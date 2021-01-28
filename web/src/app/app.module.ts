@@ -30,6 +30,9 @@ import { ConfirmarComponent } from './confirmar/confirmar.component';
 import { PedidoDetalleComponent } from './pedido-detalle/pedido-detalle.component';
 
 import { AppConfigService } from './core/config.service';
+import { GruposComponent } from './grupos/grupos.component';
+import { ServicioComponent } from './servicios/servicio/servicio.component';
+import { TareasComponent } from './servicios/tareas/tareas.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,9 @@ import { AppConfigService } from './core/config.service';
     HomeComponent,
     ConfirmarComponent,
     PedidoDetalleComponent,
+    GruposComponent,
+    ServicioComponent,
+    TareasComponent,
   
   ],
   imports: [
