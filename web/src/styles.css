@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+table {
+    width: 100%;
+    
+  }
+  .mat-form-field {
+    font-size: 14px;
+    width: 25%;
+  }
+  
+  
+  #agregar {
+    margin-left: auto;
+    margin-bottom: auto;
+    margin-top: auto;
+    margin-right: 20px;
+  }
+  
+  #filtro {
+    margin-right: auto; 
+    margin-bottom: auto; 
+    margin-top: auto;
+    margin-left: 20px;
+  }

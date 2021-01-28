@@ -1,0 +1,41 @@
+<p>
+  <mat-toolbar color="primary">
+      <span>Sistema Integral de Carga de Pedidos</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+         <mat-icon>menu</mat-icon>
+      </button>
+  </mat-toolbar>
+</p>
+
+<mat-tab-group dynamicHeight>
+  <mat-tab>
+    <ng-template  mat-tab-label>
+      <a routerLink='/clientes'>
+        <mat-icon class="example-tab-icon">person</mat-icon>
+        Clientes
+      </a>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <a routerLink='/pedidos'>
+        <mat-icon class="example-tab-icon">library_books</mat-icon>
+        Pedidos
+      </a>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <a routerLink='/productos'>
+        <mat-icon class="example-tab-icon">toys</mat-icon>
+        Productos
+      </a>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+
+
+<router-outlet></router-outlet>
