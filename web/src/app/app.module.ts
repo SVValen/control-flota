@@ -13,17 +13,17 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import {MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule } from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSortModule} from '@angular/material/sort';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
+import {MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule, MatOptionModule } from '@angular/material/core';
+import {MatSelectModule } from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { ConfirmarComponent } from '../app/shared/confirmar/confirmar.component';
 
@@ -40,8 +40,8 @@ import { HomeComponent } from './componentes/home/home.component';
     GruposComponent,
     ServicioComponent,
     TareasComponent,
-    HomeComponent
-  
+    HomeComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -67,7 +67,8 @@ import { HomeComponent } from './componentes/home/home.component';
     MatSelectModule,
     MatStepperModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatPaginatorModule
   ],
   providers: [AppConfigService,
     { provide: APP_INITIALIZER, useFactory: loadConfig, deps: [AppConfigService], multi: true }
