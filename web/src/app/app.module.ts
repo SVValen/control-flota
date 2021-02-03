@@ -21,31 +21,26 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 
-import { ClientesComponent } from './clientes/clientes.component';
-import { PedidosComponent } from './pedidos/pedidos.component';
-import { ProductoComponent } from './producto/producto.component';
-import { HomeComponent } from './home/home.component';
-import { ConfirmarComponent } from './confirmar/confirmar.component';
-import { PedidoDetalleComponent } from './pedido-detalle/pedido-detalle.component';
+
+import { ConfirmarComponent } from '../app/shared/confirmar/confirmar.component';
 
 import { AppConfigService } from './core/config.service';
-import { GruposComponent } from './grupos/grupos.component';
-import { ServicioComponent } from './servicios/servicio/servicio.component';
-import { TareasComponent } from './servicios/tareas/tareas.component';
+import { GruposComponent } from './componentes/grupos/grupos.component';
+import { ServicioComponent } from './componentes/servicio/servicio.component';
+import { TareasComponent } from './componentes/tareas/tareas.component';
+import { HomeComponent } from './componentes/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClientesComponent,
-    PedidosComponent,
-    ProductoComponent,
-    HomeComponent,
     ConfirmarComponent,
-    PedidoDetalleComponent,
     GruposComponent,
     ServicioComponent,
     TareasComponent,
+    HomeComponent
   
   ],
   imports: [
@@ -70,7 +65,9 @@ import { TareasComponent } from './servicios/tareas/tareas.component';
     MatNativeDateModule, 
     MatOptionModule,
     MatSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [AppConfigService,
     { provide: APP_INITIALIZER, useFactory: loadConfig, deps: [AppConfigService], multi: true }
