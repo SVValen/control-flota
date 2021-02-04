@@ -43,6 +43,7 @@ include_once "globales.php";
 
 include_once 'controllers/grupo.php';
 include_once 'controllers/servicio.php';
+include_once 'controllers/tarea.php';
 
 
 $app->get('/', function (Request $request, Response $response, $args) {
