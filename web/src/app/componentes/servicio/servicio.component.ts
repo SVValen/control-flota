@@ -102,6 +102,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
   }
 
   edit(seleccionado: Servicio) {
+    this.label='Editar Servicio';
     this.mostrarFormulario = true;
     this.seleccionado = seleccionado;
     this.form.setValue(seleccionado);
