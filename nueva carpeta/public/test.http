@@ -100,3 +100,35 @@ PUT http://localhost:8888/index.php/tarea HTTP/1.1
     "tareCosto": 11,
     "tareId":7
 }
+
+###test-servicio-tarea
+
+
+GET http://localhost:8888/index.php/servicio-tarea HTTP/1.1
+
+
+###
+
+DELETE http://localhost:8888/index.php/servicio-tarea/1 HTTP/1.1
+
+
+###
+
+POST http://localhost:8888/index.php/servicio-tarea HTTP/1.1
+Content-Type: application/json
+
+{
+    "setaServId":1,
+    "setaTareId":1
+}
+
+###
+
+PUT http://localhost:8888/index.php/servicio-tarea HTTP/1.1
+
+{
+    "setaServId":2,
+    "setaTareId":1,
+    "setaId": 15
+    
+}
