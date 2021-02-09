@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Servicio } from '../../modelo/servicio';
 import { ServicioService } from '../../servicios/servicio.service'
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
+import { ServicioTareaService } from '../../servicios/servicio-tarea.service';
+import { GlobalService } from '../../servicios/global.service'
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
@@ -32,6 +34,8 @@ export class ServicioComponent implements OnInit, AfterViewInit {
 
   constructor(
     private servicioService: ServicioService,
+    private servicioTareaService: ServicioTareaService,
+    private globalService: GlobalService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog
 
@@ -64,6 +68,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
         this.actualizarTabla();
       }
     )
+
   }
 
   actualizarTabla() {
@@ -114,25 +119,46 @@ export class ServicioComponent implements OnInit, AfterViewInit {
     }
 
     Object.assign(this.seleccionado, this.form.value);
+    
 
     if (this.seleccionado.servId) {
       this.servicioService.put(this.seleccionado)
         .subscribe((servicio) => {
-          this.mostrarFormulario = false;
+          this.actualizarDetalle(this.seleccionado.servId);
         });
 
     } else {
       this.servicioService.post(this.seleccionado)
         .subscribe((servicio) => {
           this.items = servicio;
-          this.mostrarFormulario = false;
-          this.actualizarTabla();
+          this.actualizarDetalle(this.seleccionado.servId);
         });
   }
 
 }
 
 cancelar() {
+  this.mostrarFormulario = false;
+}
+
+actualizarDetalle(servId:number){
+  this.globalService.items.forEach((i) => {
+    i.setaServId = servId;
+
+    if (i.setaBorrado){
+      this.servicioTareaService.delete(i.setaId).subscribe();
+    }
+
+    if(i.setaId < 0){
+      this.servicioTareaService.post(i).subscribe();
+    }
+
+    if (i.setaId > 0){
+      this.servicioTareaService.put(i).subscribe();
+    }
+  });
+
+  this.actualizarTabla();
   this.mostrarFormulario = false;
 }
 

@@ -24,6 +24,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { ConfirmarComponent } from '../app/shared/confirmar/confirmar.component';
 
@@ -32,6 +33,7 @@ import { GruposComponent } from './componentes/grupos/grupos.component';
 import { ServicioComponent } from './componentes/servicio/servicio.component';
 import { TareasComponent } from './componentes/tareas/tareas.component';
 import { HomeComponent } from './componentes/home/home.component';
+import { ServicioTareaComponent } from './componentes/servicio-tarea/servicio-tarea.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { HomeComponent } from './componentes/home/home.component';
     ServicioComponent,
     TareasComponent,
     HomeComponent,
+    ServicioTareaComponent,
     
   ],
   imports: [
@@ -68,7 +71,8 @@ import { HomeComponent } from './componentes/home/home.component';
     MatStepperModule,
     MatSidenavModule,
     MatListModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatGridListModule
   ],
   providers: [AppConfigService,
     { provide: APP_INITIALIZER, useFactory: loadConfig, deps: [AppConfigService], multi: true }

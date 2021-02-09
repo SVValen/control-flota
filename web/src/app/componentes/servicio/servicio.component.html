@@ -63,8 +63,8 @@
 
     </div>
 
-    <div *ngIf="mostrarFormulario">
-        <mat-card>
+    <div *ngIf="mostrarFormulario" class="wrapper">
+        <div class="one">
             <h2>{{label}}</h2>
             <form [formGroup]="form">
                 <div>
@@ -115,6 +115,8 @@
                     <button mat-raised-button (click)="cancelar()">Cancelar</button>
                 </div>
             </form>
-        </mat-card>
-    </div>
+        </div>
+        <div class="two">
+            <app-servicio-tarea  [servId]="seleccionado.servId"></app-servicio-tarea>
+        </div>
 </div>
