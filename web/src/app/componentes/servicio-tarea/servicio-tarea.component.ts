@@ -104,6 +104,7 @@ export class ServicioTareaComponent implements OnInit {
 
     Object.assign(this.seleccionado, this.form.value);
 
+    this.seleccionado.tareNombre = this.tarea.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareNombre;
     this.global.items = this.global.items.filter(x => x.setaId != this.seleccionado.setaId);
     this.global.items.push(this.seleccionado);
 

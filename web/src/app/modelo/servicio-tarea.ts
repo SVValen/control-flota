@@ -4,4 +4,6 @@ export class ServicioTarea {
                             setaTareId: number = 0;
                             setaFechaAlta: Date = new Date();
                             setaBorrado: number = 0;
+
+                            tareNombre: string = "";
 }

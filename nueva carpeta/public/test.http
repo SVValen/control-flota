@@ -125,7 +125,7 @@ Content-Type: application/json
 
 {
     "setaServId":7,
-    "setaTareId":1
+    "setaTareId":1,
 }
 
 ###
