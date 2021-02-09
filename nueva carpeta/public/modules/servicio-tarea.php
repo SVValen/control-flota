@@ -6,13 +6,22 @@ class ServicioTarea {
                     ,setaServId
                     ,setaTareId
                     ,CONVERT(VARCHAR, setaFechaAlta, 126) setaFechaAlta
-                    ,setaBorrado';
+                    ,setaBorrado
+                    ,tareNombre';
+    public $join = " LEFT OUTER JOIN Tarea ON setaTareId = tareId";
 
     //----------------------------------GET
     public function get($db) {
         $sql = "SELECT $this->fields FROM $this->table
+                $this->join
                 WHERE setaBorrado = 0 ";
         $params = null;
+
+        if (isset($_GET["setaServId"])) {
+            $params = [$_GET["setaServId"]];
+            $sql = $sql . " AND setaServId = ?";
+        };
+
         $stmt = SQL::query($db, $sql, $params);
 
         $results = [];
