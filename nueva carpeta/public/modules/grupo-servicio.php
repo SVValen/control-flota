@@ -8,14 +8,17 @@ class GrupoServicio {
                     ,grusKM
                     ,grusFecha
                     ,grusFechaAlta
-                    ,grusBorrado';
-    public $join = '';
+                    ,grusBorrado
+                    
+                    ,servNombre';
+    public $join = "LEFT OUTER JOIN Servicio ON grusServId = servId";
 
     //---------------------------------GET
 
     public function get($db) {
         $sql = "SELECT $this->fields
                 FROM $this->table
+                $this->join
                 WHERE grusBorrado = 0";
         $params = null;
 

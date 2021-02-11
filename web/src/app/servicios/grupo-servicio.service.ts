@@ -5,19 +5,19 @@ import { ApiService } from '../core/api-service';
 import {AppConfigService} from '../core/config.service';
 
 import { GrupoServicio } from '../modelo/grupo-servicio'
-import { GrupoService } from './grupo.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrupoServicioService
-  extends ApiService<GrupoService> {
+  extends ApiService<GrupoServicio> {
 
   constructor(
     protected http: HttpClient,
     protected app: AppConfigService
   ) 
   { 
-    super("grupo-service", http, app);
+    super("grupo-servicio", http, app);
   }
 }

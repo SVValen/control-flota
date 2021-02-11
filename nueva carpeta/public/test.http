@@ -169,11 +169,11 @@ Content-Type: application/json
 PUT http://localhost:8888/index.php/grupo-servicio HTTP/1.1
 
 {
-    "grusGrupId": 2,
-    "grusServId": 2,
+    "grusGrupId": 38,
+    "grusServId": 9,
     "grusPeriodo": 2,
-    "grusKm":2,
+    "grusKm":4,
     "grusFecha": 0,
-    "grusId": 49 
+    "grusId": 61
     
 }

@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Grupo } from '../../modelo/grupo';
 import { GrupoService } from '../../servicios/grupo.service'
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
+import { GlobalService } from '../../servicios/global.service';
+import { GrupoServicioService} from '../../servicios/grupo-servicio.service';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
@@ -30,9 +32,12 @@ export class GruposComponent implements OnInit, AfterViewInit {
   form = new FormGroup({});
 
   mostrarFormulario = false;
+  mostrarFormServ = false;
 
   constructor(
     private grupoService: GrupoService,
+    private global: GlobalService,
+    private grupoServicioService: GrupoServicioService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog) {}
 
@@ -105,6 +110,7 @@ export class GruposComponent implements OnInit, AfterViewInit {
   edit(seleccionado: Grupo) {
     this.label = 'Editar grupo';
     this.mostrarFormulario = true;
+    this.mostrarFormServ = true;
     this.seleccionado = seleccionado;
     this.form.setValue(seleccionado);
   }
@@ -118,20 +124,40 @@ export class GruposComponent implements OnInit, AfterViewInit {
 
     if(this.seleccionado.grupId) {
       this.grupoService.put(this.seleccionado)
-        .subscribe((grupo) => {
-          this.mostrarFormulario = false;
+        .subscribe(() => {
+          this.actualizarDetalle(this.seleccionado.grupId);
         });
     } else {
       this.grupoService.post(this.seleccionado)
         .subscribe((grupo) => {
           this.items = grupo;
-          this.mostrarFormulario= false;
-          this.actualizarTabla();
+          this.actualizarDetalle(this.seleccionado.grupId);
         });
     }
   }
 
   cancelar(){
+    this.mostrarFormulario = false;
+  }
+
+  actualizarDetalle(grupId:number){
+    this.global.itemsServ.forEach((i) => {
+      i.grusGrupId = grupId;
+  
+      if (i.grusBorrado){
+        this.grupoServicioService.delete(i.grusId).subscribe();
+      }
+  
+      if(i.grusId < 0){
+        this.grupoServicioService.post(i).subscribe();
+      }
+  
+      if (i.grusId > 0){
+        this.grupoServicioService.put(i).subscribe();
+      }
+    });
+  
+    this.actualizarTabla();
     this.mostrarFormulario = false;
   }
 

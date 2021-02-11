@@ -34,7 +34,7 @@ import { ServicioComponent } from './componentes/servicio/servicio.component';
 import { TareasComponent } from './componentes/tareas/tareas.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { ServicioTareaComponent } from './componentes/servicio-tarea/servicio-tarea.component';
-import { GrupoServicioComponent } from './grupo-servicio/grupo-servicio.component';
+import { GrupoServicioComponent } from './componentes/grupo-servicio/grupo-servicio.component';
 
 @NgModule({
   declarations: [
