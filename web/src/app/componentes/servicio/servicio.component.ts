@@ -31,6 +31,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
   form = new FormGroup({});
 
   mostrarFormulario = false;
+  mostrarFormTareas = false;
 
   constructor(
     private servicioService: ServicioService,
@@ -109,6 +110,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
   edit(seleccionado: Servicio) {
     this.label='Editar Servicio';
     this.mostrarFormulario = true;
+    this.mostrarFormTareas = true;
     this.seleccionado = seleccionado;
     this.form.setValue(seleccionado);
   }
@@ -123,7 +125,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
 
     if (this.seleccionado.servId) {
       this.servicioService.put(this.seleccionado)
-        .subscribe((servicio) => {
+        .subscribe(() => {
           this.actualizarDetalle(this.seleccionado.servId);
         });
 
