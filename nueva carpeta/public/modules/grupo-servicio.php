@@ -7,7 +7,7 @@ class GrupoServicio {
                     ,grusPeriodo
                     ,grusKM
                     ,grusFecha
-                    ,grusFechaAlta
+                    ,CONVERT(VARCHAR, grusFechaAlta, 126) grusFechaAlta
                     ,grusBorrado
                     
                     ,servNombre';
@@ -70,7 +70,7 @@ class GrupoServicio {
                 DATA["grusGrupId"],
                 DATA["grusServId"],
                 DATA["grusPeriodo"],
-                DATA["grusKm"],
+                DATA["grusKM"],
                 DATA["grusFecha"]
                 ];
         
@@ -96,13 +96,13 @@ class GrupoServicio {
                 SET grusGrupId = ?,
                     grusServId = ?,
                     grusPeriodo = ?,
-                    grusKm = ?,
+                    grusKM = ?,
                     grusFecha = ?
                 WHERE grusId = ?";
         $params=[DATA["grusGrupId"]
                 ,DATA["grusServId"]
                 ,DATA["grusPeriodo"]
-                ,DATA["grusKm"]
+                ,DATA["grusKM"]
                 ,DATA["grusFecha"]
                 ,DATA["grusId"]];
                 

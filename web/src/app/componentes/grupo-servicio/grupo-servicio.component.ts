@@ -9,7 +9,7 @@ import { GrupoServicioService } from '../../servicios/grupo-servicio.service';
 import { Servicio } from '../../modelo/servicio';
 import { ServicioService } from '../../servicios/servicio.service';
 import { GlobalService } from 'src/app/servicios/global.service';
-import { Grupo } from 'src/app/modelo/grupo';
+
 
 @Component({
   selector: 'app-grupo-servicio',
@@ -70,6 +70,7 @@ export class GrupoServicioComponent implements OnInit {
   actualizarTabla() {
     this.dataSource.data = this.global.itemsServ.filter(
       borrado => !(borrado.grusBorrado));
+      debugger
   }
 
   agregar() {

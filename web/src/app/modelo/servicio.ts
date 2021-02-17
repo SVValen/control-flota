@@ -4,7 +4,7 @@ export class Servicio{
     servDescripcion: string = '';
     servPeriodo: number = 0;
     servKM: number = 0;
-    servFecha: Date = new Date();
+    servFecha: number = 0;
     servFechaAlta: Date = new Date();
     servBorrado: number = 0;
 }

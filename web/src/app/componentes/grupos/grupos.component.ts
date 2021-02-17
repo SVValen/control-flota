@@ -157,8 +157,9 @@ export class GruposComponent implements OnInit, AfterViewInit {
       }
     });
   
-    this.actualizarTabla();
     this.mostrarFormulario = false;
+    this.actualizarTabla();
+    
   }
 
 

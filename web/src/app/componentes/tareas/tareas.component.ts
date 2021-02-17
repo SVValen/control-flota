@@ -52,6 +52,8 @@ export class TareasComponent implements OnInit,AfterViewInit {
       tareDescripcion: ['',Validators.required],
       tareUnidadMedida: ['',Validators.required],
       tareCantidad: ['',Validators.required],
+      tareFechaAlta: [''],
+      tareBorrado: [''],
       tareCosto: ['']
     });
 

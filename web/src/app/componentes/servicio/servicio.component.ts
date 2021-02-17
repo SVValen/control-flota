@@ -73,8 +73,9 @@ export class ServicioComponent implements OnInit, AfterViewInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.items;
-    this.dataSource.sort = this.sort;
+    this.dataSource.data = this.items.filter(
+      borrado => !(borrado.servBorrado)
+    );
   }
 
   filter(event: Event) {
@@ -122,7 +123,6 @@ export class ServicioComponent implements OnInit, AfterViewInit {
 
     Object.assign(this.seleccionado, this.form.value);
     
-
     if (this.seleccionado.servId) {
       this.servicioService.put(this.seleccionado)
         .subscribe(() => {
@@ -136,6 +136,8 @@ export class ServicioComponent implements OnInit, AfterViewInit {
           this.actualizarDetalle(this.seleccionado.servId);
         });
   }
+
+  this.actualizarTabla();
 
 }
 
@@ -160,8 +162,9 @@ actualizarDetalle(servId:number){
     }
   });
 
-  this.actualizarTabla();
   this.mostrarFormulario = false;
+  this.actualizarTabla();
+  
 }
 
 }

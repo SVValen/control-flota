@@ -46,7 +46,7 @@ Content-Type: application/json
     "servNombre":"motor",
     "servDescripcion":"verificar motor",
     "servPeriodo": 70,
-    "servKM": 15000,
+    "servKM": 15,
     "servFecha": 0
 }
 
@@ -58,7 +58,7 @@ PUT http://localhost:8888/index.php/servicio HTTP/1.1
     "servNombre": "ruedas",
     "servDescripcion": "verificar ruedas",
     "servPeriodo": 80,
-    "servKM": 15000,
+    "servKM": 15,
     "servFecha": 0,
     "servId": 9
 }
@@ -160,7 +160,7 @@ Content-Type: application/json
     "grusGrupId": 1,
     "grusServId": 1,
     "grusPeriodo": 1,
-    "grusKm":1,
+    "grusKM":1,
     "grusFecha": 1 
 }
 
@@ -172,8 +172,8 @@ PUT http://localhost:8888/index.php/grupo-servicio HTTP/1.1
     "grusGrupId": 38,
     "grusServId": 9,
     "grusPeriodo": 2,
-    "grusKm":4,
+    "grusKM": 4,
     "grusFecha": 0,
-    "grusId": 61
+    "grusId": 89
     
 }
