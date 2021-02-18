@@ -35,6 +35,7 @@ import { TareasComponent } from './componentes/tareas/tareas.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { ServicioTareaComponent } from './componentes/servicio-tarea/servicio-tarea.component';
 import { GrupoServicioComponent } from './componentes/grupo-servicio/grupo-servicio.component';
+import { MovilServicioComponent } from './componentes/movil-servicio/movil-servicio.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { GrupoServicioComponent } from './componentes/grupo-servicio/grupo-servi
     HomeComponent,
     ServicioTareaComponent,
     GrupoServicioComponent,
+    MovilServicioComponent,
     
   ],
   imports: [
