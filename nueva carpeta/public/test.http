@@ -177,3 +177,40 @@ PUT http://localhost:8888/index.php/grupo-servicio HTTP/1.1
     "grusId": 89
     
 }
+
+### movil-servicio
+
+
+GET http://localhost:8888/index.php/movil-servicio HTTP/1.1
+
+
+###
+
+DELETE http://localhost:8888/index.php/movil-servicio/8 HTTP/1.1
+
+
+###
+
+POST http://localhost:8888/index.php/movil-servicio HTTP/1.1
+Content-Type: application/json
+
+{
+    "moseMoviId":1,
+    "moseServId": 1,
+    "mosePeriodo": 1,
+    "moseKM": 1,
+    "moseFecha":1 
+}
+
+###
+
+PUT http://localhost:8888/index.php/movil-servicio HTTP/1.1
+
+{
+    "moseServId": 9,
+    "mosePeriodo": 10,
+    "moseKM":12000,
+    "moseFecha":0,
+    "moseId":5
+    
+}
