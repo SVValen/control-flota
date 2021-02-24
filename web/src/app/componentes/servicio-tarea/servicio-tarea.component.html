@@ -1,4 +1,4 @@
-<div style="width: 50%; height: 100%;" class="mat-elevation-z8">
+<div style="width: 100%; height: 100%;" >
 
     <div [hidden]="mostrarFormulario">
     
@@ -28,23 +28,22 @@
 
         </table>
 
-        <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Tarea</button>
-
         <mat-paginator [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons></mat-paginator>
-
+        <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Tarea</button>
+        
     </div>
 
-    <mat-card>
-        <div *ngIf="mostrarFormulario">
-
+    
+    <div *ngIf="mostrarFormulario">
+        
             <form [formGroup]="form">
     
                 <div [hidden]="true">
                     <input type="text" formControlName="setaServId" [(ngModel)]="servId">
                 </div>
                 
-                <div>
-                    <mat-form-field appearance="outline">
+                <div style="width: 100%;">
+                    <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Tarea</mat-label>
                         <mat-select formControlName="setaTareId" required>
                             <mat-option *ngFor="let tare of tarea" [value]="tare.tareId">
@@ -62,11 +61,7 @@
                     <button mat-raised-button (click)="cancelar()">Cancelar</button>
                 </div>
             </form>
-            
-            <div>
-                
-            </div>
-        </div>
-    </mat-card>
+        
+    </div>
 </div>
 

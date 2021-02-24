@@ -8,7 +8,7 @@ class Servicio
 	                ,servDescripcion
 	                ,servPeriodo
 	                ,servKM
-	                ,CONVERT(VARCHAR, servFecha, 126) servFecha
+	                ,servFecha
 	                ,CONVERT(VARCHAR, servFechaALTA, 126 ) servFechaAlta
                     ,servBorrado';
     public $join = '';

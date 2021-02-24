@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -22,7 +25,7 @@ export class GrupoServicioComponent implements OnInit {
 
   seleccionado = new GrupoServicio();
 
-  columnas: string [] = ['servNombre','grusPeriodo','grusKM','grusFecha','acciones'];
+  columnas: string [] = ['servNombre','grusPeriodo','grusKM','acciones'];
   dataSource = new MatTableDataSource<GrupoServicio>();
   
   form = new FormGroup({});
@@ -41,6 +44,15 @@ export class GrupoServicioComponent implements OnInit {
     private matDialog: MatDialog
 
   ) { }
+
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit(): void {
     this.form = this.formBouilder.group({
@@ -70,7 +82,6 @@ export class GrupoServicioComponent implements OnInit {
   actualizarTabla() {
     this.dataSource.data = this.global.itemsServ.filter(
       borrado => !(borrado.grusBorrado));
-      debugger
   }
 
   agregar() {

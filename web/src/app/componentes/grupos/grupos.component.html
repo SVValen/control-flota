@@ -40,7 +40,7 @@
                 <tr mat-row *matRowDef="let row; columns: columnas"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No hay datos para el filtro "{{input.value}}"</td>
+                    <td class="mat-cell" colspan="4">No hay datos"{{input.value}}"</td>
                 </tr>
             </table>
 
@@ -48,43 +48,62 @@
 
         </div>
         
-
-        <mat-card>
             <div *ngIf="mostrarFormulario">
-                <mat-card>
-                    <h2>{{label}}</h2>
-                    <form [formGroup]="form">
-                        <div>
-                            <div>
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Nombre</mat-label>
-                                    <input matInput formControlName="grupNombre" required>
-                                    <mat-error>El campo no puede ser vacio</mat-error>
-                                </mat-form-field>
-                            </div>
-        
-                            <div>
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Descripcion</mat-label>
-                                    <input matInput formControlName="grupDescripcion" required>
-                                    <mat-error>El campo no puede ser vacio</mat-error>
-                                </mat-form-field>
-                            </div>
+            <mat-card>
+                <mat-grid-list cols="2" rowHeight="4:2">
+                    <mat-grid-tile
+                        [colspan]="1"
+                        [rowspan]="1">
+
+                            <div style="width: 100%;">
+                            
+                            <h2>{{label}}</h2>
+                            
+                            <form [formGroup]="form" >
+                                <div>
+                                    <div>
+                                        <mat-form-field appearance="outline" style="width: 100%;">
+                                            <mat-label>Nombre</mat-label>
+                                            <input matInput formControlName="grupNombre" required>
+                                            <mat-error>El campo no puede ser vacio</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                
+                                    <div>
+                                        <mat-form-field appearance="outline" style="width: 100%;">
+                                            <mat-label>Descripcion</mat-label>
+                                            <input matInput formControlName="grupDescripcion" required>
+                                            <mat-error>El campo no puede ser vacio</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                &nbsp;
+                
+                                <div>
+                                    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                                    &nbsp;
+                                    <button mat-raised-button (click)="cancelar()">Cancelar</button>
+                                </div>
+                            </form> 
                         </div>
 
+                    </mat-grid-tile>
+    
+                    <mat-grid-tile
+                        [colspan]="1"
+                        [rowspan]="1"> 
+                    
                         <div *ngIf="mostrarFormServ">
-                            <app-grupo-servicio [grupId]="seleccionado.grupId"></app-grupo-servicio>
+                            <div style="width: 100%;">
+                                <h2>Editar Servicios</h2>
+                                <app-grupo-servicio [grupId]="seleccionado.grupId"></app-grupo-servicio>
+                            </div>
                         </div>
 
-                        &nbsp;
-        
-                        <div>
-                            <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
-                            &nbsp;
-                            <button mat-raised-button (click)="cancelar()">Cancelar</button>
-                        </div>
-                    </form>
-                </mat-card>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-card>
+         
             </div>
-        </mat-card>
 </div>

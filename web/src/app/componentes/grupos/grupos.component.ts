@@ -159,7 +159,6 @@ export class GruposComponent implements OnInit, AfterViewInit {
   
     this.mostrarFormulario = false;
     this.actualizarTabla();
-    
   }
 
 
