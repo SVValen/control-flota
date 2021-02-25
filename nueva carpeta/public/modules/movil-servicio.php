@@ -10,14 +10,16 @@ class MovilServicio {
                         ,moseFecha
                         ,CONVERT(VARCHAR, moseFechaAlta, 126) moseFechaAlta
                         ,moseBorrado
-                        ';
-    public $join = "";
+
+                        ,servNombre';
+    public $join = "LEFT OUTER JOIN Servicio ON moseServId = servId";
 
     //----------------------------------GET
 
     public function get($db) {
         $sql = "SELECT $this->fields
                 FROM $this->table
+                $this->join
                 WHERE moseBorrado = 0";
         $params = null;
 
