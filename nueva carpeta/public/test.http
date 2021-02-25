@@ -22,9 +22,9 @@ Content-Type: application/json
 PUT http://localhost:8888/index.php/grupo HTTP/1.1
 
 {
-    "grupId": 12,
+    "grupId": 1,
     "grupNombre": "Camionetas",
-    "grupDescripcion": "Camionetas hilux modelo new"
+    "grupDescripcion": "Hilux"
 }
 
 ###test-servicio

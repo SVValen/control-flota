@@ -26,13 +26,15 @@ export class GruposComponent implements OnInit, AfterViewInit {
 
   label = '';
 
-  columnas: string[] = ['grupId','grupNombre','grupDescripcion','acciones'];
+  columnas: string[] = ['grupNombre','grupDescripcion','acciones'];
   dataSource = new MatTableDataSource<Grupo>();
 
   form = new FormGroup({});
 
   mostrarFormulario = false;
   mostrarFormServ = false;
+
+  
 
   constructor(
     private grupoService: GrupoService,
