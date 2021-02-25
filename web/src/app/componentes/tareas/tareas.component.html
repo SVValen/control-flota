@@ -12,7 +12,6 @@
         <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Tarea</button>
 
         <table mat-table [dataSource]="dataSource" matSort style="overflow-x:auto; width: 100%;">
-            <mat-text-column name="tareId" headerText="ID"></mat-text-column>
 
             <ng-container matColumnDef="tareNombre">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
@@ -111,9 +110,9 @@
                 </div>
 
                 <div>
-                    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                    <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
                     &nbsp;
-                    <button mat-raised-button (click)="cancelar()">Cancelar</button>
+                    <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
                 </div>
             </form>
         </mat-card>

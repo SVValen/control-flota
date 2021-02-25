@@ -24,7 +24,7 @@ export class TareasComponent implements OnInit,AfterViewInit {
 
   label='';
 
-  columnas: string[] = ['tareId','tareNombre','tareDescripcion','tareUnidadMedida','tareCantidad','tareCosto','acciones']
+  columnas: string[] = ['tareNombre','tareDescripcion','tareUnidadMedida','tareCantidad','tareCosto','acciones']
   dataSource = new MatTableDataSource<Tarea>();
 
   form = new FormGroup({});
