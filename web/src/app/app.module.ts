@@ -25,6 +25,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { ConfirmarComponent } from '../app/shared/confirmar/confirmar.component';
 
@@ -78,7 +79,8 @@ import { MovilBitacoraComponent } from './componentes/movil-bitacora/movil-bitac
     MatSidenavModule,
     MatListModule,
     MatPaginatorModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCheckboxModule
   ],
   providers: [AppConfigService,
     { provide: APP_INITIALIZER, useFactory: loadConfig, deps: [AppConfigService], multi: true }

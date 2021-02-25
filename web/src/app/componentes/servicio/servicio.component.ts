@@ -25,7 +25,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
 
   label = '';
 
-  columnas: string[] = ['servId','servNombre','servDescripcion','servPeriodo','servKM','servFecha','acciones'];
+  columnas: string[] = ['servNombre','servDescripcion','servPeriodo','servKM','servFecha','acciones'];
   dataSource = new MatTableDataSource<Servicio>();
 
   form = new FormGroup({});
@@ -88,6 +88,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
     this.form.reset();
     this.seleccionado = new Servicio();
     this.mostrarFormulario = true;
+    this.mostrarFormTareas = false;
   }
 
   delete(row: Servicio) {

@@ -12,7 +12,6 @@
         <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Servicio</button>
 
         <table mat-table [dataSource]="dataSource" matSort style="overflow-x:auto; width: 100%;">
-            <mat-text-column name="servId" headerText="ID"></mat-text-column>
 
             <ng-container matColumnDef="servNombre">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
@@ -85,7 +84,7 @@
                                     <div>
                                         <mat-form-field appearance="outline" style="width: 100%;">
                                             <mat-label>Descripcion</mat-label>
-                                            <input matInput formControlName="servDescripcion" required>
+                                            <input matInput formControlName="servDescripcion" >
                                             <mat-error>El campo no puede ser vacio</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -93,7 +92,7 @@
                                     <div>
                                         <mat-form-field appearance="outline" style="width: 100%;">
                                             <mat-label>Periodo</mat-label>
-                                            <input matInput formControlName="servPeriodo" required>
+                                            <input matInput formControlName="servPeriodo" >
                                             <mat-error>El campo no puede ser vacio</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -101,7 +100,7 @@
                                     <div>
                                         <mat-form-field appearance="outline" style="width: 100%;">
                                             <mat-label>KM</mat-label>
-                                            <input matInput formControlName="servKM" required>
+                                            <input matInput formControlName="servKM" >
                                             <mat-error>El campo no puede ser vacio</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -109,15 +108,15 @@
                                     <div>
                                         <mat-form-field appearance="outline" style="width: 100%;">
                                             <mat-label>Fecha</mat-label>
-                                            <input matInput formControlName="servFecha" required>
+                                            <input matInput formControlName="servFecha" >
                                             <mat-error>El campo no puede ser vacio</mat-error>
                                         </mat-form-field>
                                     </div>
                                 &nbsp;
                                 <div>
-                                    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                                    <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
                                     &nbsp;
-                                    <button mat-raised-button (click)="cancelar()">Cancelar</button>
+                                    <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
                                 </div>
                             </form>
                         </div>
