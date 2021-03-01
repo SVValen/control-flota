@@ -112,3 +112,5 @@ function noCache() {
     header('Cache-Control: post-check=0, pre-check=0', false);
     header('Pragma: no-cache');
     }
+
+?>

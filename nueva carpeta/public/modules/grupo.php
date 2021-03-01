@@ -14,7 +14,7 @@ class Grupo
     //----------------------------------GET
     public function get($db) {
         $sql = "SELECT $this->fields FROM $this->table
-                 ";
+                WHERE grupBorrado = 0";
         $params = null;
         $stmt = SQL::query($db, $sql, $params);
 

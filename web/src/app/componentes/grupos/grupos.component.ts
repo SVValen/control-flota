@@ -67,6 +67,7 @@ export class GruposComponent implements OnInit, AfterViewInit {
         this.actualizarTabla();
       }
     )  
+    debugger
   }
 
   actualizarTabla() {
