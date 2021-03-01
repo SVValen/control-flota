@@ -48,6 +48,7 @@ include_once 'controllers/servicio-tarea.php';
 include_once 'controllers/grupo-servicio.php';
 include_once 'controllers/movil-servicio.php';
 include_once 'controllers/movil-bitacora.php';
+include_once 'controllers/bitacora-tarea.php';
 
 
 $app->get('/', function (Request $request, Response $response, $args) {
