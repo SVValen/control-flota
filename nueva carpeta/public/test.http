@@ -304,3 +304,29 @@ PUT http://localhost:8888/index.php/bitacora-tarea HTTP/1.1
 
     
 }
+### movil
+
+
+GET http://localhost:8888/index.php/movil HTTP/1.1
+
+
+###
+
+DELETE http://localhost:8888/index.php/movil/13 HTTP/1.1
+
+
+###
+
+POST http://localhost:8888/index.php/movil HTTP/1.1
+Content-Type: application/json
+
+{
+    "moviId":16
+}
+
+###
+
+PUT http://localhost:8888/index.php/movil HTTP/1.1
+
+{   
+}

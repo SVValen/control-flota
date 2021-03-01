@@ -39,6 +39,8 @@ import { GrupoServicioComponent } from './componentes/grupo-servicio/grupo-servi
 import { MovilServicioComponent } from './componentes/movil-servicio/movil-servicio.component';
 import { MovilBitacoraComponent } from './componentes/movil-bitacora/movil-bitacora.component';
 import { BitacoraTareaComponent } from './componentes/bitacora-tarea/bitacora-tarea.component';
+import { MovilComponent } from './componentes/movil/movil.component';
+
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { BitacoraTareaComponent } from './componentes/bitacora-tarea/bitacora-ta
     MovilServicioComponent,
     MovilBitacoraComponent,
     BitacoraTareaComponent,
+    MovilComponent,
+   
     
   ],
   imports: [

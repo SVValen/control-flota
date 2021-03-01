@@ -49,7 +49,7 @@ include_once 'controllers/grupo-servicio.php';
 include_once 'controllers/movil-servicio.php';
 include_once 'controllers/movil-bitacora.php';
 include_once 'controllers/bitacora-tarea.php';
-
+include_once 'controllers/movil.php';
 
 $app->get('/', function (Request $request, Response $response, $args) {
     $response->getBody()->write("API");
