@@ -40,6 +40,8 @@ import { MovilServicioComponent } from './componentes/movil-servicio/movil-servi
 import { MovilBitacoraComponent } from './componentes/movil-bitacora/movil-bitacora.component';
 import { BitacoraTareaComponent } from './componentes/bitacora-tarea/bitacora-tarea.component';
 import { MovilComponent } from './componentes/movil/movil.component';
+import { MovilOdometroComponent } from './componentes/movil-odometro/movil-odometro.component';
+import { MovilGrupoComponent } from './componentes/movil-grupo/movil-grupo.component';
 
 
 @NgModule({
@@ -56,6 +58,8 @@ import { MovilComponent } from './componentes/movil/movil.component';
     MovilBitacoraComponent,
     BitacoraTareaComponent,
     MovilComponent,
+    MovilOdometroComponent,
+    MovilGrupoComponent,
    
     
   ],
