@@ -23,9 +23,9 @@ class MovilServicio {
                 WHERE moseBorrado = 0";
         $params = null;
 
-        if(isset($_GET["moseServId"])){
-            $params = [$_GET["moseServId"]];
-            $sql = $sql . "AND moseServId = ?";
+        if(isset($_GET["moseMoviId"])){
+            $params = [$_GET["moseMoviId"]];
+            $sql = $sql . "AND moseMoviId = ?";
         }
 
         $stmt = SQL::query($db, $sql, $params);

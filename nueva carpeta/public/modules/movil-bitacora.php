@@ -27,9 +27,9 @@ class MovilBitacora {
                 $this->join
                 WHERE mobiBorrado = 0";
         $params = null;
-        if(isset($_GET["mobiMoseId"])){
-            $params = [$_GET["mobiMoseId"]];
-            $sql = $sql . "AND mobiMoseId = ? ";
+        if(isset($_GET["mobiMoviId"])){
+            $params = [$_GET["mobiMoviId"]];
+            $sql = $sql . "AND mobiMoviId = ? ";
         }
 
         $stmt = SQL::query($db, $sql, $params);
