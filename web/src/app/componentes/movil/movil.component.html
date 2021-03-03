@@ -8,6 +8,8 @@
     </mat-form-field>
 
     &nbsp;
+    <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Movil</button>
+
 
     <!--Tabla moviles-->
 
@@ -112,9 +114,27 @@
             <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
             </mat-card>
         </mat-tab>
-        <mat-tab label="Bitacora"> Bitacora </mat-tab>
-        <mat-tab label="Servicios"> Servicios </mat-tab>
-        <mat-tab label="Odometro"> Odometro </mat-tab>
+        <mat-tab label="Bitacora"> 
+            <mat-card>
+                <app-movil-bitacora></app-movil-bitacora>
+                <br>
+                <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Servicios">  
+            <mat-card>
+                <app-movil-servicio [moviId]="seleccionado.moviId"></app-movil-servicio>
+                <br>
+                <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Odometro">
+            <mat-card>
+                <app-movil-odometro></app-movil-odometro>
+                <br>
+                <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
+            </mat-card>
+        </mat-tab>
       </mat-tab-group>
 </div>
 

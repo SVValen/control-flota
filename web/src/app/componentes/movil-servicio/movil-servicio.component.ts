@@ -21,7 +21,7 @@ export class MovilServicioComponent implements OnInit {
 
   seleccionado = new MovilServicio();
 
-  columnas : string[] = ['mosePeriodo','moseKM','acciones'];
+  columnas : string[] = ['servNombre','mosePeriodo','moseKM','acciones'];
   dataSource = new MatTableDataSource<MovilServicio>();
 
   form = new FormGroup({});
