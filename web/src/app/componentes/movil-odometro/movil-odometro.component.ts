@@ -21,9 +21,62 @@ export class MovilOdometroComponent implements OnInit {
   items : MovilOdometro[] = [];
 
   columnas : string[] = ['modoFecha','modoOdometro','acciones'];
-  constructor() { }
+  dataSource = new MatTableDataSource<MovilOdometro>();
+  form = new FormGroup({});
+
+  mostrarFormulario = false;
+
+  constructor(
+    private movilOdometroService: MovilOdometroService,
+    private formBouilder: FormBuilder,
+    private matDialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
+    this.form = this.formBouilder.group({
+      modoId:[''],
+      modoMoviId:[''],
+      modoFecha:[''],
+      modoOdometro:[''],
+      modoFechaAlta:[''],
+      modoBorrado:['']
+    });
+
+    this.movilOdometroService.get().subscribe(
+      (movil) => {
+        this.items = movil;
+        this.actualizarTabla();
+      }
+    )
+  }
+
+  actualizarTabla() {
+    this.dataSource.data = this.items;
+  }
+
+  filter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  agregar() {
+    
+  }
+
+  delete(row: MovilOdometro) {
+
+  }
+
+  edit(seleccionado: MovilOdometro) {
+   
+  }
+
+  guardar() {
+
+  }
+
+  cancelar() {
+    this.mostrarFormulario = false;
   }
 
 }

@@ -47,30 +47,29 @@ class MovilGrupo {
 
     public function post($db) {
         $sql = "INSERT INTO $this->table
-                (mogrMoviId,
-                mogrGrupId,
-                mogrFechaAlta,
-                mogrBorrado)
+                (mogrMoviId
+                ,mogrGrupId
+                ,mogrFechaAlta
+                ,mogrBorrado) 
                 VALUES(?,?,GETDATE(),0);
-
+                
                 SELECT @@IDENTITY mogrId, CONVERT(VARCHAR, GETDATE(),126) mogrFechaAlta;";
 
-        $params = [DATA['mogrMoviId'],
-                    DATA['mogrGrupId']];
-        $stmt = SQL::query($db,$sql,$params);
+        $params = [DATA["mogrMoviId"],DATA["mogrGrupId"]];
+        $stmt = SQL::query($db, $sql, $params);
 
         sqlsrv_fetch($stmt);
         sqlsrv_next_result($stmt);
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-        $row = sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
         $results = DATA;
-
         $results["mogrId"] = $row["mogrId"];
         $results["mogrFechaAlta"] = $row["mogrFechaAlta"];
         $results["mogrBorrado"] = 0;
+        
 
         return $results;
-    }
+}
 
     //------------------------------------PUT
 

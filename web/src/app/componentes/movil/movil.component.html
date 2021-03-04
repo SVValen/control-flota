@@ -74,58 +74,74 @@
     <mat-tab-group>
         <mat-tab label="Detalle Movil"> 
             <mat-card>
-            <h2>Detalle Movil</h2>
-            <table style="width: 100%;">
-                <tr><td id="b">Patente</td><td>{{seleccionado.patente}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Descripcion</td><td>{{seleccionado.descripcion}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Dependencia</td><td>{{seleccionado.dependencia}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Dependencia Completa</td><td>{{seleccionado.dependenciaCompleta}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Marca</td><td>{{seleccionado.marca}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Modelo</td><td>{{seleccionado.modelo}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Año</td><td>{{seleccionado.anio}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Chasis</td><td>{{seleccionado.chasis}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Tipo Movil</td><td>{{seleccionado.tipoMovil}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Color</td><td>{{seleccionado.color}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Seguro</td><td>{{seleccionado.seguro}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Poliza</td><td>{{seleccionado.poliza}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Nro Motor</td><td>{{seleccionado.numeroMotor}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Peso</td><td>{{seleccionado.peso}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">Patrullaje</td><td>{{seleccionado.tienePatrullaje}}</td></tr>
-                <mat-divider></mat-divider>
-                <tr><td id="b">CUIT</td><td>{{seleccionado.CUIT}}</td></tr>
-                <mat-divider></mat-divider>
-                
-            </table>
-            <br>
-            <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
-            </mat-card>
-        </mat-tab>
-        <mat-tab label="Bitacora"> 
-            <mat-card>
-                <app-movil-bitacora [moviId]="seleccionado.moviId"></app-movil-bitacora>
-                <br>
-                <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
-            </mat-card>
-        </mat-tab>
-        <mat-tab label="Servicios">  
-            <mat-card>
-                <app-movil-servicio [moviId]="seleccionado.moviId"></app-movil-servicio>
-                <br>
-                <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
+                <mat-grid-list cols="2" rowHeight="4:4">
+
+                    <!--COLUMNA DETALLE MOVIL-->
+
+                    <mat-grid-tile
+                    [colspan]="1"
+                    [rowspan]="1">
+                    
+                    <div>
+                        <table style="width: 100%;">
+                            <div>
+                                <h2>Detalle</h2>
+                            </div>
+                            <tr><td id="b">Patente</td><td>{{seleccionado.patente}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Descripcion</td><td>{{seleccionado.descripcion}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Dependencia</td><td>{{seleccionado.dependencia}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Dependencia Completa</td><td>{{seleccionado.dependenciaCompleta}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Marca</td><td>{{seleccionado.marca}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Modelo</td><td>{{seleccionado.modelo}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Año</td><td>{{seleccionado.anio}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Chasis</td><td>{{seleccionado.chasis}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Tipo Movil</td><td>{{seleccionado.tipoMovil}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Color</td><td>{{seleccionado.color}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Seguro</td><td>{{seleccionado.seguro}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Poliza</td><td>{{seleccionado.poliza}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Nro Motor</td><td>{{seleccionado.numeroMotor}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Peso</td><td>{{seleccionado.peso}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">Patrullaje</td><td>{{seleccionado.tienePatrullaje}}</td></tr>
+                            <mat-divider></mat-divider>
+                            <tr><td id="b">CUIT</td><td>{{seleccionado.CUIT}}</td></tr>
+                            <mat-divider></mat-divider>
+                            &nbsp;
+                            <div>
+                                <br>
+                                <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
+                        
+                            </div>
+                        </table>
+                    </div>
+                    &nbsp;
+                    </mat-grid-tile>
+            
+                    <!--COLUMNA SERVICIOS-->
+                 
+                    <mat-grid-tile
+                    [colspan]="1"
+                    [rowspan]="1">
+
+                        <div style="width: 95%;"> 
+                            <app-movil-servicio [moviId]="seleccionado.moviId"></app-movil-servicio>
+                        </div>
+                     </mat-grid-tile>
+
+                </mat-grid-list>
             </mat-card>
         </mat-tab>
         <mat-tab label="Odometro">
@@ -135,6 +151,16 @@
                 <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
             </mat-card>
         </mat-tab>
+ 
+ 
+        <mat-tab label="Bitacora"> 
+            <mat-card>
+                <app-movil-bitacora [moviId]="seleccionado.moviId"></app-movil-bitacora>
+                <br>
+                <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
+            </mat-card>
+        </mat-tab>
+    
       </mat-tab-group>
 </div>
 
