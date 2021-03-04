@@ -69,6 +69,11 @@ export class MovilServicioComponent implements OnInit {
   actualizarTabla() {
     this.dataSource.data = this.global.itemsMov;
   }
+  
+  filter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   agregar() {
     this.AuxId--;

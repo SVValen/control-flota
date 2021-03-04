@@ -116,7 +116,7 @@
         </mat-tab>
         <mat-tab label="Bitacora"> 
             <mat-card>
-                <app-movil-bitacora></app-movil-bitacora>
+                <app-movil-bitacora [moviId]="seleccionado.moviId"></app-movil-bitacora>
                 <br>
                 <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
             </mat-card>
@@ -130,7 +130,7 @@
         </mat-tab>
         <mat-tab label="Odometro">
             <mat-card>
-                <app-movil-odometro></app-movil-odometro>
+                <app-movil-odometro [moviId]="seleccionado.moviId"></app-movil-odometro>
                 <br>
                 <button type="button" mat-raised-button color="primary" (click)="cancelar()">Salir</button>
             </mat-card>

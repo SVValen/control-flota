@@ -1,6 +1,7 @@
 export class MovilBitacora {
     mobiId: number = 0;
 	mobiMoseId: number = 0;
+	mobiMoviId: number = 0;
 	mobiServId: number = 0;
 	mobiFecha: Date = new Date();
 	mobiObservaciones: string = '';
