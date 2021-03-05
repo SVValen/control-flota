@@ -51,7 +51,7 @@ class Movil {
             $sql = $sql . "AND C.nombre LIKE ? ";
         };
 
-        if(isset($_GET["activo"])){
+        if($_GET["activo"]){
             $sql = $sql . "AND B.moviBorrado = 0";
         }
         

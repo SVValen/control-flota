@@ -11,6 +11,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 
+
 @Component({
   selector: 'app-movil',
   templateUrl: './movil.component.html',
@@ -27,6 +28,9 @@ export class MovilComponent implements OnInit {
   form = new FormGroup({});
 
   mostrarFormulario = false;
+  mostrarFormularioMantenimiento = false;
+
+  
 
   constructor(
     private movilServicio : MovilService,
@@ -40,6 +44,7 @@ export class MovilComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+
   }
 
   ngOnInit(): void {
@@ -55,7 +60,7 @@ export class MovilComponent implements OnInit {
       marca: [''],
       modelo: ['']
     })
-
+    
     this.movilServicio.get("activo=1").subscribe(
       (movil) => {
         this.items = movil;
@@ -77,12 +82,19 @@ export class MovilComponent implements OnInit {
   }
 
   verMas(seleccionado:Movil) {
-    this.mostrarFormulario = true;
+    this.mostrarFormularioMantenimiento = true;
     this.seleccionado = seleccionado;
   }
 
   agregar() {
-    
+    this.movilServicio.get("activo=0").subscribe(
+      (movil) => {
+        this.items = movil;
+        this.actualizarTabla();
+      }
+    )
+
+    this.mostrarFormulario = true;
   }
 
   delete(row: Movil) {
@@ -99,7 +111,9 @@ export class MovilComponent implements OnInit {
 
   cancelar() {
     this.mostrarFormulario = false;
+    this.mostrarFormularioMantenimiento = false;
   }
+
 
   actualizarMantenimiento(moviId: number) {
 
