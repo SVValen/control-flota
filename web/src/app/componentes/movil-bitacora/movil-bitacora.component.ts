@@ -8,7 +8,9 @@ import { MovilBitacora } from '../../modelo/movil-bitacora';
 import { MovilBitacoraService } from '../../servicios/movil-bitacora.service';
 import { Servicio } from '../../modelo/servicio';
 import { ServicioService } from '../../servicios/servicio.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { BitacoraTareaService } from '../../servicios/bitacora-tarea.service'
+import { BitacoraTarea } from 'src/app/modelo/bitacora-tarea';
+
 @Component({
   selector: 'app-movil-bitacora',
   templateUrl: './movil-bitacora.component.html',
@@ -19,6 +21,8 @@ export class MovilBitacoraComponent implements OnInit {
   @Input() moviId: number= 0;
 
   items : MovilBitacora[] = []
+
+  itemBitacoraTarea: BitacoraTarea[] = [];
 
   seleccionado= new MovilBitacora();
 
@@ -31,11 +35,10 @@ export class MovilBitacoraComponent implements OnInit {
 
   servicios: Servicio[] = [];
 
-
-
   constructor(
     private movilBitacoraService: MovilBitacoraService,
     private servicioService: ServicioService,
+    private bitacoraTareaService: BitacoraTareaService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog
   ) { }
@@ -82,23 +85,86 @@ export class MovilBitacoraComponent implements OnInit {
   }
 
   agregar() {
+    this.form.reset();
+    this.seleccionado = new MovilBitacora();
+    this.mostrarFormulario = true;
     
   }
 
   delete(row: MovilBitacora) {
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
 
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        console.log(`Dialog Result: ${result}`);
+
+        if(result) {
+          this.movilBitacoraService.delete(row.mobiId).subscribe(
+            () => {
+              this.items = this.items.filter(
+                (item) => {
+                  if (item.mobiId != row.mobiId) {
+                    return true
+                  } else {
+                    return false
+                  }
+                });
+                this.actualizarTabla();
+            });
+        }
+      });
   }
 
   edit(seleccionado: MovilBitacora) {
-   
+   this.mostrarFormulario = true;
+   this.seleccionado = seleccionado;
+   this.form.setValue(seleccionado);
   }
 
   guardar() {
+    if (!this.form.valid) {
+      return;
+    }
 
+    Object.assign(this.seleccionado, this.form.value);
+
+    if(this.seleccionado.mobiId) {
+      this.movilBitacoraService.put(this.seleccionado).subscribe(
+        () => {
+          this.actualizarDetalle(this.seleccionado.mobiId);
+        });
+    }else{
+      this.movilBitacoraService.post(this.seleccionado).subscribe(
+        (mobi) => {
+          this.items = mobi;
+          this.actualizarDetalle(this.seleccionado.mobiId);
+        });
+    }
   }
 
   cancelar() {
     this.mostrarFormulario = false;
+  }
+
+  actualizarDetalle(mobiId: number){
+    this.itemBitacoraTarea.forEach((i) => {
+      i.bitaMobiId = mobiId;
+
+      if(i.bitaBorrado) {
+        this.bitacoraTareaService.delete(i.bitaId).subscribe();
+      }
+
+      if (i.bitaId < 0) {
+        this.bitacoraTareaService.post(i).subscribe();
+      }
+
+      if (i.bitaId > 0) {
+        this.bitacoraTareaService.put(i).subscribe();        
+      }
+    });
+
+    this.mostrarFormulario = false;
+    this.actualizarTabla();
   }
 
  

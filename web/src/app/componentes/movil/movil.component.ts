@@ -87,13 +87,6 @@ export class MovilComponent implements OnInit {
   }
 
   agregar() {
-    this.movilServicio.get("activo=0").subscribe(
-      (movil) => {
-        this.items = movil;
-        this.actualizarTabla();
-      }
-    )
-
     this.mostrarFormulario = true;
   }
 

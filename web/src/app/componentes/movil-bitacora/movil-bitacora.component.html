@@ -60,4 +60,84 @@
          
     </div>
 
+    <div *ngIf="mostrarFormulario">
+            <mat-grid-list>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Editar Servicios</th>
+                            <th>Editar Tareas</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                <form [formGroup]="form">
+                                        
+                                        <div>
+                                            <mat-form-field appearance="outline" style="width: 100%;">
+                                                <mat-label>Servicio</mat-label>
+                                                <mat-select formControlName="mobiServId" required>
+                                                    <mat-option *ngFor="let serv of servicios" [value]="serv.servId">
+                                                        {{serv.servNombre}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>El campo no puede ser vacio</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                        <div>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Fecha del servicio</mat-label>
+                                                <input matInput [matDatepicker]="picker" formControlName="mobiFecha">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                       
+                                        <div>
+                                            <mat-form-field appearance="outline" style="width: 100%;">
+                                                <mat-label></mat-label>
+                                                <input matInput formControlName="mobiObservaciones" required>
+                                                <mat-error>El campo no puede ser vacio</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                        <div>
+                                            <mat-form-field appearance="outline" style="width: 100%;">
+                                                <mat-label></mat-label>
+                                                <input matInput formControlName="mobiOdometro" required>
+                                                <mat-error>El campo no puede ser vacio</mat-error>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div>
+                                            <mat-form-field appearance="outline" style="width: 100%;">
+                                                <mat-label></mat-label>
+                                                <input matInput formControlName="mobiProximoOdometro" required>
+                                                <mat-error>El campo no puede ser vacio</mat-error>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Próxima Fecha</mat-label>
+                                                <input matInput [matDatepicker]="picker" formControlName="mobiProximaFecha">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+
+                                </form>
+                            </td>
+                            <td>
+                                <app-bitacora-tarea></app-bitacora-tarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-grid-list>
+    </div>
+
 </div>
