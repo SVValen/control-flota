@@ -1,4 +1,4 @@
-import { Component,OnInit,ViewChild } from '@angular/core';
+import { Component,Input,OnInit,ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -29,8 +29,6 @@ export class MovilComponent implements OnInit {
 
   mostrarFormulario = false;
   mostrarFormularioMantenimiento = false;
-
-  
 
   constructor(
     private movilServicio : MovilService,

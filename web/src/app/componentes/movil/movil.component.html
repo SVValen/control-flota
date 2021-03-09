@@ -89,8 +89,8 @@
                         <thead>
                             
                             <tr>
-                                <th id="th">Detalle Movil</th>
-                                <th id="th">Servicios</th>
+                                <th id="th" id="b">Detalle Movil</th>
+                                <th id="th" id="b">Servicios</th>
                             </tr>
 
                         </thead>
@@ -139,7 +139,12 @@
                                     </table>
                                 </td>
                                 <td id="td">
-                                    <app-movil-servicio [moviId]="seleccionado.moviId"></app-movil-servicio>
+                                    <table>
+                                        <tr><app-movil-servicio [moviId]="seleccionado.moviId"></app-movil-servicio></tr>
+                                        <br>
+                                        <tr><th id="b" >Grupo/s</th></tr>
+                                        <tr><app-movil-grupo [moviId]="seleccionado.moviId"></app-movil-grupo></tr>
+                                    </table>
                                 </td>
 
                             </tr>
