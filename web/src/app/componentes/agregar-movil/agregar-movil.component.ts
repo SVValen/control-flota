@@ -219,6 +219,9 @@ export class AgregarMovilComponent implements OnInit {
 
   }
 
+  guardar (){
+    
+  }
   delete(row: Movil) {
 
   }
