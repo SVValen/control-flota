@@ -5,6 +5,7 @@ export class Movil {
     moviFechaAlta: Date = new Date();
     moviBorrado: number = 0;
 
+    movilID: number = 0;
     patente: string = '';
     descripcion:string = '';
     dependencia: string = '';    

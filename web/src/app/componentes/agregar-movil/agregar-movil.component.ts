@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
 import { AgregarMovilService } from '../../servicios/agregar-movil.service';
 import { Movil } from '../../modelo/movil';
+import { MovilService } from '../../servicios/movil.service';
 import { MovilGrupo } from '../../modelo/movil-grupos';
 import { MovilGrupoService } from '../../servicios/movil-grupo.service';
 import { MovilServicio } from '../../modelo/movil-servicio';
@@ -23,6 +24,7 @@ import { ServicioService } from '../../servicios/servicio.service';
 
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { disableDebugTools } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-agregar-movil',
@@ -59,8 +61,10 @@ export class AgregarMovilComponent implements OnInit {
 
   constructor(
     private agregarMovilServicio : AgregarMovilService,
+    private movilServicio: MovilService,
     private grupoServicio: GrupoService,
     private servicioService: ServicioService,
+    private movilGrupoService : MovilGrupoService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog) { }
 
@@ -132,7 +136,6 @@ export class AgregarMovilComponent implements OnInit {
       modoBorrado: ['']
     })
 
-
     this.agregarMovilServicio.get().subscribe(
       (movil) => {
         this.items = movil;
@@ -179,15 +182,40 @@ export class AgregarMovilComponent implements OnInit {
 
     this.seleccionado = seleccionado;
     this.seleccionado.moviId;
+    this.seleccionado.movilID;    
 
-    
+    debugger
+  }
+
+  guardarMovil () {
+    this.seleccionado.moviId = this.seleccionado.movilID;
+    this.seleccionado.moviModoFecha = this.formMovil.value.moviModoFecha;
+    this.seleccionado.moviModoOdometro = this.formMovil.value.moviModoOdometro;
+    this.seleccionado;
+    this.movilServicio.post(this.seleccionado).subscribe();
+
+    debugger    
+  }
+
+  guardarGrupo() {
+
+    //Object.assign(this.seleccionado, this.formMovil.value);
+    this.selecGrupo.mogrGrupId = this.formGrupo.value.mogrGrupId;
+    this.selecGrupo.mogrMoviId = this.seleccionado.moviId;
+
+    this.movilGrupoService.post(this.selecGrupo).subscribe();
+
+  }
+
+  guardarServicio() {
     
   }
 
-  guardar() {
+  guardarBitacora() {
 
-    Object.assign(this.seleccionado, this.formMovil.value);
-    debugger
+  }
+
+  guardarOdometro() {
 
   }
 

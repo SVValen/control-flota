@@ -66,16 +66,16 @@
 
 <div *ngIf="mostrarFormularioMantenimiento">
     <mat-label>(Guardar cambios en cada instancia)</mat-label>
-    <mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
         
         <!--FORM MÓVIL-->
-        <mat-step [stepControl]="formMovil" optional>
+        <mat-step [stepControl]="formMovil">
             <form [formGroup]="formMovil">
               <ng-template matStepLabel>Asignar Movil</ng-template>
 
               <mat-form-field appearance="outline" >
                     <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="moviModoFecha">
+                    <input matInput [matDatepicker]="picker" formControlName="moviModoFecha" required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>                    
               </mat-form-field>
@@ -83,15 +83,14 @@
 
               <mat-form-field appearance="outline" >
                 <mat-label>Odometro</mat-label>
-                <input matInput formControlName="moviModoOdometro">
+                <input matInput formControlName="moviModoOdometro" required>
               </mat-form-field>
 
               <div>
                 <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
                 &nbsp;
-                <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                <button type="button" mat-raised-button color="primary" (click)="guardarMovil()" mat-button matStepperNext>Guardar</button>
                 &nbsp;
-                <button type="button" mat-raised-button color="primary" mat-button matStepperNext>Siguiente</button>
               </div>
             </form>
         </mat-step>
@@ -110,9 +109,7 @@
             <div>
                 <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
                 &nbsp;
-                <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" mat-button matStepperPrevious>Atras</button>
+                <button type="button" mat-raised-button color="primary" (click)="guardarGrupo()">Guardar</button>
                 &nbsp;
                 <button type="button" mat-raised-button color="primary" mat-button matStepperNext>Siguiente</button>
               </div>

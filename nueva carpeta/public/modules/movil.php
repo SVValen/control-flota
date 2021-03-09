@@ -84,10 +84,14 @@ class Movil {
     public function post($db){
         $sql = "INSERT INTO $this->table
                 (moviId
+                ,moviModoFecha
+                ,moviModoOdometro
                 ,moviFechaAlta
                 ,moviBorrado)
-                VALUES (?,GETDATE(),0)";
-        $params = [DATA["moviId"]];
+                VALUES (?,?,?,GETDATE(),0)";
+        $params = [DATA["moviId"]
+                    ,DATA["moviModoFecha"]
+                    ,DATA["moviModoOdometro"]];
 
         $stmt = SQL::query($db,$sql,$params);
 
