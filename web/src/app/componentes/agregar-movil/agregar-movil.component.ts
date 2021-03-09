@@ -4,27 +4,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
-import { AgregarMovilService } from '../../servicios/agregar-movil.service';
 import { Movil } from '../../modelo/movil';
 import { MovilService } from '../../servicios/movil.service';
 import { MovilGrupo } from '../../modelo/movil-grupos';
 import { MovilGrupoService } from '../../servicios/movil-grupo.service';
-import { MovilServicio } from '../../modelo/movil-servicio';
-import { MovilServicioService } from '../../servicios/movil-servicio.service';
-import { MovilBitacora } from '../../modelo/movil-bitacora';
-import { MovilBitacoraService } from '../../servicios/movil-bitacora.service';
 import { MovilOdometro } from '../../modelo/movil-odometro';
 import { MovilOdometroService } from '../../servicios/movil-odometro.service';
 
 import { Grupo } from '../../modelo/grupo';
 import { GrupoService } from '../../servicios/grupo.service';
 
-import { Servicio } from 'src/app/modelo/servicio';
-import { ServicioService } from '../../servicios/servicio.service';
-
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { disableDebugTools } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-agregar-movil',
@@ -38,8 +29,6 @@ export class AgregarMovilComponent implements OnInit {
   seleccionado = new Movil();
 
   selecGrupo = new MovilGrupo();
-  selecServ = new MovilServicio();
-  selecBit = new MovilBitacora();
   selecOdo = new MovilOdometro();
 
   columnas : string[] = ['patente','descripcion','dependencia','marca','modelo','acciones'];
@@ -48,23 +37,19 @@ export class AgregarMovilComponent implements OnInit {
   //formularios
   formMovil = new FormGroup({});
   formGrupo = new FormGroup({});
-  formServicio = new FormGroup({});
-  formBitacora = new FormGroup({});
   formOdometro = new FormGroup({});
 
   //modelos
+  moviles: Movil[] = [];
   grupos: Grupo[] = []; 
-  servicios: Servicio[] = [];
 
-  mostrarFormulario = false;
-  mostrarFormularioMantenimiento = false;
+  mostrarFormularioAgregar = false;
 
   constructor(
-    private agregarMovilServicio : AgregarMovilService,
     private movilServicio: MovilService,
     private grupoServicio: GrupoService,
-    private servicioService: ServicioService,
     private movilGrupoService : MovilGrupoService,
+    private movilOdometroService: MovilOdometroService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog) { }
 
@@ -75,7 +60,6 @@ export class AgregarMovilComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-
   }
 
   ngOnInit(): void {
@@ -95,37 +79,6 @@ export class AgregarMovilComponent implements OnInit {
       mogrFechaAlta: [''],
       mogrBorrado: ['']
     })
-    //form Servicios
-    this.formServicio = this.formBouilder.group({
-      moseId: [''],
-      moseServId: [''],
-      moseMoviId: [''],
-      mosePeriodo: [''],
-      moseKM: [''],
-      moseFecha: [''],
-      moseFechaAlta: [''],
-      moseBorrado: ['']
-    })
-
-    //form Bitacora
-    this.formBitacora = this.formBouilder.group({
-      mobiId: [''],
-      mobiMoseId: [''],
-      mobiMoviId: [''],
-      mobiServId: [''],
-      mobiFecha: [''],
-      mobiObservaciones: [''],
-      mobiOdometro: [''],
-      mobiProximoOdometro: [''],
-      mobiProximaFecha: [''],
-      mobiIdAnterior: [''],
-      mobiIdSiguiente: [''], 
-      mobiPendiente: [''],
-      mobiFechaAlta: [''],
-      mobiBorrado: ['']
-    })
-    //se deberia agregar bitacora? , se deberia poder agregar mas de un registro a bitacora?
-
     //form Odometro
     this.formOdometro = this.formBouilder.group({
       modoId: [''],
@@ -136,7 +89,7 @@ export class AgregarMovilComponent implements OnInit {
       modoBorrado: ['']
     })
 
-    this.agregarMovilServicio.get().subscribe(
+    this.movilServicio.get("activo=0").subscribe(
       (movil) => {
         this.items = movil;
         this.actualizarTabla();
@@ -149,11 +102,6 @@ export class AgregarMovilComponent implements OnInit {
       }
     )
 
-    this.servicioService.get().subscribe(
-      (serv) => {
-        this.servicios = serv;
-      }
-    )
   }
 
   actualizarTabla() {
@@ -163,39 +111,39 @@ export class AgregarMovilComponent implements OnInit {
   }
 
   agregar(seleccionado:Movil) {
-    this.mostrarFormularioMantenimiento = true;
-    
-    this.formMovil.reset();
-    this.seleccionado = new Movil();
-    
-    this.formGrupo.reset();
-    this.selecGrupo = new MovilGrupo();
-    
-    this.formServicio.reset();
-    this.selecServ = new MovilServicio();
-    
-    this.formBitacora.reset();
-    this.selecBit = new MovilBitacora();
-    
-    this.formOdometro.reset();
-    this.selecOdo = new MovilOdometro();
 
-    this.seleccionado = seleccionado;
-    this.seleccionado.moviId;
-    this.seleccionado.movilID;    
+    
 
-    debugger
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(
+      result => {
+
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+
+        this.mostrarFormularioAgregar = true;
+
+        this.seleccionado = seleccionado;
+        this.seleccionado.moviId = this.seleccionado.movilID;
+
+        this.movilServicio.post(this.seleccionado).subscribe();
+
+        this.formGrupo.reset();
+        this.selecGrupo = new MovilGrupo();
+        
+        this.formOdometro.reset();
+        this.selecOdo = new MovilOdometro();
+
+
+      }else{
+        this.cancelar();
+      }
+    });
+    
   }
 
-  guardarMovil () {
-    this.seleccionado.moviId = this.seleccionado.movilID;
-    this.seleccionado.moviModoFecha = this.formMovil.value.moviModoFecha;
-    this.seleccionado.moviModoOdometro = this.formMovil.value.moviModoOdometro;
-    this.seleccionado;
-    this.movilServicio.post(this.seleccionado).subscribe();
-
-    debugger    
-  }
 
   guardarGrupo() {
 
@@ -204,40 +152,46 @@ export class AgregarMovilComponent implements OnInit {
     this.selecGrupo.mogrMoviId = this.seleccionado.moviId;
 
     this.movilGrupoService.post(this.selecGrupo).subscribe();
-
-  }
-
-  guardarServicio() {
-    
-  }
-
-  guardarBitacora() {
-
+    debugger
   }
 
   guardarOdometro() {
 
+    this.selecOdo.modoFecha = this.formOdometro.value.modoFecha;
+    this.selecOdo.modoOdometro = this.formOdometro.value.modoOdometro;
+    this.selecOdo.modoMoviId = this.seleccionado.moviId
+
+    this.movilOdometroService.put(this.selecOdo).subscribe();
+
   }
 
-  guardar (){
+  reactivar(seleccionado: Movil) {
+    this.seleccionado = seleccionado;
+    this.seleccionado.moviBorrado = 0;
     
-  }
-  delete(row: Movil) {
-
+    this.movilServicio.put(this.seleccionado).subscribe();
   }
 
-  edit(seleccionado: Movil) {
-   
-  }
+  delete(seleccionado: Movil) {
 
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(
+      result => {
+
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        this.seleccionado = seleccionado;
+        this.movilServicio.delete(this.seleccionado.moviId).subscribe();
+
+        this.actualizarTabla();
+      }
+    });
+  }
 
   cancelar() {
-    this.mostrarFormularioMantenimiento = false;
-  }
-
-
-  actualizarMantenimiento(moviId: number) {
-
+    this.mostrarFormularioAgregar = false;
   }
 
 }

@@ -52,7 +52,7 @@ include_once 'controllers/bitacora-tarea.php';
 include_once 'controllers/movil.php';
 include_once 'controllers/movil-grupo.php';
 include_once 'controllers/movil-odometro.php';
-include_once 'controllers/agregar-movil.php';
+
 $app->get('/', function (Request $request, Response $response, $args) {
     $response->getBody()->write("API");
     return $response;

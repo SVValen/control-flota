@@ -1,4 +1,4 @@
-<div [hidden]="mostrarFormularioMantenimiento">
+<div [hidden]="mostrarFormularioAgregar">
     <!--Busqueda-->
     
     <!--Tabla Moviles que no tienen control flota-->    
@@ -64,38 +64,12 @@
 
     <!--Agregar movil a control flota-->
 
-<div *ngIf="mostrarFormularioMantenimiento">
+<div *ngIf="mostrarFormularioAgregar">
     <mat-label>(Guardar cambios en cada instancia)</mat-label>
     <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
         
-        <!--FORM MÓVIL-->
-        <mat-step [stepControl]="formMovil">
-            <form [formGroup]="formMovil">
-              <ng-template matStepLabel>Asignar Movil</ng-template>
-
-              <mat-form-field appearance="outline" >
-                    <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="moviModoFecha" required>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>                    
-              </mat-form-field>
-              <br>
-
-              <mat-form-field appearance="outline" >
-                <mat-label>Odometro</mat-label>
-                <input matInput formControlName="moviModoOdometro" required>
-              </mat-form-field>
-
-              <div>
-                <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" (click)="guardarMovil()" mat-button matStepperNext>Guardar</button>
-                &nbsp;
-              </div>
-            </form>
-        </mat-step>
         <!--FORM GRUPO-->
-        <mat-step [stepControl]="formGrupo" optional>
+        <mat-step [stepControl]="formGrupo">
           <form [formGroup]="formGrupo">
             <ng-template matStepLabel>Asignar grupo</ng-template>
             <mat-form-field appearance="outline">
@@ -115,109 +89,6 @@
               </div>
           </form>
         </mat-step>
-        <!--FORM SERVICIO-->
-        <mat-step [stepControl]="formServicio" optional>
-          <form [formGroup]="formServicio">
-            <ng-template matStepLabel>Asignar Servicios</ng-template>
-            <mat-form-field appearance="outline" >
-                <mat-label>Servicio</mat-label>
-                <mat-select formControlName="moseServId">
-                  <mat-option *ngFor="let serv of servicios" [value]="serv.servId">
-                      {{serv.servNombre}}
-                  </mat-option>
-              </mat-select>
-              </mat-form-field>
-              <br>
-
-              <mat-form-field appearance="outline" >
-                <mat-label>Periodo</mat-label>
-                <input type="number" matInput formControlName="mosePeriodo">
-              </mat-form-field>
-              <br>
-
-              <mat-form-field appearance="outline" >
-                <mat-label>KM</mat-label>
-                <input type="number" matInput formControlName="moseKM">
-              </mat-form-field>
-
-              <br>
-
-              <mat-form-field appearance="outline" >
-                <mat-label>Fecha</mat-label>
-                <input matInput [matDatepicker]="picker1" formControlName="moseFecha">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>                    
-             </mat-form-field>
-              
-              <div>
-                <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" mat-button matStepperPrevious>Atras</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" mat-button matStepperNext>Siguiente</button>
-              </div>
-          </form>
-        </mat-step>
-        <!--FORM BITACORA-->
-        <mat-step [stepControl]="formBitacora" optional>
-            <form [formGroup]="formBitacora">
-
-              <ng-template matStepLabel>Asignar Bitacora</ng-template>
-
-              <mat-form-field appearance="outline">
-                  <mat-label>Servicio</mat-label>
-                  <mat-select formControlName="mobiServId">
-                    <mat-option *ngFor="let serv of servicios" [value]="serv.servId">
-                        {{serv.servNombre}}
-                    </mat-option>
-                </mat-select>
-                </mat-form-field>
-                <br>
-               
-                <br>
-                <mat-form-field appearance="outline" >
-                    <mat-label>Observaciones</mat-label>
-                    <input type="text" matInput formControlName="mobiObservaciones">
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="outline" >
-                    <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepicker]="picker2" formControlName="mobiFecha">
-                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>                    
-                 </mat-form-field>
-                 <br>
-                <mat-form-field appearance="outline" >
-                    <mat-label>Odometro</mat-label>
-                    <input type="number" matInput formControlName="mobiOdometro">
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="outline" >
-                    <mat-label>Próximo odometro</mat-label>
-                    <input type="number" matInput formControlName="mobiProximoOdometro">
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="outline" >
-                    <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepicker]="picker3" formControlName="mobiProximaFecha">
-                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                    <mat-datepicker #picker3></mat-datepicker>                    
-                 </mat-form-field>
-                 <br>
-                
-                <div>
-                    <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
-                    &nbsp;
-                    <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
-                    &nbsp;
-                    <button type="button" mat-raised-button color="primary" mat-button matStepperPrevious>Atras</button>
-                    &nbsp;
-                    <button type="button" mat-raised-button color="primary" mat-button matStepperNext>Siguiente</button>
-                  </div>
-            </form>
-          </mat-step>
         <!--FORM ODOMETRO-->
         <mat-step [stepControl]="formOdometro" optional>
             <form [formGroup]="formOdometro">
@@ -240,7 +111,7 @@
               <div>
                 <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
                 &nbsp;
-                <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                <button type="button" mat-raised-button color="primary" (click)="guardarOdometro()">Guardar</button>
                 &nbsp;
                 <button type="button" mat-raised-button color="primary" mat-button matStepperPrevious>Atras</button>
                 &nbsp;
