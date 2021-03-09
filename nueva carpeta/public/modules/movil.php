@@ -52,9 +52,14 @@ class Movil {
         };
 
         if($_GET["activo"]){
-            $sql = $sql . "AND B.moviBorrado = 0";
+            $sql = $sql . " AND B.moviBorrado = 0";
         }
-        
+        //if($_GET["activo"] == "1"){
+        //    $sql = $sql . " AND B.moviBorrado = 0";
+        //}
+        //if($_GET["activo"] == "0"){
+        //    $sql = $sql . " AND (B.moviBorrado = 1 OR B.moviBorrado IS NULL)";
+        //}
         $stmt = SQL::query($db, $sql, $params);
         $results = [];
 
@@ -84,14 +89,10 @@ class Movil {
     public function post($db){
         $sql = "INSERT INTO $this->table
                 (moviId
-                ,moviModoFecha
-                ,moviModoOdometro
                 ,moviFechaAlta
                 ,moviBorrado)
-                VALUES (?,?,?,GETDATE(),0)";
-        $params = [DATA["moviId"]
-                    ,DATA["moviModoFecha"]
-                    ,DATA["moviModoOdometro"]];
+                VALUES (?,GETDATE(),0)";
+        $params = [DATA["moviId"]];
 
         $stmt = SQL::query($db,$sql,$params);
 
@@ -104,11 +105,11 @@ class Movil {
 
     public function put($db){
         $sql = "UPDATE $this->table 
-                SET moviNombre = ?,
-                    moviDescripcion = ?
+                SET moviModoFecha = ?,
+                    moviModoOdometro = ? 
                 WHERE moviId = ?";
-        $params = [DATA["moviNombre"],
-                    DATA["moviDescripcion"],
+        $params = [DATA["moviModoFecha"],
+                    DATA["moviModoOdometro"],
                     DATA["moviId"]];
         $stmt = SQL::query($db,$sql,$params);
         sqlsrv_fetch($stmt);

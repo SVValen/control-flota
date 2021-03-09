@@ -1,1 +1,44 @@
-<p>movil-grupo works!</p>
+<div>
+    <div [hidden]="mostrarFormulario">
+        <!--Tabla movil grupos-->
+    
+        <table mat-table [dataSource]="dataSource" matSort style="overflow-x:auto; width: 100%;">
+    
+            <ng-container matColumnDef="grupNombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo </th>
+                <td mat-cell *matCellDef="let grup"> {{ grup.grupNombre }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="grupDescripcion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+                <td mat-cell *matCellDef="let grup"> {{grup.grupDescripcion}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let grup">
+                    <button title="editar" mat-raised-button color="primary" style="margin-right: 10px;" (click)="edit()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button title="borrar" mat-raised-button color="primary" (click)="delete()">
+                        <mat-icon>delete</mat-icon>
+                    </button>  
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="columnas" ></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+    
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No hay datos..</td>
+            </tr>
+        </table>
+      
+        
+        <!--Paginador-->
+        
+        <mat-paginator [pageSizeOptions]="[1, 4, 10]" showFirstLastButtons></mat-paginator>
+         
+    </div>
+
+</div>
