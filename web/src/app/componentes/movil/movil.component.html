@@ -1,6 +1,6 @@
 <div style="width: 100%; height: 100%;" class="mat-elevation-z8">
 
-    <div [hidden]="mostrarFormulario" [hidden]="mostrarFormularioMantenimiento">
+    <div [hidden]="mostrarFormulario" [hidden]="mostrarFormularioMantenimiento" [hidden]="mostrarFormularioEditar">
 
         <!--Buscador en memoria-->
 
@@ -53,9 +53,15 @@
             <ng-container matColumnDef="acciones">
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
                 <td mat-cell *matCellDef="let movil">
-                            <button title="ver mas" mat-raised-button color="primary" (click)="verMas(movil)">
-                                <mat-icon>visibility</mat-icon>
-                            </button>    
+                    <button title="Mantenimiento" mat-raised-button color="primary" style="margin-right: 10px;" (click)="verMas(movil)">
+                        <mat-icon>visibility</mat-icon>
+                    </button> 
+                    <button title="editar" mat-raised-button color="primary" style="margin-right: 10px;" (click)="edit(movil)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button title="borrar" mat-raised-button color="primary" (click)="delete(movil)">
+                        <mat-icon>delete</mat-icon>
+                    </button>     
                 </td>
             </ng-container>
 
@@ -63,7 +69,7 @@
             <tr mat-row *matRowDef="let row; columns: columnas"></tr>
 
             <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No hay datos para el filtro "{{input.value}}"</td>
+                <td class="mat-cell" colspan="4">No hay datos..</td>
             </tr>
         </table>
         
@@ -186,7 +192,7 @@
     
             <mat-tab label="Bitacora"> 
                 <mat-card>
-                    <button type="button" id="salir" mat-raised-button color="primary" (click)="cancelar()" style="float:right;">Salir</button>
+                    <button type="button" id="salir" mat-raised-button color="primary" (click)="cancelar()" >Salir</button>
                     <br>
                     <app-movil-bitacora [moviId]="seleccionado.moviId"></app-movil-bitacora>
                 </mat-card>
@@ -199,10 +205,16 @@
 
     <div *ngIf="mostrarFormulario">
         <mat-card>
-            <button mat-raised-button id="salir" type="button" color="primary" (click)="cancelar()">Salir</button>
+            <button mat-raised-button id="salir" type="button" style="float:right;" color="primary" (click)="cancelar()">Salir</button>
             <app-agregar-movil></app-agregar-movil>
 
         </mat-card>
+    </div>
+
+    <!--Formulario Editar-->
+
+    <div *ngIf="mostrarFormularioEditar">
+        <button mat-raised-button id="salir" type="button" style="float:right;" color="primary" (click)="cancelar()">Salir</button>
     </div>
 
 </div>

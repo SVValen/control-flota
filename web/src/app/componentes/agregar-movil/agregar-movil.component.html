@@ -41,8 +41,11 @@
         <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let movil">
-                        <button title="agregar mantenimiento" mat-raised-button color="primary" (click)="agregar(movil)">
+                        <button [disabled]="" title="agregar mantenimiento" mat-raised-button color="primary" style="margin-right: 10px;" (click)="agregar(movil)">
                             <mat-icon>add</mat-icon>
+                        </button> 
+                        <button [disabled]="" title="reactivar" mat-raised-button color="primary" (click)="">
+                            <mat-icon>playlist_add</mat-icon>
                         </button>    
             </td>
         </ng-container>
@@ -65,6 +68,7 @@
     <!--Agregar movil a control flota-->
 
 <div *ngIf="mostrarFormularioAgregar">
+
     <mat-label>(Guardar cambios en cada instancia)</mat-label>
     <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
         
@@ -74,11 +78,11 @@
             <ng-template matStepLabel>Asignar grupo</ng-template>
             <mat-form-field appearance="outline">
               <mat-label>Grupo</mat-label>
-              <mat-select formControlName="mogrGrupId">
+              <mat-select formControlName="mogrGrupId" required>
                 <mat-option *ngFor="let grup of grupos" [value]="grup.grupId">
                     {{grup.grupNombre}} - {{grup.grupDescripcion}}
                 </mat-option>
-            </mat-select>
+                </mat-select>
             </mat-form-field>
             <div>
                 <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
@@ -86,38 +90,12 @@
                 <button type="button" mat-raised-button color="primary" (click)="guardarGrupo()">Guardar</button>
                 &nbsp;
                 <button type="button" mat-raised-button color="primary" mat-button matStepperNext>Siguiente</button>
-              </div>
+            </div>
           </form>
         </mat-step>
         <!--FORM ODOMETRO-->
-        <mat-step [stepControl]="formOdometro" optional>
-            <form [formGroup]="formOdometro">
-                <ng-template matStepLabel>Asignar Odometro</ng-template>
-            
-              
-                <br> 
-                <mat-form-field appearance="outline" >
-                    <mat-label>Odometro</mat-label>
-                    <input matInput formControlName="modoOdometro">
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="outline" >
-                    <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepicker]="picker4" formControlName="modoFecha">
-                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                    <mat-datepicker #picker4></mat-datepicker>                    
-                 </mat-form-field>
-                 <br>
-              <div>
-                <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" (click)="guardarOdometro()">Guardar</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" mat-button matStepperPrevious>Atras</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" mat-button matStepperNext>Siguiente</button>
-              </div>
-            </form>
+        <mat-step optional>
+            <app-movil-odometro [moviId]="seleccionado.movilID"></app-movil-odometro>
         </mat-step>
 
         <!--FIN-->
@@ -125,5 +103,5 @@
           <ng-template matStepLabel>Fin</ng-template>
           <p>Móvil agregado a control de flota exitosamente.</p>
         </mat-step>
-      </mat-horizontal-stepper>
+    </mat-horizontal-stepper>
 </div>

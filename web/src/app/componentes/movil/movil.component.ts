@@ -32,6 +32,7 @@ export class MovilComponent implements OnInit {
 
   mostrarFormulario = false;
   mostrarFormularioMantenimiento = false;
+  mostrarFormularioEditar = false;
 
   gruposMovil: MovilGrupo[] = [];
 
@@ -99,8 +100,17 @@ export class MovilComponent implements OnInit {
     this.mostrarFormulario = true;
   }
 
+  edit(movil : Movil){
+    this.mostrarFormularioEditar = true;
+  }
+
+  delete(movil : Movil) {
+
+  }
+
   cancelar() {
     this.mostrarFormulario = false;
     this.mostrarFormularioMantenimiento = false;
+    this.mostrarFormularioEditar = false;
   }
 }

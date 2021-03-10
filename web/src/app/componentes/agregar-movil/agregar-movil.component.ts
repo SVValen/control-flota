@@ -35,9 +35,7 @@ export class AgregarMovilComponent implements OnInit {
   dataSource = new MatTableDataSource<Movil>();
 
   //formularios
-  formMovil = new FormGroup({});
   formGrupo = new FormGroup({});
-  formOdometro = new FormGroup({});
 
   //modelos
   moviles: Movil[] = [];
@@ -63,14 +61,6 @@ export class AgregarMovilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //form movil
-    this.formMovil = this.formBouilder.group({
-      moviId: [''],
-      moviModoFecha: [''],
-      moviModoOdometro: [''],
-      moviFechaAlta: [''],
-      moviBorrado: ['']
-    })
     //form Grupo
     this.formGrupo = this.formBouilder.group({
       mogrId: [''],
@@ -79,21 +69,13 @@ export class AgregarMovilComponent implements OnInit {
       mogrFechaAlta: [''],
       mogrBorrado: ['']
     })
-    //form Odometro
-    this.formOdometro = this.formBouilder.group({
-      modoId: [''],
-      modoMoviId: [''],
-      modoFecha: [''],
-      modoOdometro: [''],
-      modoFechaAlta: [''],
-      modoBorrado: ['']
-    })
 
     this.movilServicio.get("activo=0").subscribe(
       (movil) => {
         this.items = movil;
         this.actualizarTabla();
       }
+      //TODO habilitar o desabilitar botones 
     )
 
     this.grupoServicio.get().subscribe(
@@ -132,10 +114,6 @@ export class AgregarMovilComponent implements OnInit {
 
         this.formGrupo.reset();
         this.selecGrupo = new MovilGrupo();
-        
-        this.formOdometro.reset();
-        this.selecOdo = new MovilOdometro();
-
 
       }else{
         this.cancelar();
@@ -153,16 +131,6 @@ export class AgregarMovilComponent implements OnInit {
 
     this.movilGrupoService.post(this.selecGrupo).subscribe();
     debugger
-  }
-
-  guardarOdometro() {
-
-    this.selecOdo.modoFecha = this.formOdometro.value.modoFecha;
-    this.selecOdo.modoOdometro = this.formOdometro.value.modoOdometro;
-    this.selecOdo.modoMoviId = this.seleccionado.moviId
-
-    this.movilOdometroService.put(this.selecOdo).subscribe();
-
   }
 
   reactivar(seleccionado: Movil) {
