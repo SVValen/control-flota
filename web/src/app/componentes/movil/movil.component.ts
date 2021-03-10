@@ -7,6 +7,9 @@ import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
 import { MovilService } from '../../servicios/movil.service';
 import { Movil } from '../../modelo/movil';
 
+import { MovilGrupo} from '../../modelo/movil-grupos';
+import { MovilGrupoService } from '../../servicios/movil-grupo.service';
+
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -30,8 +33,11 @@ export class MovilComponent implements OnInit {
   mostrarFormulario = false;
   mostrarFormularioMantenimiento = false;
 
+  gruposMovil: MovilGrupo[] = [];
+
   constructor(
     private movilServicio : MovilService,
+    private movilGrupoService: MovilGrupoService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog
   ) { }
@@ -42,7 +48,6 @@ export class MovilComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-
   }
 
   ngOnInit(): void {
@@ -65,7 +70,7 @@ export class MovilComponent implements OnInit {
         this.actualizarTabla();
       }
     )
-    
+  
   }
 
   actualizarTabla() {
@@ -82,32 +87,20 @@ export class MovilComponent implements OnInit {
   verMas(seleccionado:Movil) {
     this.mostrarFormularioMantenimiento = true;
     this.seleccionado = seleccionado;
+
+    this.movilGrupoService.get(`mogrMoviId=${this.seleccionado.moviId}`).subscribe(
+      (grupos) => {
+        this.gruposMovil = grupos;
+      }
+    )
   }
 
   agregar() {
     this.mostrarFormulario = true;
   }
 
-  delete(row: Movil) {
-
-  }
-
-  edit(seleccionado: Movil) {
-   
-  }
-
-  guardar() {
-
-  }
-
   cancelar() {
     this.mostrarFormulario = false;
     this.mostrarFormularioMantenimiento = false;
   }
-
-
-  actualizarMantenimiento(moviId: number) {
-
-  }
-
 }
