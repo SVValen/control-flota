@@ -94,8 +94,6 @@ export class AgregarMovilComponent implements OnInit {
 
   agregar(seleccionado:Movil) {
 
-    
-
     const dialogRef = this.matDialog.open(ConfirmarComponent);
 
     dialogRef.afterClosed().subscribe(
