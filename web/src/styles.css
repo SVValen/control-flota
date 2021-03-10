@@ -27,3 +27,37 @@ table {
     margin-top: 20px;
     margin-left: 20px;
   }
+
+  #salir {
+    margin-left: auto;
+    margin-bottom: 15px;
+    margin-top: auto;
+    margin-right: auto;
+  }
+
+  #b {
+    background-color: rgb(235, 235, 235);
+} 
+
+#tabla {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+#td {
+    padding: 10px;
+  }
+#th {
+    font-size: medium;
+    color: rgb(111, 111, 112);
+}
+
+#divider {
+      width: 50%;
+  }
+
+.center {
+  display: flex;
+  justify-content: center;
+}

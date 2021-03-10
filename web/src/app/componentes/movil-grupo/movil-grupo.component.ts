@@ -10,6 +10,7 @@ import { Grupo } from '../../modelo/grupo';
 import { GrupoService } from '../../servicios/grupo.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { ConfirmarComponent } from 'src/app/shared/confirmar/confirmar.component';
 
 @Component({
   selector: 'app-movil-grupo',
@@ -39,7 +40,8 @@ export class MovilGrupoComponent implements OnInit {
     private movilGrupoService: MovilGrupoService,
     private gruposService: GrupoService,
     private formBouilder: FormBuilder,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    
   ) { }
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -57,7 +59,9 @@ export class MovilGrupoComponent implements OnInit {
       mogrMoviId: [''],
       mogrGrupId: [''],
       mogrFechaAlta: [''],
-      mogrBorrado: ['']
+      mogrBorrado: [''],
+      grupNombre:[''],
+      grupDescripcion: ['']
     });
 
     this.movilGrupoService.get(`mogrMoviId=${this.moviId}`).subscribe(
@@ -79,18 +83,59 @@ export class MovilGrupoComponent implements OnInit {
   }
 
   agregar() {
+    this.form.reset();
+    this.seleccionado = new MovilGrupo();
+    this.mostrarFormulario = true;
+  }
+
+  editar(selec: MovilGrupo) {
+    this.mostrarFormulario = true;
+    this.seleccionado = selec;
+    this.form.setValue(selec);
+    debugger
+  }
+
+  guardar() {
+    if (!this.form.valid) {
+      return;
+    }
+
+    if(this.seleccionado.mogrId) {
+      this.seleccionado.mogrGrupId = this.form.value.mogrGrupId;
+
+      this.movilGrupoService.put(this.seleccionado).subscribe();
+
+    }else{
+      this.seleccionado.mogrMoviId = this.moviId;
+      this.seleccionado.mogrGrupId = this.form.value.mogrGrupId;
+
+      this.movilGrupoService.post(this.seleccionado).subscribe();
+    }
+
+    this.mostrarFormulario = false;
+    this.actualizarTabla();
 
   }
 
-  delete() {
+  delete(seleccionado: MovilGrupo) {
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
 
+    dialogRef.afterClosed().subscribe(
+      result =>{
+        console.log(`Dialog resulr: ${result}`);
+
+        if (result) {
+          this.movilGrupoService.delete(seleccionado.mogrId).subscribe(
+            () => {
+              this.items = this.items.filter( x => x.mogrId !== seleccionado.mogrId);
+              this.actualizarTabla();
+            });
+        }
+      });
   }
 
-  camcelar() {
-
+  cancelar() {
+    this.mostrarFormulario = false;
   }
 
-  edit() {
-
-  }
 }
