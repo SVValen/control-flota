@@ -1,6 +1,8 @@
 <div>
     <div [hidden]="mostrarFormulario">
 
+        <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Servicio</button>
+
         <!--Tabla movil servicio-->
     
         <table mat-table [dataSource]="dataSource" matSort style="overflow-x:auto; width: 100%;">
@@ -45,6 +47,24 @@
         
         <mat-paginator [pageSizeOptions]="[1, 4, 10]" showFirstLastButtons></mat-paginator>
          
+    </div>
+
+    <div *ngIf="mostrarFormulario">
+        <form [formGroup]="form">
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Servicio</mat-label>
+                <mat-select formControlName="moseServId" required>
+                    <mat-option *ngFor="let serv of servicios" [value]="serv.servId">
+                        {{serv.servNombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div>   
+                <button mat-raised-button  (click)="cancelar()">Cancelar</button>   
+                <button mat-raised-button type="button" color="primary" (click)="guardar()" >Guardar</button>
+            </div>
+        </form>
+       
     </div>
 
 </div>

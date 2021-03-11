@@ -21,6 +21,8 @@ export class MovilServicioComponent implements OnInit {
 
   @Input() moviId: number = 0;
 
+  items : MovilServicio[] = [];
+
   seleccionado = new MovilServicio();
 
   columnas : string[] = ['servNombre','mosePeriodo','moseKM','acciones'];
@@ -31,8 +33,7 @@ export class MovilServicioComponent implements OnInit {
   mostrarFormulario = false;
   
   servicios: Servicio[] = [];
-
-  AuxId = -1;
+  servicio: Servicio[] = [];
 
   constructor(
     public global: GlobalService,
@@ -65,7 +66,7 @@ export class MovilServicioComponent implements OnInit {
 
     this.movilServicioService.get(`moseMoviId=${this.moviId}`).subscribe(
       (movi) => {
-        this.global.itemsMov = movi;
+        this.items = movi;
         this.actualizarTabla();
       }
     );
@@ -78,35 +79,19 @@ export class MovilServicioComponent implements OnInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.global.itemsMov;
+    this.dataSource.data = this.items;
+    this.dataSource.paginator = this.paginator;
   }
 
   agregar() {
-    this.AuxId--;
+    this.form.reset();
     this.seleccionado = new MovilServicio();
-    this.seleccionado.moseId = this.AuxId;
-
-    this.form.setValue(this.seleccionado);
     this.mostrarFormulario = true;
-  }
-
-  delete(row: MovilServicio) {
-    const dialogRef = this.matDialog.open(ConfirmarComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
-      if (result) {
-        row.moseBorrado = 1;
-        this.actualizarTabla();
-      }
-    });
   }
 
   edit(seleccionado: MovilServicio) {
     this.mostrarFormulario = true;
     this.seleccionado = seleccionado;
-
     this.form.setValue(seleccionado);
   }
 
@@ -115,13 +100,41 @@ export class MovilServicioComponent implements OnInit {
       return;
     }
 
-    Object.assign(this.seleccionado, this.form.value);
+    if(this.seleccionado.moseId){
+      this.seleccionado.moseServId = this.form.value.moseServId;
 
-    this.global.itemsMov = this.global.itemsMov.filter(x => x.moseId != this.seleccionado.moseId);
-    this.global.itemsMov.push(this.seleccionado);
+      this.movilServicioService.put(this.seleccionado).subscribe();
+      this.items = this.items.filter(x => x.moseId != this.seleccionado.moseId);
+      this.items.push(this.seleccionado);
+    }else{
+      this.seleccionado.moseMoviId = this.moviId;
+      this.seleccionado.moseServId = this.form.value.moseServId;
+      this.seleccionado.mosePeriodo = this.servicios.find( x => x.servId == this.seleccionado.moseServId)!.servPeriodo;
+      this.seleccionado.moseKM = this.servicios.find(x => x.servId == this.seleccionado.moseServId)!.servKM;
+      this.seleccionado.servNombre =this.servicios.find(x => x.servId == this.seleccionado.moseServId)!.servNombre;      
+      this.movilServicioService.post(this.seleccionado).subscribe();
+      this.items = this.items.filter(x => x.moseId != this.seleccionado.moseId);
+      this.items.push(this.seleccionado);
+    }
 
     this.mostrarFormulario = false;
     this.actualizarTabla();
+  }
+
+  delete(seleccionado: MovilServicio) {
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        this.movilServicioService.delete(seleccionado.moseId).subscribe(
+          () => {
+            this.items = this.items.filter(x => x.moseId !== seleccionado.moseId);
+            this.actualizarTabla();
+          });
+        }
+      });
   }
 
   cancelar() {
