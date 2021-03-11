@@ -32,7 +32,7 @@ class Movil {
         LEFT OUTER JOIN SISEP_ControlFlota.dbo.Movil B ON A.MovilID = B.moviId
         LEFT OUTER JOIN AVL_Estructura.dbo.Comp C ON A.CompID = C.CompID
         LEFT OUTER JOIN AVL_Estructura.dbo.TipoMovil T ON T.TipoMovilID = A.TipoMovilID 
-        WHERE A.Activa = 1 AND A.Borrado = 0 AND T.nombre = 'Moviles'";
+        WHERE A.Activa = 1 AND A.Borrado = 0";
 
         $params = null;
 
@@ -54,12 +54,7 @@ class Movil {
         if($_GET["activo"]){
             $sql = $sql . " AND B.moviBorrado = 0";
         }
-        //if($_GET["activo"] == "1"){
-        //    $sql = $sql . " AND B.moviBorrado = 0";
-        //}
-        //if($_GET["activo"] == "0"){
-        //    $sql = $sql . " AND (B.moviBorrado = 1 OR B.moviBorrado IS NULL)";
-        //}
+    
         $stmt = SQL::query($db, $sql, $params);
         $results = [];
 

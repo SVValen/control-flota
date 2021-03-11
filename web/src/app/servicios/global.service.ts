@@ -9,7 +9,5 @@ export class GlobalService {
 
   items: ServicioTarea[] = [];
   itemsServ : GrupoServicio[] = [];
-  itemsMov : MovilServicio[] = [];
-
   constructor() { }
 }

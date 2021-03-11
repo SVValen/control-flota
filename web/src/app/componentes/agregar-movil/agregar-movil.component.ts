@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { AlertaExitoComponent } from '../../shared/alerta-exito/alerta-exito.component';
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
 import { Movil } from '../../modelo/movil';
 import { MovilService } from '../../servicios/movil.service';
@@ -31,7 +32,7 @@ export class AgregarMovilComponent implements OnInit {
   selecGrupo = new MovilGrupo();
   selecOdo = new MovilOdometro();
 
-  columnas : string[] = ['patente','descripcion','dependencia','marca','modelo','acciones'];
+  columnas : string[] = ['patente','descripcion','dependencia','marca','modelo','acciones','id','estado'];
   dataSource = new MatTableDataSource<Movil>();
 
   //formularios
@@ -42,6 +43,8 @@ export class AgregarMovilComponent implements OnInit {
   grupos: Grupo[] = []; 
 
   mostrarFormularioAgregar = false;
+
+  buttonDisabled = true;
 
   constructor(
     private movilServicio: MovilService,
@@ -75,7 +78,7 @@ export class AgregarMovilComponent implements OnInit {
         this.items = movil;
         this.actualizarTabla();
       }
-      //TODO habilitar o desabilitar botones 
+      //TODO habilitar o desabilitar botones
     )
 
     this.grupoServicio.get().subscribe(
@@ -86,10 +89,10 @@ export class AgregarMovilComponent implements OnInit {
 
   }
 
+  
   actualizarTabla() {
-    this.dataSource.data = this.items.filter(
-      borrado => !(borrado.moviBorrado)
-    );
+    this.dataSource.data = this.items;
+    this.dataSource.paginator = this.paginator;
   }
 
   agregar(seleccionado:Movil) {
@@ -113,6 +116,14 @@ export class AgregarMovilComponent implements OnInit {
         this.formGrupo.reset();
         this.selecGrupo = new MovilGrupo();
 
+        const dialogRefe = this.matDialog.open(AlertaExitoComponent);
+
+        dialogRefe.afterClosed().subscribe(
+          result => {
+            console.log(`Dialog result: ${result}`)
+          }
+        )
+
       }else{
         this.cancelar();
       }
@@ -128,7 +139,6 @@ export class AgregarMovilComponent implements OnInit {
     this.selecGrupo.mogrMoviId = this.seleccionado.moviId;
 
     this.movilGrupoService.post(this.selecGrupo).subscribe();
-    debugger
   }
 
   reactivar(seleccionado: Movil) {

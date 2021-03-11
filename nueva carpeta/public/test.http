@@ -307,12 +307,12 @@ PUT http://localhost:8888/index.php/bitacora-tarea HTTP/1.1
 ### movil
 
 
-GET http://localhost:8888/index.php/movil?activo=1 HTTP/1.1
+GET http://localhost:8888/index.php/movil?activo HTTP/1.1
 
 
 ###
 
-DELETE http://localhost:8888/index.php/movil/13 HTTP/1.1
+DELETE http://localhost:8888/index.php/movil/18 HTTP/1.1
 
 
 ###
