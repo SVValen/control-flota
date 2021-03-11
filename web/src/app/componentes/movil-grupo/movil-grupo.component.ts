@@ -80,6 +80,7 @@ export class MovilGrupoComponent implements OnInit {
 
   actualizarTabla() {
     this.dataSource.data = this.items;
+    this.dataSource.paginator = this.paginator;
   }
 
   agregar() {
@@ -92,7 +93,6 @@ export class MovilGrupoComponent implements OnInit {
     this.mostrarFormulario = true;
     this.seleccionado = selec;
     this.form.setValue(selec);
-    debugger
   }
 
   guardar() {
@@ -104,12 +104,16 @@ export class MovilGrupoComponent implements OnInit {
       this.seleccionado.mogrGrupId = this.form.value.mogrGrupId;
 
       this.movilGrupoService.put(this.seleccionado).subscribe();
+      this.items = this.items.filter(x => x.mogrId != this.seleccionado.mogrId);
+      this.items.push(this.seleccionado);
 
     }else{
       this.seleccionado.mogrMoviId = this.moviId;
       this.seleccionado.mogrGrupId = this.form.value.mogrGrupId;
 
       this.movilGrupoService.post(this.seleccionado).subscribe();
+      this.items = this.items.filter(x => x.mogrId != this.seleccionado.mogrId);
+      this.items.push(this.seleccionado);
     }
 
     this.mostrarFormulario = false;
