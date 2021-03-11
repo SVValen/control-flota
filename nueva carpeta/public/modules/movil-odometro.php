@@ -11,7 +11,7 @@ class MovilOdometro {
     //---------------------------------------GET
     
     public function get($db) {
-        $sql = "SELECT $this->fields
+        $sql = "SELECT TOP 5 $this->fields
                 FROM $this->table
                 WHERE modoBorrado = 0";
         $params = null;
@@ -19,6 +19,8 @@ class MovilOdometro {
             $params = [$_GET["modoMoviId"]];
             $sql = $sql . "AND modoMoviId = ?";
         }
+
+        $sql = $sql . " ORDER BY modoId desc";
 
         $stmt = SQL::query($db,$sql,$params);
 
@@ -35,7 +37,7 @@ class MovilOdometro {
 
     public function delete($db,$id) {
         $sql = "UPDATE $this->table
-                SET modoBorrado = 0
+                SET modoBorrado = 1
                 WHERE modoId = ?";
         $params = [$id];
         $stmt = SQL::query($db,$sql,$params);

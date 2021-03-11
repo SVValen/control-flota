@@ -18,6 +18,7 @@ $app->get("/movil-odometro",function ($request, $response, $args){
 //---------------------------------------DELETE
 
 $app->delete("/movil-odometro/{id}",function ($request, $response, $args){
+    $id= $args["id"];
     $db = SQL::connect();
     $model = new MovilOdometro();
     $results = $model->delete($db,$id);

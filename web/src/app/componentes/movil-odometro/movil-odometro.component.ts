@@ -26,8 +26,6 @@ export class MovilOdometroComponent implements OnInit {
   dataSource = new MatTableDataSource<MovilOdometro>();
   form = new FormGroup({});
 
-  mostrarFormulario = false;
-
   constructor(
     private movilOdometroService: MovilOdometroService,
     private formBouilder: FormBuilder,
@@ -55,7 +53,7 @@ export class MovilOdometroComponent implements OnInit {
       modoBorrado:['']
     });
 
-    this.movilOdometroService.get().subscribe(
+    this.movilOdometroService.get(`modoMoviId=${this.moviId}`).subscribe(
       (movil) => {
         this.items = movil;
         this.actualizarTabla();
@@ -65,26 +63,66 @@ export class MovilOdometroComponent implements OnInit {
 
   actualizarTabla() {
     this.dataSource.data = this.items;
+    this.dataSource.paginator = this.paginator;
   }
 
   agregar() {
-    
-  }
-
-  delete(row: MovilOdometro) {
-
+    this.form.reset();
+    this.seleccionado = new MovilOdometro();
   }
 
   edit(seleccionado: MovilOdometro) {
-   
+    this.seleccionado = seleccionado;
+    this.form.setValue(seleccionado);
   }
 
   guardar() {
+    if (!this.form.valid) {
+      return;
+    }
+
+    if(this.seleccionado.modoId){
+      this.seleccionado.modoOdometro = this.form.value.modoOdometro;
+      this.seleccionado.modoFecha = this.form.value.modoFecha;
+
+      this.movilOdometroService.put(this.seleccionado).subscribe();
+      this.items = this.items.filter(x => x.modoId != this.seleccionado.modoId);
+      this.items.push(this.seleccionado);
+    }else{
+      this.seleccionado.modoOdometro = this.form.value.modoOdometro;
+      this.seleccionado.modoFecha = this.form.value.modoFecha;
+      this.seleccionado.modoMoviId = this.moviId;
+
+      this.movilOdometroService.post(this.seleccionado).subscribe();
+      this.items = this.items.filter(x => x.modoId != this.seleccionado.modoId);
+      this.items.push(this.seleccionado);
+    }
+
+    this.form.reset();
+    this.actualizarTabla();
 
   }
 
+  delete(seleccionado: MovilOdometro) {
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(
+      result =>{
+        console.log(`Dialog resulr: ${result}`);
+
+        if (result) {
+          this.movilOdometroService.delete(seleccionado.modoId).subscribe(
+            () => {
+              this.items = this.items.filter( x => x.modoId !== seleccionado.modoId);
+              this.actualizarTabla();
+            });
+        }
+      });
+  }
+
   cancelar() {
-    this.mostrarFormulario = false;
+    this.form.reset();
+    this.actualizarTabla();
   }
 
 }
