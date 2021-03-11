@@ -19,6 +19,10 @@ class Servicio
         $sql = "SELECT $this->fields FROM $this->table
                 WHERE servBorrado = 0";
         $params = null;
+        if(isset($_GET["servId"])){
+            $params = [$_GET["servId"]];
+            $sql = $sql . "AND servId = ?";
+        }
         $stmt = SQL::query($db,$sql,$params);
 
         $results = [];
