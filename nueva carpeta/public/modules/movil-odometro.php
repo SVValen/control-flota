@@ -7,6 +7,7 @@ class MovilOdometro {
                         modoOdometro,
                         CONVERT(VARCHAR,modoFecha,126) modoFechaAlta,
                         modoBorrado';
+    public $join = ' LEFT OUTER JOIN Movil ON modoMoviId = moviId';
     
     //---------------------------------------GET
     
@@ -76,6 +77,8 @@ class MovilOdometro {
         $results["modoBorrado"] = 0;
 
         return $results;
+
+
     }
 
     //---------------------------------------PUT

@@ -100,10 +100,14 @@ class Movil {
 
     public function put($db){
         $sql = "UPDATE $this->table
-                    SET moviBorrado = ?
+                    SET moviBorrado = ?,
+                        moviModoOdometro = ?,
+                        moviModoFecha = ?
                     WHERE moviId = ? ";
 
         $params = [DATA["moviBorrado"]
+                    ,DATA["moviModoOdometro"]
+                    ,DATA["moviModoFecha"]
                     ,DATA["moviId"]];
 
 

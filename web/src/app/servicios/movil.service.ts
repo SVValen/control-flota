@@ -12,6 +12,8 @@ import { Movil } from '../modelo/movil';
 export class MovilService
   extends ApiService<Movil> {
 
+    movilOdometro = new Movil();
+
   constructor(
     protected http: HttpClient,
     protected app: AppConfigService

@@ -6,6 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
 import { MovilOdometro } from '../../modelo/movil-odometro';
 import { MovilOdometroService } from '../../servicios/movil-odometro.service';
+import { Movil } from '../../modelo/movil';
+import { MovilService } from '../../servicios/movil.service';
+
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -18,9 +21,12 @@ export class MovilOdometroComponent implements OnInit {
 
   @Input() moviId: number = 0;
 
+  items : MovilOdometro[] = [];
   seleccionado = new MovilOdometro();
 
-  items : MovilOdometro[] = [];
+  moviles: Movil[] = [];
+  movil = new Movil();
+
 
   columnas : string[] = ['modoFecha','modoOdometro','acciones'];
   dataSource = new MatTableDataSource<MovilOdometro>();
@@ -28,6 +34,7 @@ export class MovilOdometroComponent implements OnInit {
 
   constructor(
     private movilOdometroService: MovilOdometroService,
+    private movilService: MovilService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog
   ) { }
@@ -50,7 +57,11 @@ export class MovilOdometroComponent implements OnInit {
       modoFecha:[''],
       modoOdometro:[''],
       modoFechaAlta:[''],
-      modoBorrado:['']
+      modoBorrado:[''],
+
+      moviModoOdometro: [''],
+      moviModoFecha: [''],
+      moviId: ['']
     });
 
     this.movilOdometroService.get(`modoMoviId=${this.moviId}`).subscribe(
@@ -58,6 +69,12 @@ export class MovilOdometroComponent implements OnInit {
         this.items = movil;
         this.actualizarTabla();
       }
+    )
+
+    this.movilService.get("activo=1").subscribe(
+     (movil) => {
+       this.moviles = movil;
+     } 
     )
   }
 
@@ -82,6 +99,7 @@ export class MovilOdometroComponent implements OnInit {
     }
 
     if(this.seleccionado.modoId){
+      // editar odometro
       this.seleccionado.modoOdometro = this.form.value.modoOdometro;
       this.seleccionado.modoFecha = this.form.value.modoFecha;
 
@@ -89,9 +107,19 @@ export class MovilOdometroComponent implements OnInit {
       this.items = this.items.filter(x => x.modoId != this.seleccionado.modoId);
       this.items.push(this.seleccionado);
     }else{
+      //agregar odometro
       this.seleccionado.modoOdometro = this.form.value.modoOdometro;
       this.seleccionado.modoFecha = this.form.value.modoFecha;
       this.seleccionado.modoMoviId = this.moviId;
+
+      // actualizar odometro y fecha odometro de movil
+      
+      this.movil.moviBorrado = this.moviles.find(x => x.moviId == this.seleccionado.modoMoviId)!.moviBorrado;
+      this.movil.moviId = this.seleccionado.modoMoviId;
+      this.movil.moviModoOdometro = this.seleccionado.modoOdometro;
+      this.movil.moviModoFecha = this.seleccionado.modoFecha;
+
+      this.movilService.put(this.movil).subscribe();
 
       this.movilOdometroService.post(this.seleccionado).subscribe();
       this.items = this.items.filter(x => x.modoId != this.seleccionado.modoId);

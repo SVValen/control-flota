@@ -323,7 +323,9 @@ Content-Type: application/json
 {
     "moviId":79,
     "moviModoFecha":"2020-12-19T00:00:00",
-    "moviModoOdometro":13000
+    "moviModoOdometro":13000,
+    
+
 }
 
 ###
@@ -331,6 +333,8 @@ Content-Type: application/json
 PUT http://localhost:8888/index.php/movil HTTP/1.1
 
 {   
+    "moviModoFecha":"2020-12-15T00:00:00",
+    "moviModoOdometro":15000,
     "moviBorrado": 0,
     "moviId": 1
 }
@@ -381,7 +385,7 @@ POST http://localhost:8888/index.php/movil-odometro HTTP/1.1
 Content-Type: application/json
 
 {
-    "modoMoviId": 16,
+    "modoMoviId": 1,
     "modoFecha": "2020-12-19T00:00:00",
     "modoOdometro": 15000
 }
