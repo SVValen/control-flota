@@ -1,209 +1,212 @@
 <div style="width: 100%; height: 100%;" class="mat-elevation-z8">
 
     <div [hidden]="mostrarFormularioAgregarMovil" [hidden]="mostrarFormularioMantenimiento" [hidden]="mostrarFormularioEditarMovil">
-
-        <div>
-            <mat-label style="font-size: 25px; font-weight: 100">Móviles en Control de Flota</mat-label>
-        
-        &nbsp;
-        
-        <!--Buscador en memoria-->
-        <mat-form-field id="filtro" appearance="legacy">
-            <mat-label>Buscar patente, descripcion, dependencia..</mat-label>
-            <input matInput (keyup)="filter($event)" placeholder="..." #input>
-        </mat-form-field>
-
-        &nbsp;
-
-        <!--Agregar nuevo movil a control flota-->
-
-        <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Movil</button>
-
-        </div>
-        <!--Tabla moviles que estan en control flota-->
-
-        <table mat-table [dataSource]="dataSource" matSort style="overflow-x:auto; width: 100%;">
-
-            <ng-container matColumnDef="patente">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Patente </th>
-                <td mat-cell *matCellDef="let movil"> {{ movil.patente }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="descripcion">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
-                <td mat-cell *matCellDef="let movil"> {{movil.descripcion}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="dependencia">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Dependencia </th>
-                <td mat-cell *matCellDef="let movil"> {{movil.dependencia}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="marca">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
-                <td mat-cell *matCellDef="let movil"> {{movil.marca}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="modelo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
-                <td mat-cell *matCellDef="let movil"> {{movil.modelo}} </td>
-            </ng-container>
+        <mat-card>
+            <div>
+                <mat-label style="font-size: 25px; font-weight: 100">Móviles en Control de Flota</mat-label>
             
-            <a mat-list-item routerLink="/servicios" >
-                <mat-icon aria-hidden="false" aria-label="Example home icon">build</mat-icon>
-                &nbsp;
-                servicios
-            </a>
-
-            <ng-container matColumnDef="acciones">
-                <th mat-header-cell *matHeaderCellDef>Acciones</th>
-                <td mat-cell *matCellDef="let movil">
-                    <button title="Mantenimiento" mat-raised-button color="primary" style="margin-right: 10px;" (click)="verMas(movil)">
-                        <mat-icon>visibility</mat-icon>
-                    </button> 
-                    <button title="editar" mat-raised-button color="primary" style="margin-right: 10px;" (click)="edit(movil)">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button title="borrar" mat-raised-button color="primary" (click)="delete(movil)">
-                        <mat-icon>delete</mat-icon>
-                    </button>     
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="columnas" ></tr>
-            <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-
-            <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No hay datos..</td>
-            </tr>
-        </table>
-        
-        <!--Paginador-->
-        
-        <mat-paginator [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons></mat-paginator>
-        
+            &nbsp;
+            
+            <!--Buscador en memoria-->
+            <mat-form-field id="filtro" appearance="legacy">
+                <mat-label>Buscar patente, descripcion, dependencia..</mat-label>
+                <input matInput (keyup)="filter($event)" placeholder="..." #input>
+            </mat-form-field>
+    
+            &nbsp;
+    
+            <!--Agregar nuevo movil a control flota-->
+    
+            <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Movil</button>
+    
+            </div>
+            <!--Tabla moviles que estan en control flota-->
+    
+            <table mat-table [dataSource]="dataSource" matSort style="overflow-x:auto; width: 100%;">
+    
+                <ng-container matColumnDef="patente">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Patente </th>
+                    <td mat-cell *matCellDef="let movil"> {{ movil.patente }} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+                    <td mat-cell *matCellDef="let movil"> {{movil.descripcion}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="dependencia">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Dependencia </th>
+                    <td mat-cell *matCellDef="let movil"> {{movil.dependencia}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="marca">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
+                    <td mat-cell *matCellDef="let movil"> {{movil.marca}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="modelo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
+                    <td mat-cell *matCellDef="let movil"> {{movil.modelo}} </td>
+                </ng-container>
+                
+                <a mat-list-item routerLink="/servicios" >
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">build</mat-icon>
+                    &nbsp;
+                    servicios
+                </a>
+    
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let movil">
+                        <button title="Mantenimiento" mat-raised-button color="primary" style="margin-right: 10px;" (click)="verMas(movil)">
+                            <mat-icon>visibility</mat-icon>
+                        </button> 
+                        <button title="editar" mat-raised-button color="primary" style="margin-right: 10px;" (click)="edit(movil)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button title="borrar" mat-raised-button color="primary" (click)="delete(movil)">
+                            <mat-icon>delete</mat-icon>
+                        </button>     
+                    </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="columnas" ></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+    
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No hay datos..</td>
+                </tr>
+            </table>
+            
+            <!--Paginador-->
+            
+            <mat-paginator [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-card>
     </div>
         
     <!--Formulario Mantenimiento Control Flota-->
 
     <div *ngIf="mostrarFormularioMantenimiento">
-        
-        <mat-tab-group>
+        <mat-card>
+            <mat-tab-group>
 
-            <!--Detalle movil y servicios-->
-
-            <mat-tab label="Detalle Movil"> 
-                <mat-card>
-                    <button type="button" id="salir" mat-raised-button color="primary" (click)="cancelar()" style="float:right;">Salir</button>
-
-                    <table id="tabla">
-
-                        <thead>
-                            
-                            <tr>
-                                <th id="th" id="b">Detalle Movil</th>
-                                <th id="th" id="b">Servicios</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            <tr>
-                                <td id="td">
-                                    <table style="width: 100%;">
-                                        <tr><td id="b">Patente</td><td>{{seleccionado.patente}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Descripcion</td><td>{{seleccionado.descripcion}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Dependencia</td><td>{{seleccionado.dependencia}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Dependencia Completa</td><td>{{seleccionado.dependenciaCompleta}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Marca</td><td>{{seleccionado.marca}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Modelo</td><td>{{seleccionado.modelo}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Año</td><td>{{seleccionado.anio}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Chasis</td><td>{{seleccionado.chasis}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Tipo Movil</td><td>{{seleccionado.tipoMovil}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Color</td><td>{{seleccionado.color}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Seguro</td><td>{{seleccionado.seguro}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Poliza</td><td>{{seleccionado.poliza}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Nro Motor</td><td>{{seleccionado.numeroMotor}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Peso</td><td>{{seleccionado.peso}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">Patrullaje</td><td>{{seleccionado.tienePatrullaje}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                        <tr><td id="b">CUIT</td><td>{{seleccionado.CUIT}}</td></tr>
-                                        <mat-divider id="divider"></mat-divider>
-                                    </table>
-                                </td>
-                                <td id="td">
-                                    <table>
-                                        <tr><app-movil-servicio [moviId]="seleccionado.moviId"></app-movil-servicio></tr>
-                                        <br>
-                                        <tr><th id="b" >Grupo/s</th></tr>
-                                        <tr>
-                                            <!--Tabla movil grupos-->
-                                            <table>
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nombre</th>
-                                                        <th>Descripcion</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let grup of gruposMovil">
-                                                        <td>{{grup.grupNombre}}</td>
-                                                        <td>{{grup.grupDescripcion}}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            
-                                        </tr>
-                                        <!--<tr><app-movil-grupo [moviId]="seleccionado.moviId"></app-movil-grupo></tr>-->
-                                    </table> 
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-                        
-                    </table>
-
-                </mat-card>
-
-            </mat-tab>
-
-            <!--Odometro-->
-
-            <mat-tab label="Odometro">
-                <mat-card>
-                    <button type="button" id="salir" mat-raised-button color="primary" (click)="cancelar()" style="float:right;">Salir</button>
-                    <br>
-                    <app-movil-odometro [moviId]="seleccionado.moviId"></app-movil-odometro>
-                </mat-card>
-            </mat-tab>
-
-            <!--Bitacora-->
+                <!--Detalle movil y servicios-->
     
-            <mat-tab label="Bitacora"> 
-                <mat-card>
-                    <button type="button" id="salir" mat-raised-button color="primary" (click)="cancelar()" style="float:right;" >Salir</button>
-                    <br>
-                    <app-movil-bitacora [moviId]="seleccionado.moviId"></app-movil-bitacora>
-                </mat-card>
-            </mat-tab>
+                <mat-tab label="Detalle Movil"> 
+                    <mat-card>
+                        <div>
+                            <button type="button" id="salir" mat-raised-button color="primary" (click)="cancelar()" style="float:right;">Salir</button>
+    
+                        <table id="tabla">
+    
+                            <thead>
+                                
+                                <tr>
+                                    <th id="th" id="b">Detalle Movil</th>
+                                    <th id="th" id="b">Servicios</th>
+                                </tr>
+    
+                            </thead>
+    
+                            <tbody>
+    
+                                <tr>
+                                    <td id="td">
+                                        <table style="width: 100%;">
+                                            <tr><td id="b">Patente</td><td>{{seleccionado.patente}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Descripcion</td><td>{{seleccionado.descripcion}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Dependencia</td><td>{{seleccionado.dependencia}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Dependencia Completa</td><td>{{seleccionado.dependenciaCompleta}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Marca</td><td>{{seleccionado.marca}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Modelo</td><td>{{seleccionado.modelo}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Año</td><td>{{seleccionado.anio}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Chasis</td><td>{{seleccionado.chasis}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Tipo Movil</td><td>{{seleccionado.tipoMovil}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Color</td><td>{{seleccionado.color}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Seguro</td><td>{{seleccionado.seguro}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Poliza</td><td>{{seleccionado.poliza}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Nro Motor</td><td>{{seleccionado.numeroMotor}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Peso</td><td>{{seleccionado.peso}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">Patrullaje</td><td>{{seleccionado.tienePatrullaje}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                            <tr><td id="b">CUIT</td><td>{{seleccionado.CUIT}}</td></tr>
+                                            <mat-divider id="divider"></mat-divider>
+                                        </table>
+                                    </td>
+                                    <td id="td">
+                                        <table>
+                                            <tr><app-movil-servicio [moviId]="seleccionado.moviId"></app-movil-servicio></tr>
+                                            <br>
+                                            <tr><th id="b" >Grupo/s</th></tr>
+                                            <tr>
+                                                <!--Tabla movil grupos-->
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nombre</th>
+                                                            <th>Descripcion</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let grup of gruposMovil">
+                                                            <td>{{grup.grupNombre}}</td>
+                                                            <td>{{grup.grupDescripcion}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                            </tr>
+                                            <!--<tr><app-movil-grupo [moviId]="seleccionado.moviId"></app-movil-grupo></tr>-->
+                                        </table> 
+                                    </td>
+    
+                                </tr>
+    
+                            </tbody>
+                            
+                        </table>
+                        </div>
+    
+                    </mat-card>
+    
+                </mat-tab>
+    
+                <!--Odometro-->
+    
+                <mat-tab label="Odometro">
+                    <mat-card>
+                        <button type="button" id="salir" mat-raised-button color="primary" (click)="cancelar()" style="float:right;">Salir</button>
+                        <br>
+                        <app-movil-odometro [moviId]="seleccionado.moviId"></app-movil-odometro>
+                    </mat-card>
+                </mat-tab>
+    
+                <!--Bitacora-->
         
-        </mat-tab-group>
+                <mat-tab label="Bitacora"> 
+                    <mat-card>
+                        <button type="button" id="salir" mat-raised-button color="primary" (click)="cancelar()" style="float:right;" >Salir</button>
+                        <br>
+                        <app-movil-bitacora [moviId]="seleccionado.moviId"></app-movil-bitacora>
+                    </mat-card>
+                </mat-tab>
+            
+            </mat-tab-group>
+        </mat-card>
     </div>
 
     <!--Formulario Agregar Movil a Control Flota-->
