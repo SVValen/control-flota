@@ -117,6 +117,9 @@ export class MovilGrupoComponent implements OnInit {
 
       this.movilGrupoService.post(this.seleccionado).subscribe();
       this.items = this.items.filter(x => x.mogrId != this.seleccionado.mogrId);
+      this.seleccionado.grupNombre = this.items.find(x => x.mogrId = this.seleccionado.mogrGrupId)!.grupNombre;
+      this.seleccionado.grupDescripcion = this.items.find(x => x.mogrId = this.seleccionado.mogrGrupId)!.grupDescripcion;
+      
       this.items.push(this.seleccionado);
     }
 
