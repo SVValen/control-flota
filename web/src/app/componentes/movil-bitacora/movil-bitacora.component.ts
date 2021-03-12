@@ -37,6 +37,8 @@ export class MovilBitacoraComponent implements OnInit {
 
   servicios: Servicio[] = [];
 
+  label = 'Agregar Nueva Bitacora'
+
   constructor(
     private movilBitacoraService: MovilBitacoraService,
     private servicioService: ServicioService,
@@ -70,7 +72,9 @@ export class MovilBitacoraComponent implements OnInit {
       mobiIdSiguiente: [''], 
       mobiPendiente: [''],
       mobiFechaAlta: [''],
-      mobiBorrado: ['']
+      mobiBorrado: [''],
+
+      servNombre: ['']
     });
 
     this.movilBitacoraService.get(`mobiMoviId=${this.moviId}`).subscribe(
@@ -89,11 +93,7 @@ export class MovilBitacoraComponent implements OnInit {
 
   actualizarTabla() {
     this.dataSource.data = this.items;
-  }
-
-  filter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.paginator = this.paginator;
   }
 
   agregar() {
@@ -103,7 +103,55 @@ export class MovilBitacoraComponent implements OnInit {
     
   }
 
-  delete(row: MovilBitacora) {
+  edit(seleccionado: MovilBitacora) {
+    this.label ="Editar Bitacora"
+    this.mostrarFormulario = true;
+    this.seleccionado = seleccionado;
+    this.form.setValue(seleccionado);
+  }
+
+   guardar() {
+    if (!this.form.valid) {
+      return;
+    }
+
+    if(this.seleccionado.mobiId) {
+      this.seleccionado.mobiServId = this.form.value.mobiServId;
+      this.seleccionado.mobiFecha = this.form.value.mobiFecha;
+      this.seleccionado.mobiObservaciones = this.form.value.mobiObservaciones;
+      this.seleccionado.mobiOdometro = this.form.value.mobiOdometro;
+
+      //TODO actualizar valores de mobiProximoOdometro y mobiProximaFecha
+
+      this.movilBitacoraService.put(this.seleccionado).subscribe();
+      this.items = this.items.filter(x => x.mobiId != this.seleccionado.mobiId);
+      this.items.push(this.seleccionado);
+
+    }else{
+      
+      this.seleccionado.mobiMoviId = this.moviId;
+      this.seleccionado.mobiServId = this.form.value.mobiServId;
+      this.seleccionado.mobiFecha = this.form.value.mobiFecha;
+      this.seleccionado.mobiObservaciones = this.form.value.mobiObservaciones;
+      this.seleccionado.mobiOdometro = this.form.value.mobiOdometro;
+      // TODO  asignar this.seleccionado.mobiMoseId
+      // TODO asignar this.seleccionado.mobiProximoOdometro
+      // TODO asignar this.seleccionado.mobiProximaFecha
+      // TODO asignar this.seleccionado.mobiIdAnterior
+      // TODO asignar this.seleccionado.mobiIdSiguiente
+      // TODO asignar this.seleccionado.mobiPendiente
+
+      this.movilBitacoraService.post(this.seleccionado).subscribe();
+      this.items = this.items.filter(x => x.mobiId != this.seleccionado.mobiId);
+      this.seleccionado.servNombre = this.items.find(x => x.mobiId = this.seleccionado.mobiId)!.servNombre;
+      this.items.push(this.seleccionado);
+    }
+
+    this.form.reset();
+    this.actualizarTabla();
+  }
+
+  delete(seleccionado: MovilBitacora) {
     const dialogRef = this.matDialog.open(ConfirmarComponent);
 
     dialogRef.afterClosed().subscribe(
@@ -111,11 +159,11 @@ export class MovilBitacoraComponent implements OnInit {
         console.log(`Dialog Result: ${result}`);
 
         if(result) {
-          this.movilBitacoraService.delete(row.mobiId).subscribe(
+          this.movilBitacoraService.delete(seleccionado.mobiId).subscribe(
             () => {
               this.items = this.items.filter(
                 (item) => {
-                  if (item.mobiId != row.mobiId) {
+                  if (item.mobiId != seleccionado.mobiId) {
                     return true
                   } else {
                     return false
@@ -127,35 +175,10 @@ export class MovilBitacoraComponent implements OnInit {
       });
   }
 
-  edit(seleccionado: MovilBitacora) {
-   this.mostrarFormulario = true;
-   this.seleccionado = seleccionado;
-   this.form.setValue(seleccionado);
-  }
-
-  guardar() {
-    if (!this.form.valid) {
-      return;
-    }
-
-    Object.assign(this.seleccionado, this.form.value);
-
-    if(this.seleccionado.mobiId) {
-      this.movilBitacoraService.put(this.seleccionado).subscribe(
-        () => {
-          this.actualizarDetalle(this.seleccionado.mobiId);
-        });
-    }else{
-      this.movilBitacoraService.post(this.seleccionado).subscribe(
-        (mobi) => {
-          this.items = mobi;
-          this.actualizarDetalle(this.seleccionado.mobiId);
-        });
-    }
-  }
 
   cancelar() {
-    this.mostrarFormulario = false;
+    this.form.reset();
+    this.label = 'Agregar Nueva Bitacora'
   }
 
   actualizarDetalle(mobiId: number){
@@ -180,6 +203,4 @@ export class MovilBitacoraComponent implements OnInit {
   }
 
  
-
-
 }
