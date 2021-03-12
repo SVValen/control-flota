@@ -35,6 +35,8 @@ export class MovilGrupoComponent implements OnInit {
 
   grupos: Grupo[] = [];
 
+  label = '';
+
 
   constructor(
     private movilGrupoService: MovilGrupoService,
@@ -87,12 +89,14 @@ export class MovilGrupoComponent implements OnInit {
     this.form.reset();
     this.seleccionado = new MovilGrupo();
     this.mostrarFormulario = true;
+    this.label = 'Agregar Grupo'
   }
 
   editar(selec: MovilGrupo) {
     this.mostrarFormulario = true;
     this.seleccionado = selec;
     this.form.setValue(selec);
+    this.label = 'Editar Grupo'
   }
 
   guardar() {

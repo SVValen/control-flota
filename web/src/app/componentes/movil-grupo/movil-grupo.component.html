@@ -39,13 +39,13 @@
     <mat-paginator [pageSizeOptions]="[1, 4, 10]" showFirstLastButtons></mat-paginator>
 </div>
 
-<div *ngIf="mostrarFormulario">
+<div *ngIf="mostrarFormulario" style="margin-top: 10px;">
     <form [formGroup]="form">
-        <h2>Agregar Grupo</h2>
-        &nbsp;
-        <mat-form-field appearance="outline">
+        <mat-label style="font-size: 20px; font-weight: 100;">{{label}}</mat-label>
+        <br>
+        <mat-form-field appearance="outline" style="margin-top: 10px;">
             <mat-label>Grupo</mat-label>
-            <mat-select formControlName="mogrGrupId">
+            <mat-select formControlName="mogrGrupId" required>
               <mat-option *ngFor="let grup of grupos" [value]="grup.grupId">
                   {{grup.grupNombre}} - {{grup.grupDescripcion}}
               </mat-option>
@@ -53,9 +53,10 @@
           </mat-select>
         </mat-form-field>
         <div>
-            <button mat-raised-button type="button" color="primary" (click)="guardar()" style="float:right;">Guardar</button>   
-            <button mat-raised-button  (click)="cancelar()" style="float:right;">Cancelar</button>   
+            <button mat-raised-button type="button" color="primary" (click)="guardar()" >Guardar</button>   
+            <button mat-raised-button  (click)="cancelar()" >Cancelar</button>   
         </div>
+        <br>
     </form>
     
 </div>

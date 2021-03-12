@@ -99,13 +99,14 @@ class Movil {
     //------------------------------------PUT
 
     public function put($db){
-        $sql = "UPDATE $this->table 
-                SET moviModoFecha = ?,
-                    moviModoOdometro = ? 
-                WHERE moviId = ?";
-        $params = [DATA["moviModoFecha"],
-                    DATA["moviModoOdometro"],
-                    DATA["moviId"]];
+        $sql = "UPDATE $this->table
+                    SET moviBorrado = ?
+                    WHERE moviId = ? ";
+
+        $params = [DATA["moviBorrado"]
+                    ,DATA["moviId"]];
+
+
         $stmt = SQL::query($db,$sql,$params);
         sqlsrv_fetch($stmt);
 

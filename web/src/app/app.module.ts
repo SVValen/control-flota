@@ -64,7 +64,6 @@ import { AlertaExitoComponent } from './shared/alerta-exito/alerta-exito.compone
     MovilGrupoComponent,
     AgregarMovilComponent,
     AlertaExitoComponent,
-   
     
   ],
   imports: [

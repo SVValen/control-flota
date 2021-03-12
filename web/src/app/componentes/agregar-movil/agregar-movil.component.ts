@@ -32,7 +32,7 @@ export class AgregarMovilComponent implements OnInit {
   selecGrupo = new MovilGrupo();
   selecOdo = new MovilOdometro();
 
-  columnas : string[] = ['patente','descripcion','dependencia','marca','modelo','acciones','id','estado'];
+  columnas : string[] = ['patente','descripcion','dependencia','marca','modelo','acciones','estado'];
   dataSource = new MatTableDataSource<Movil>();
 
   //formularios
@@ -44,7 +44,8 @@ export class AgregarMovilComponent implements OnInit {
 
   mostrarFormularioAgregar = false;
 
-  buttonDisabled = true;
+  buttonDisabledReactivar = false;
+  buttonDisabledActivar = false;
 
   constructor(
     private movilServicio: MovilService,
@@ -77,6 +78,7 @@ export class AgregarMovilComponent implements OnInit {
       (movil) => {
         this.items = movil;
         this.actualizarTabla();
+        //this.botones(movil[]);
       }
       //TODO habilitar o desabilitar botones
     )
@@ -88,6 +90,12 @@ export class AgregarMovilComponent implements OnInit {
     )
 
   }
+
+  //botones(movil: Movil) {
+  //  if(movil.moviBorrado == 1) {
+  //    this.buttonDisabledReactivar = true;
+  //  }
+  //}
 
   
   actualizarTabla() {
@@ -142,11 +150,34 @@ export class AgregarMovilComponent implements OnInit {
   }
 
   reactivar(seleccionado: Movil) {
-    this.seleccionado = seleccionado;
-    this.seleccionado.moviBorrado = 0;
-    
-    this.movilServicio.put(this.seleccionado).subscribe();
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(
+      result => {
+
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+
+        this.seleccionado = seleccionado;
+        this.seleccionado.moviBorrado = 0;
+
+        this.movilServicio.put(this.seleccionado).subscribe();
+
+        const dialogRefe = this.matDialog.open(AlertaExitoComponent);
+
+        dialogRefe.afterClosed().subscribe(
+          result => {
+            console.log(`Dialog result: ${result}`)
+          }
+        )
+
+      }else{
+        this.cancelar();
+      }
+    });
   }
+    
 
   delete(seleccionado: Movil) {
 

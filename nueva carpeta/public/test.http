@@ -331,6 +331,8 @@ Content-Type: application/json
 PUT http://localhost:8888/index.php/movil HTTP/1.1
 
 {   
+    "moviBorrado": 0,
+    "moviId": 1
 }
 
 ### movil-grupo
