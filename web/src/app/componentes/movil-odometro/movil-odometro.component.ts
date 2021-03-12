@@ -32,6 +32,8 @@ export class MovilOdometroComponent implements OnInit {
   dataSource = new MatTableDataSource<MovilOdometro>();
   form = new FormGroup({});
 
+  label = 'Agregar Nuevo Odometro';
+
   constructor(
     private movilOdometroService: MovilOdometroService,
     private movilService: MovilService,
@@ -57,11 +59,7 @@ export class MovilOdometroComponent implements OnInit {
       modoFecha:[''],
       modoOdometro:[''],
       modoFechaAlta:[''],
-      modoBorrado:[''],
-
-      moviModoOdometro: [''],
-      moviModoFecha: [''],
-      moviId: ['']
+      modoBorrado:['']
     });
 
     this.movilOdometroService.get(`modoMoviId=${this.moviId}`).subscribe(
@@ -89,6 +87,7 @@ export class MovilOdometroComponent implements OnInit {
   }
 
   edit(seleccionado: MovilOdometro) {
+    this.label = 'Editar Odometro';
     this.seleccionado = seleccionado;
     this.form.setValue(seleccionado);
   }
@@ -151,6 +150,7 @@ export class MovilOdometroComponent implements OnInit {
   cancelar() {
     this.form.reset();
     this.actualizarTabla();
+    this.label = 'Agregar Nuevo Odometro';
   }
 
 }
