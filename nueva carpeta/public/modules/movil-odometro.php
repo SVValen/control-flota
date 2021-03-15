@@ -60,9 +60,13 @@ class MovilOdometro {
                 
                 VALUES (?,?,?,GETDATE(),0);
                 
-                SELECT @@IDENTITY modoId, CONVERT(VARCHAR, GETDATE(),126) modoFechaAlta;";
+                SELECT @@IDENTITY modoId, CONVERT(VARCHAR, GETDATE(),126) modoFechaAlta;
+                
+                UPDATE Movil SET moviModoOdometro = ?, moviModoFecha = ? WHERE moviId = ?;";
 
-        $params = [DATA["modoMoviId"],DATA["modoFecha"],DATA["modoOdometro"]];
+        $params = [DATA["modoMoviId"],DATA["modoFecha"],DATA["modoOdometro"],
+    
+                    DATA["modoOdometro"],DATA["modoFecha"],DATA["modoMoviId"]];
 
         $stmt = SQL::query($db,$sql,$params);
 
