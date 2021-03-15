@@ -79,6 +79,7 @@ export class MovilOdometroComponent implements OnInit {
   actualizarTabla() {
     this.dataSource.data = this.items;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   agregar() {
@@ -110,15 +111,6 @@ export class MovilOdometroComponent implements OnInit {
       this.seleccionado.modoOdometro = this.form.value.modoOdometro;
       this.seleccionado.modoFecha = this.form.value.modoFecha;
       this.seleccionado.modoMoviId = this.moviId;
-
-      // actualizar odometro y fecha odometro de movil
-      
-      this.movil.moviBorrado = this.moviles.find(x => x.moviId == this.seleccionado.modoMoviId)!.moviBorrado;
-      this.movil.moviId = this.seleccionado.modoMoviId;
-      this.movil.moviModoOdometro = this.seleccionado.modoOdometro;
-      this.movil.moviModoFecha = this.seleccionado.modoFecha;
-
-      this.movilService.put(this.movil).subscribe();
 
       this.movilOdometroService.post(this.seleccionado).subscribe();
       this.items = this.items.filter(x => x.modoId != this.seleccionado.modoId);
