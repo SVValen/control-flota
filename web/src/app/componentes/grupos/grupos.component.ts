@@ -5,13 +5,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Grupo } from '../../modelo/grupo';
 import { GrupoService } from '../../servicios/grupo.service'
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
-import { GlobalService } from '../../servicios/global.service';
 import { GrupoServicioService} from '../../servicios/grupo-servicio.service';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { GrupoServicio } from 'src/app/modelo/grupo-servicio';
 
 
 @Component({
@@ -23,6 +23,8 @@ export class GruposComponent implements OnInit, AfterViewInit {
 
   items : Grupo[] = [];
   seleccionado = new Grupo();
+
+  itemsServicios : GrupoServicio[] = [];
 
   label = '';
 
@@ -38,7 +40,6 @@ export class GruposComponent implements OnInit, AfterViewInit {
 
   constructor(
     private grupoService: GrupoService,
-    private global: GlobalService,
     private grupoServicioService: GrupoServicioService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog) {}
@@ -71,7 +72,7 @@ export class GruposComponent implements OnInit, AfterViewInit {
 
   actualizarTabla() {
     this.dataSource.data = this.items;
-    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   filter(event: Event) {
@@ -85,30 +86,6 @@ export class GruposComponent implements OnInit, AfterViewInit {
     this.seleccionado = new Grupo();
     this.mostrarFormulario = true;
   }
-
-  delete(row: Grupo) {
-    const dialogRef = this.dialog.open(ConfirmarComponent);
-
-    dialogRef.afterClosed().subscribe(
-      (result) => {
-        console.log(`Dialog Result: ${result}`);
-
-        if(result) {
-          this.grupoService.delete(row.grupId)
-            .subscribe(() => {
-              this.items = this.items.filter((item) => {
-                if (item.grupId != row.grupId) {
-                  return true
-                } else {
-                  return false
-                }
-              });
-              this.actualizarTabla();
-            });
-        }
-      });
-  }
-
   edit(seleccionado: Grupo) {
     this.label = 'Editar grupo';
     this.mostrarFormulario = true;
@@ -138,12 +115,32 @@ export class GruposComponent implements OnInit, AfterViewInit {
     }
   }
 
-  cancelar(){
-    this.mostrarFormulario = false;
+
+  delete(row: Grupo) {
+    const dialogRef = this.dialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        console.log(`Dialog Result: ${result}`);
+
+        if(result) {
+          this.grupoService.delete(row.grupId)
+            .subscribe(() => {
+              this.items = this.items.filter((item) => {
+                if (item.grupId != row.grupId) {
+                  return true
+                } else {
+                  return false
+                }
+              });
+              this.actualizarTabla();
+            });
+        }
+      });
   }
 
   actualizarDetalle(grupId:number){
-    this.global.itemsServ.forEach((i) => {
+    this.itemsServicios.forEach((i) => {
       i.grusGrupId = grupId;
   
       if (i.grusBorrado){
@@ -161,6 +158,10 @@ export class GruposComponent implements OnInit, AfterViewInit {
   
     this.mostrarFormulario = false;
     this.actualizarTabla();
+  }
+
+  cancelar(){
+    this.mostrarFormulario = false;
   }
 
 

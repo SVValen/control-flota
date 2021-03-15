@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
-import { GlobalService } from '../../servicios/global.service';
+
 import { ServicioTareaService } from '../../servicios/servicio-tarea.service';
 import { ServicioTarea } from '../../modelo/servicio-tarea'
 import { Tarea } from '../../modelo/tarea';
@@ -22,7 +22,7 @@ export class ServicioTareaComponent implements OnInit {
 
   @Input() servId: number = 0;
 
-
+  items: ServicioTarea[] = [];
   seleccionado = new ServicioTarea();
 
   columnas: string[] = ['tareNombre','acciones'];
@@ -37,7 +37,7 @@ export class ServicioTareaComponent implements OnInit {
   AuxId = -1;
 
   constructor(
-    public global: GlobalService,
+
     private servicioTareaService: ServicioTareaService,
     private tareaService: TareaService,
     private formBouilder: FormBuilder,
@@ -64,7 +64,7 @@ export class ServicioTareaComponent implements OnInit {
 
     this.servicioTareaService.get(`setaServId=${this.servId}`).subscribe(
       (servTare) => {
-        this.global.items = servTare;
+        this.items = servTare;
         this.actualizarTabla();
       });
 
@@ -75,8 +75,8 @@ export class ServicioTareaComponent implements OnInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.global.items.filter(
-      borrado => !(borrado.setaBorrado));
+    this.dataSource.data = this.items;
+    this.dataSource.paginator = this.paginator;
   }
 
   agregar() {
@@ -86,19 +86,6 @@ export class ServicioTareaComponent implements OnInit {
 
     this.form.setValue(this.seleccionado);
     this.mostrarFormulario = true;
-  }
-
-  delete(row: ServicioTarea) {
-    const dialogRef = this.matDialog.open(ConfirmarComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
-      if (result) {
-        row.setaBorrado = 1;
-        this.actualizarTabla();
-      }
-    });
   }
 
   edit(seleccionado: ServicioTarea) {
@@ -116,11 +103,24 @@ export class ServicioTareaComponent implements OnInit {
     Object.assign(this.seleccionado, this.form.value);
 
     this.seleccionado.tareNombre = this.tarea.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareNombre;
-    this.global.items = this.global.items.filter(x => x.setaId != this.seleccionado.setaId);
-    this.global.items.push(this.seleccionado);
+    this.items = this.items.filter(x => x.setaId != this.seleccionado.setaId);
+    this.items.push(this.seleccionado);
 
     this.mostrarFormulario = false;
     this.actualizarTabla();
+  }
+
+  delete(row: ServicioTarea) {
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        row.setaBorrado = 1;
+        this.actualizarTabla();
+      }
+    });
   }
 
   cancelar(){

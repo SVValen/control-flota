@@ -6,12 +6,12 @@ import { Servicio } from '../../modelo/servicio';
 import { ServicioService } from '../../servicios/servicio.service'
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
 import { ServicioTareaService } from '../../servicios/servicio-tarea.service';
-import { GlobalService } from '../../servicios/global.service'
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ServicioTarea } from 'src/app/modelo/servicio-tarea';
 
 @Component({
   selector: 'app-servicio',
@@ -22,6 +22,8 @@ export class ServicioComponent implements OnInit, AfterViewInit {
   
   items : Servicio[] = [];
   seleccionado = new Servicio();
+
+  itemsTareas: ServicioTarea[] = [];
 
   label = '';
 
@@ -36,7 +38,6 @@ export class ServicioComponent implements OnInit, AfterViewInit {
   constructor(
     private servicioService: ServicioService,
     private servicioTareaService: ServicioTareaService,
-    private globalService: GlobalService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog
 
@@ -73,9 +74,8 @@ export class ServicioComponent implements OnInit, AfterViewInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.items.filter(
-      borrado => !(borrado.servBorrado)
-    );
+    this.dataSource.data = this.items;
+    this.dataSource.paginator = this.paginator;
   }
 
   filter(event: Event) {
@@ -89,24 +89,6 @@ export class ServicioComponent implements OnInit, AfterViewInit {
     this.seleccionado = new Servicio();
     this.mostrarFormulario = true;
     this.mostrarFormTareas = false;
-  }
-
-  delete(row: Servicio) {
-    const dialogRef = this.dialog.open(ConfirmarComponent);
-
-    dialogRef.afterClosed().subscribe(
-      result =>{
-        console.log(`Dialog resulr: ${result}`);
-
-        if (result) {
-          this.servicioService.delete(row.servId).subscribe(
-            () => {
-              this.items = this.items.filter( x => x !== row);
-
-              this.actualizarTabla();
-            });
-        }
-      });
   }
 
   edit(seleccionado: Servicio) {
@@ -142,12 +124,26 @@ export class ServicioComponent implements OnInit, AfterViewInit {
 
 }
 
-cancelar() {
-  this.mostrarFormulario = false;
+delete(row: Servicio) {
+  const dialogRef = this.dialog.open(ConfirmarComponent);
+
+  dialogRef.afterClosed().subscribe(
+    result =>{
+      console.log(`Dialog resulr: ${result}`);
+
+      if (result) {
+        this.servicioService.delete(row.servId).subscribe(
+          () => {
+            this.items = this.items.filter( x => x !== row);
+
+            this.actualizarTabla();
+          });
+      }
+    });
 }
 
 actualizarDetalle(servId:number){
-  this.globalService.items.forEach((i) => {
+  this.itemsTareas.forEach((i) => {
     i.setaServId = servId;
 
     if (i.setaBorrado){
@@ -166,6 +162,10 @@ actualizarDetalle(servId:number){
   this.mostrarFormulario = false;
   this.actualizarTabla();
   
+}
+
+cancelar() {
+  this.mostrarFormulario = false;
 }
 
 }

@@ -11,7 +11,6 @@ import { GrupoServicio } from '../../modelo/grupo-servicio';
 import { GrupoServicioService } from '../../servicios/grupo-servicio.service';
 import { Servicio } from '../../modelo/servicio';
 import { ServicioService } from '../../servicios/servicio.service';
-import { GlobalService } from 'src/app/servicios/global.service';
 
 
 @Component({
@@ -23,6 +22,7 @@ export class GrupoServicioComponent implements OnInit {
 
   @Input() grupId: number = 0;
 
+  items : GrupoServicio[] = [];
   seleccionado = new GrupoServicio();
 
   columnas: string [] = ['servNombre','grusPeriodo','grusKM','acciones'];
@@ -37,7 +37,6 @@ export class GrupoServicioComponent implements OnInit {
   AuxId = -1;
 
   constructor(
-    public global: GlobalService,
     private grupoServicioService: GrupoServicioService,
     private servicioService : ServicioService,
     private formBouilder: FormBuilder,
@@ -49,7 +48,6 @@ export class GrupoServicioComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -69,7 +67,7 @@ export class GrupoServicioComponent implements OnInit {
 
     this.grupoServicioService.get(`grusGrupId=${this.grupId}`).subscribe(
       (grus) => {
-        this.global.itemsServ = grus;
+        this.items = grus;
         this.actualizarTabla();
       });
 
@@ -80,8 +78,8 @@ export class GrupoServicioComponent implements OnInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.global.itemsServ.filter(
-      borrado => !(borrado.grusBorrado));
+    this.dataSource.data = this.items;
+    this.dataSource.paginator = this.paginator;
   }
 
   agregar() {
@@ -91,19 +89,6 @@ export class GrupoServicioComponent implements OnInit {
 
     this.form.setValue(this.seleccionado);
     this.mostrarFormulario= true;
-  }
-
-  delete(row: GrupoServicio) {
-    const dialogRef = this.matDialog.open(ConfirmarComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
-      if (result) {
-        row.grusBorrado = 1;
-        this.actualizarTabla();
-      }
-    });
   }
 
   edit(seleccionado: GrupoServicio) {
@@ -121,13 +106,26 @@ export class GrupoServicioComponent implements OnInit {
     Object.assign(this.seleccionado, this.form.value);
 
     this.seleccionado.servNombre = this.servicios.find(serv => serv.servId == this.seleccionado.grusServId)!.servNombre;
-    this.global.itemsServ = this.global.itemsServ.filter(x => x.grusId != this.seleccionado.grusId);
-    this.global.itemsServ.push(this.seleccionado);
+    this.items = this.items.filter(x => x.grusId != this.seleccionado.grusId);
+    this.items.push(this.seleccionado);
 
     this.mostrarFormulario = false;
     this.actualizarTabla();
   }
 
+  delete(row: GrupoServicio) {
+    const dialogRef = this.matDialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        row.grusBorrado = 1;
+        this.actualizarTabla();
+      }
+    });
+  }
+  
   cancelar(){
     this.mostrarFormulario = false;
   }

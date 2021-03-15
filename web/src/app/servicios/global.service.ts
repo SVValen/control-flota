@@ -7,7 +7,5 @@ import { MovilServicio } from '../modelo/movil-servicio';
 })
 export class GlobalService {
 
-  items: ServicioTarea[] = [];
-  itemsServ : GrupoServicio[] = [];
   constructor() { }
 }

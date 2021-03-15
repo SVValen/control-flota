@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Grupo } from 'src/app/modelo/grupo';
+
 
 @Component({
   selector: 'app-tareas',
@@ -67,7 +67,7 @@ export class TareasComponent implements OnInit,AfterViewInit {
 
   actualizarTabla() {
     this.dataSource.data = this.items;
-    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   filter(event: Event) {
@@ -80,29 +80,6 @@ export class TareasComponent implements OnInit,AfterViewInit {
     this.form.reset();
     this.seleccionado = new Tarea();
     this.mostrarFormulario = true;
-  }
-
-  delete(row: Tarea) {
-    const dialogRef = this.dialog.open(ConfirmarComponent);
-
-    dialogRef.afterClosed().subscribe(
-      (result) => {
-        console.log(`Dialog Result: ${result}`);
-
-        if(result) {
-          this.tareaService.delete(row.tareId)
-            .subscribe(() => {
-              this.items = this.items.filter((item) => {
-                if (item.tareId != row.tareId) {
-                  return true
-                } else {
-                  return false
-                }
-              });
-              this.actualizarTabla();
-            });
-        }
-      });
   }
 
   edit(seleccionado: Tarea) {
@@ -123,6 +100,7 @@ export class TareasComponent implements OnInit,AfterViewInit {
       this.tareaService.put(this.seleccionado)
         .subscribe((tarea) => {
           this.mostrarFormulario = false;
+          this.actualizarTabla();
         });
     } else {
       this.tareaService.post(this.seleccionado)
@@ -133,6 +111,30 @@ export class TareasComponent implements OnInit,AfterViewInit {
         });
     }
   }
+
+  delete(row: Tarea) {
+    const dialogRef = this.dialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        console.log(`Dialog Result: ${result}`);
+
+        if(result) {
+          this.tareaService.delete(row.tareId)
+            .subscribe(() => {
+              this.items = this.items.filter((item) => {
+                if (item.tareId != row.tareId) {
+                  return true
+                } else {
+                  return false
+                }
+              });
+            });
+            this.actualizarTabla();
+        }
+      });
+  }
+
 
   cancelar(){
     this.mostrarFormulario = false;
