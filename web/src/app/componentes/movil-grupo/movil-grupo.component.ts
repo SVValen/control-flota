@@ -8,9 +8,17 @@ import { MovilGrupoService } from '../../servicios/movil-grupo.service';
 
 import { Grupo } from '../../modelo/grupo';
 import { GrupoService } from '../../servicios/grupo.service';
+
+import { GrupoServicio } from '../../modelo/grupo-servicio';
+import { GrupoServicioService } from '../../servicios/grupo-servicio.service';
+
+import { MovilServicio } from '../../modelo/movil-servicio';
+import { MovilServicioService} from '../../servicios/movil-servicio.service';
+
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { ConfirmarComponent } from 'src/app/shared/confirmar/confirmar.component';
+import { AlertaExitoComponent } from 'src/app/shared/alerta-exito/alerta-exito.component';
 
 @Component({
   selector: 'app-movil-grupo',
@@ -35,12 +43,22 @@ export class MovilGrupoComponent implements OnInit {
 
   grupos: Grupo[] = [];
 
+  servicios: number[] = [];
+
+  movilServicio = new MovilServicio();
+
+  grupoServicio : GrupoServicio[] = [];
+
   label = '';
+
+  agregarServiciosPreestablecidos = false;
 
 
   constructor(
     private movilGrupoService: MovilGrupoService,
     private gruposService: GrupoService,
+    private grupoServicioService : GrupoServicioService,
+    private movilServicioService : MovilServicioService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog,
     
@@ -78,6 +96,12 @@ export class MovilGrupoComponent implements OnInit {
         this.grupos = grupos;
       }
     )
+
+    this.grupoServicioService.get().subscribe(
+      (grupos) => {
+        this.grupoServicio = grupos;
+      }
+    )
   }
 
   actualizarTabla() {
@@ -112,20 +136,72 @@ export class MovilGrupoComponent implements OnInit {
       this.items.push(this.seleccionado);
 
     }else{
+
       this.seleccionado.mogrMoviId = this.moviId;
       this.seleccionado.mogrGrupId = this.form.value.mogrGrupId;
 
+      if (this.agregarServiciosPreestablecidos){
+        
+        // servicios correspondientes al grupo
+        this.grupoServicio = this.grupoServicio.filter(x => x.grusGrupId == this.seleccionado.mogrGrupId);
+
+        // por cada servicio hago un post de movil servicio
+        this.grupoServicio.forEach((i) => {
+          this.movilServicio.moseMoviId = this.moviId;
+          this.movilServicio.moseServId = i.grusServId;
+          this.movilServicio.mosePeriodo = i.grusPeriodo;
+          this.movilServicio.moseKM = i.grusKM;
+          this.movilServicio.moseFecha = i.grusFecha;
+          this.movilServicioService.post(this.movilServicio).subscribe();
+        });
+      }
+      
       this.movilGrupoService.post(this.seleccionado).subscribe();
+
       this.items = this.items.filter(x => x.mogrId != this.seleccionado.mogrId);
-      this.seleccionado.grupNombre = this.items.find(x => x.mogrId = this.seleccionado.mogrGrupId)!.grupNombre;
-      this.seleccionado.grupDescripcion = this.items.find(x => x.mogrId = this.seleccionado.mogrGrupId)!.grupDescripcion;
+      this.seleccionado.grupNombre = this.grupos.find(x => x.grupId = this.seleccionado.mogrGrupId)!.grupNombre;
+      this.seleccionado.grupDescripcion = this.grupos.find(x => x.grupId = this.seleccionado.mogrGrupId)!.grupDescripcion;
       
       this.items.push(this.seleccionado);
+
+      //dialogo exito
+
+      const dialogRefe = this.matDialog.open(AlertaExitoComponent);
+
+      dialogRefe.afterClosed().subscribe(
+        result => {
+          console.log(`Dialog result: ${result}`)
+        }
+      )
+
+      this.form.reset();
+
     }
 
     this.mostrarFormulario = false;
     this.actualizarTabla();
 
+  }
+
+  agregarServPreestablecidos() {
+    const dialog = this.matDialog.open(ConfirmarComponent);
+
+    dialog.afterClosed().subscribe(
+      result => {
+        console.log(`Dialog resulr: ${result}`);
+
+        if (result) {
+
+          this.agregarServiciosPreestablecidos = true;
+
+          const dialogRefe = this.matDialog.open(AlertaExitoComponent);
+
+          dialogRefe.afterClosed().subscribe(
+            result => {
+              console.log(`Dialog result: ${result}`)
+            }) 
+        }
+      })
   }
 
   delete(seleccionado: MovilGrupo) {
