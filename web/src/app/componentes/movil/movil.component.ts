@@ -131,6 +131,7 @@ export class MovilComponent implements OnInit {
 
         this.movilServicio.delete(this.seleccionado.moviId).subscribe();
 
+        this.items = this.items.filter(x => x.moviId != this.seleccionado.moviId);
         this.actualizarTabla();
 
       }else{
