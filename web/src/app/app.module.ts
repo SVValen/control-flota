@@ -44,7 +44,7 @@ import { MovilOdometroComponent } from './componentes/movil-odometro/movil-odome
 import { MovilGrupoComponent } from './componentes/movil-grupo/movil-grupo.component';
 import { AgregarMovilComponent } from './componentes/agregar-movil/agregar-movil.component';
 import { AlertaExitoComponent } from './shared/alerta-exito/alerta-exito.component';
-
+import { AlertaErrorComponent } from './shared/alerta-error/alerta-exito.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +64,7 @@ import { AlertaExitoComponent } from './shared/alerta-exito/alerta-exito.compone
     MovilGrupoComponent,
     AgregarMovilComponent,
     AlertaExitoComponent,
-    
+    AlertaErrorComponent
   ],
   imports: [
     BrowserModule,
