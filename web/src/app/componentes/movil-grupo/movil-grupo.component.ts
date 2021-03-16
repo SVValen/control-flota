@@ -53,6 +53,8 @@ export class MovilGrupoComponent implements OnInit {
 
   agregarServiciosPreestablecidos = false;
 
+  serviciosYaAgregados=false;
+
 
   constructor(
     private movilGrupoService: MovilGrupoService,
@@ -113,11 +115,13 @@ export class MovilGrupoComponent implements OnInit {
     this.form.reset();
     this.seleccionado = new MovilGrupo();
     this.mostrarFormulario = true;
+    this.serviciosYaAgregados = false;
     this.label = 'Agregar Grupo'
   }
 
   editar(selec: MovilGrupo) {
     this.mostrarFormulario = true;
+    this.serviciosYaAgregados = true;
     this.seleccionado = selec;
     this.form.setValue(selec);
     this.label = 'Editar Grupo'
