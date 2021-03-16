@@ -11,6 +11,7 @@ import { MovilService } from '../../servicios/movil.service';
 
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { AlertaErrorComponent } from 'src/app/shared/alerta-error/alerta-exito.component';
 
 @Component({
   selector: 'app-movil-odometro',
@@ -100,6 +101,7 @@ export class MovilOdometroComponent implements OnInit {
 
     if(this.seleccionado.modoId){
       // editar odometro
+
       this.seleccionado.modoOdometro = this.form.value.modoOdometro;
       this.seleccionado.modoFecha = this.form.value.modoFecha;
 
@@ -108,13 +110,22 @@ export class MovilOdometroComponent implements OnInit {
       this.items.push(this.seleccionado);
     }else{
       //agregar odometro
+
       this.seleccionado.modoOdometro = this.form.value.modoOdometro;
       this.seleccionado.modoFecha = this.form.value.modoFecha;
       this.seleccionado.modoMoviId = this.moviId;
 
-      this.movilOdometroService.post(this.seleccionado).subscribe();
-      this.items = this.items.filter(x => x.modoId != this.seleccionado.modoId);
-      this.items.push(this.seleccionado);
+      let primero = this.items[0];
+
+      if(primero.modoOdometro > this.form.value.modoOdometro){
+        this.matDialog.open(AlertaErrorComponent);
+        this.cancelar();
+
+      }else{
+        this.movilOdometroService.post(this.seleccionado).subscribe();
+        this.items = this.items.filter(x => x.modoId != this.seleccionado.modoId);
+        this.items.push(this.seleccionado);    
+        }
     }
 
     this.form.reset();
