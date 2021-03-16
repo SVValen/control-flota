@@ -4,6 +4,23 @@
     <!--Tabla Moviles que no tienen control flota-->    
 
     <mat-label style="font-size: 25px; font-weight: 100;">Agregar Móvil a Control de Flota</mat-label>
+    
+    <!--Buscadores-->
+    <div>
+        <mat-form-field  appearance="legacy">
+            <mat-label>Buscar por Patente</mat-label>
+            <input matInput #patente (keyup)="buscarPatente(patente.value)" placeholder="Ej : AAA111" >
+        </mat-form-field>&nbsp;
+        <mat-form-field  appearance="legacy">
+            <mat-label>Buscar por Descripcion</mat-label>
+            <input matInput #descripcion (keyup)="buscarDescripcion(descripcion.value)" placeholder="Ej : CV11A ..">
+        </mat-form-field>&nbsp;
+        <mat-form-field  appearance="legacy">
+            <mat-label>Buscar por Dependencia</mat-label>
+            <input matInput #dependencia (keyup)="buscarDependencia(dependencia.value)" placeholder="Ej: CRIA VECINAL ..">
+        </mat-form-field>
+       
+    </div>
 
     <table mat-table [dataSource]="dataSource" matSort style="overflow-x:auto; width: 100%;">
 
@@ -32,7 +49,7 @@
             <td mat-cell *matCellDef="let movil"> {{movil.modelo}} </td>
         </ng-container>
         
-        <!--TODO habilitar o desabilitar botones agreagr y reactivar-->
+        <!--habilitar o desabilitar botones agreagr y reactivar-->
         <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let movil">
@@ -45,6 +62,7 @@
             </td>
         </ng-container>
 
+        <!--EStado del movil : agregado, borraro o no agregado-->
         <ng-container matColumnDef="estado">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
             <td mat-cell *matCellDef="let movil"> 
@@ -59,7 +77,7 @@
         <tr mat-row *matRowDef="let row; columns: columnas"></tr>
 
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">No hay datos..</td>
+            <td class="mat-cell" colspan="4">Buscar por patente, descripcion o dependencia</td>
         </tr>
     
     </table>
@@ -78,29 +96,14 @@
     <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
         
         <!--FORM GRUPO-->
-        <mat-step [stepControl]="formGrupo">
-          <form [formGroup]="formGrupo">
-            <ng-template matStepLabel>Asignar grupo</ng-template>
-            <mat-form-field appearance="outline">
-              <mat-label>Grupo</mat-label>
-              <mat-select formControlName="mogrGrupId" required>
-                <mat-option *ngFor="let grup of grupos" [value]="grup.grupId">
-                    {{grup.grupNombre}} - {{grup.grupDescripcion}}
-                </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div>
-                <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" (click)="guardarGrupo()">Guardar</button>
-                &nbsp;
-                <button type="button" mat-raised-button color="primary" mat-button matStepperNext>Siguiente</button>
-            </div>
-          </form>
+        <mat-step required>
+            <app-movil-grupo [moviId]="seleccionado.movilID"></app-movil-grupo>
+            <button type="button" mat-raised-button color="primary" matStepperNext>Siguiente</button>
         </mat-step>
         <!--FORM ODOMETRO-->
         <mat-step optional>
             <app-movil-odometro [moviId]="seleccionado.movilID"></app-movil-odometro>
+            <button type="button" mat-raised-button color="primary" matStepperNext>Siguiente</button>
         </mat-step>
 
         <!--FIN-->

@@ -5,15 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { AlertaExitoComponent } from '../../shared/alerta-exito/alerta-exito.component';
 import { ConfirmarComponent } from '../../shared/confirmar/confirmar.component';
+
 import { Movil } from '../../modelo/movil';
 import { MovilService } from '../../servicios/movil.service';
-import { MovilGrupo } from '../../modelo/movil-grupos';
-import { MovilGrupoService } from '../../servicios/movil-grupo.service';
-import { MovilOdometro } from '../../modelo/movil-odometro';
-import { MovilOdometroService } from '../../servicios/movil-odometro.service';
-
-import { Grupo } from '../../modelo/grupo';
-import { GrupoService } from '../../servicios/grupo.service';
 
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -29,8 +23,6 @@ export class AgregarMovilComponent implements OnInit {
   items : Movil[] = [];
   seleccionado = new Movil();
 
-  selecGrupo = new MovilGrupo();
-  selecOdo = new MovilOdometro();
 
   columnas : string[] = ['patente','descripcion','dependencia','marca','modelo','acciones','estado'];
   dataSource = new MatTableDataSource<Movil>();
@@ -40,18 +32,13 @@ export class AgregarMovilComponent implements OnInit {
 
   //modelos
   moviles: Movil[] = [];
-  grupos: Grupo[] = []; 
 
   mostrarFormularioAgregar = false;
+  searchValue='';
 
-  buttonDisabledReactivar = false;
-  buttonDisabledActivar = false;
 
   constructor(
     private movilServicio: MovilService,
-    private grupoServicio: GrupoService,
-    private movilGrupoService : MovilGrupoService,
-    private movilOdometroService: MovilOdometroService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog) { }
 
@@ -74,20 +61,14 @@ export class AgregarMovilComponent implements OnInit {
       mogrBorrado: ['']
     })
 
-    this.movilServicio.get("activo=0").subscribe(
-      (movil) => {
-        this.items = movil;
-        this.actualizarTabla();
+    //this.movilServicio.get("activo=0").subscribe(
+    //  (movil) => {
+    //    this.items = movil;
+    //    this.actualizarTabla();
         //this.botones(movil[]);
-      }
+    //  }
       //TODO habilitar o desabilitar botones
-    )
-
-    this.grupoServicio.get().subscribe(
-      (grup) => {
-        this.grupos = grup;
-      }
-    )
+    //)
 
   }
 
@@ -114,6 +95,8 @@ export class AgregarMovilComponent implements OnInit {
 
       if (result) {
 
+        //agregar movil
+
         this.mostrarFormularioAgregar = true;
 
         this.seleccionado = seleccionado;
@@ -121,8 +104,7 @@ export class AgregarMovilComponent implements OnInit {
 
         this.movilServicio.post(this.seleccionado).subscribe();
 
-        this.formGrupo.reset();
-        this.selecGrupo = new MovilGrupo();
+        //dialogo exito
 
         const dialogRefe = this.matDialog.open(AlertaExitoComponent);
 
@@ -137,16 +119,6 @@ export class AgregarMovilComponent implements OnInit {
       }
     });
     
-  }
-
-
-  guardarGrupo() {
-
-    //Object.assign(this.seleccionado, this.formMovil.value);
-    this.selecGrupo.mogrGrupId = this.formGrupo.value.mogrGrupId;
-    this.selecGrupo.mogrMoviId = this.seleccionado.moviId;
-
-    this.movilGrupoService.post(this.selecGrupo).subscribe();
   }
 
   reactivar(seleccionado: Movil) {
@@ -177,24 +149,38 @@ export class AgregarMovilComponent implements OnInit {
       }
     });
   }
-    
 
-  delete(seleccionado: Movil) {
+  buscarPatente(value: string){
+    if (value){
+      this.movilServicio.get(`?patente=${value}&activo=0`).subscribe(
+        (moviles) => {
+          this.items = moviles;
+        }
+      )
+      this.dataSource.data = this.items;
+    }
+  }
+  
+  buscarDependencia(value: string){
+    if(value){
+      this.movilServicio.get(`?dependencia=${value}&activo=0`).subscribe(
+        (moviles) => {
+          this.items = moviles;
+        }
+      )
+      this.dataSource.data = this.items;
+    }
 
-    const dialogRef = this.matDialog.open(ConfirmarComponent);
+  }
 
-    dialogRef.afterClosed().subscribe(
-      result => {
-
-      console.log(`Dialog result: ${result}`);
-
-      if (result) {
-        this.seleccionado = seleccionado;
-        this.movilServicio.delete(this.seleccionado.moviId).subscribe();
-
-        this.actualizarTabla();
+  buscarDescripcion(value: string){
+    this.movilServicio.get(`?descripcion=${value}&activo=0`).subscribe(
+      (moviles) => {
+        this.items = moviles;
       }
-    });
+    )
+    this.dataSource.data = this.items;
+
   }
 
   cancelar() {
