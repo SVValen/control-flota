@@ -34,7 +34,10 @@ export class AgregarMovilComponent implements OnInit {
   moviles: Movil[] = [];
 
   mostrarFormularioAgregar = false;
-  searchValue='';
+
+  patente : string = '';
+  descripcion : string = '';
+  dependencia : string = '';
 
 
   constructor(
@@ -150,37 +153,58 @@ export class AgregarMovilComponent implements OnInit {
     });
   }
 
-  buscarPatente(value: string){
-    if (value){
-      this.movilServicio.get(`?patente=${value}&activo=0`).subscribe(
-        (moviles) => {
-          this.items = moviles;
-        }
-      )
-      this.dataSource.data = this.items;
-    }
-  }
   
-  buscarDependencia(value: string){
-    if(value){
-      this.movilServicio.get(`?dependencia=${value}&activo=0`).subscribe(
+  buscar(){
+
+    if(!this.patente && !this.descripcion && !this.dependencia){
+      alert("Busque por algun filtro")
+    }
+    if(this.patente && !this.descripcion && !this.dependencia){
+      this.movilServicio.get(`?patente=${this.patente}&activo=0`).subscribe(
         (moviles) => {
           this.items = moviles;
+          this.actualizarTabla();
         }
       )
-      this.dataSource.data = this.items;
+    } else if(this.descripcion && !this.patente && !this.dependencia){
+      this.movilServicio.get(`descripcion=${this.descripcion}&activo=0`).subscribe(
+        (moviles) => {
+          this.items = moviles;
+          this.actualizarTabla();
+        }
+      )
+    } else if(this.dependencia && !this.patente && !this.descripcion ){
+      this.movilServicio.get(`dependencia=${this.dependencia}&activo=0`).subscribe(
+        (moviles) => {
+          this.items = moviles;
+          this.actualizarTabla();
+        }
+      )
     }
 
-  }
-
-  buscarDescripcion(value: string){
-    this.movilServicio.get(`?descripcion=${value}&activo=0`).subscribe(
-      (moviles) => {
-        this.items = moviles;
-      }
-    )
-    this.dataSource.data = this.items;
-
+    if(this.patente && this.descripcion){
+    } else if (this.patente && this.dependencia){
+      this.movilServicio.get(`patente=${this.patente}&dependencia=${this.dependencia}&activo=0`).subscribe(
+        (moviles) => {
+          this.items = moviles;
+          this.actualizarTabla();
+        }
+      )
+    } else if(this.descripcion && this.dependencia){
+      this.movilServicio.get(`descripcion=${this.descripcion}&dependencia=${this.dependencia}&activo=0`).subscribe(
+        (moviles) => {
+          this.items = moviles;
+          this.actualizarTabla();
+        }
+      )
+    } else if(this.patente && this.descripcion && this.dependencia){
+      this.movilServicio.get(`patente=${this.patente}&descripcion=${this.descripcion}&dependencia=${this.dependencia}&activo=0`).subscribe(
+        (moviles) => {
+          this.items = moviles;
+          this.actualizarTabla();
+        }
+      )
+    }
   }
 
   cancelar() {

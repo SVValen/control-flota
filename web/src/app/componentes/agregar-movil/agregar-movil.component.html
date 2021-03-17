@@ -6,19 +6,22 @@
     <mat-label style="font-size: 25px; font-weight: 100;">Agregar Móvil a Control de Flota</mat-label>
     
     <!--Buscadores-->
-    <div>
+    <div style="margin-top: 20px;">
         <mat-form-field  appearance="legacy">
             <mat-label>Buscar por Patente</mat-label>
-            <input matInput #patente (keyup)="buscarPatente(patente.value)" placeholder="Ej : AAA111" >
+            <input matInput  (keyup.enter)="buscar()" [(ngModel)]="patente" placeholder="Ej : AAA111" >
         </mat-form-field>&nbsp;
         <mat-form-field  appearance="legacy">
             <mat-label>Buscar por Descripcion</mat-label>
-            <input matInput #descripcion (keyup)="buscarDescripcion(descripcion.value)" placeholder="Ej : CV11A ..">
+            <input matInput  (keyup.enter)="buscar()" [(ngModel)]="descripcion"  placeholder="Ej : CV11A ..">
         </mat-form-field>&nbsp;
         <mat-form-field  appearance="legacy">
             <mat-label>Buscar por Dependencia</mat-label>
-            <input matInput #dependencia (keyup)="buscarDependencia(dependencia.value)" placeholder="Ej: CRIA VECINAL ..">
+            <input matInput  (keyup.enter)="buscar()" [(ngModel)]="dependencia" placeholder="Ej: CRIA VECINAL ..">
         </mat-form-field>
+
+        <button mat-raised-button style="margin-left: 10px;" (click)="buscar()">Buscar</button>
+
        
     </div>
 
