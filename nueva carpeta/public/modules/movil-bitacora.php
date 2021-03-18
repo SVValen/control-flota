@@ -126,7 +126,8 @@ class MovilBitacora {
                     DATA["mobiOdometro"],
                     DATA["mobiProximoOdometro"],
                     DATA["mobiProximaFecha"],
-                    DATA["mobiPendiente"]]; 
+                    DATA["mobiPendiente"],
+                    DATA["mobiId"]]; 
 
         $stmt = SQL::query($db,$sql,$params);
 

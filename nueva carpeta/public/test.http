@@ -250,18 +250,18 @@ Content-Type: application/json
 PUT http://localhost:8888/index.php/movil-bitacora HTTP/1.1
 
 {
-    "mobiServId":2,
-    "mobiFecha": "2020-12-19T00:00:00",
-    "mobiObservaciones":"nada",
-    "mobiOdometro":25000,
-    "mobiProximoOdometro":35000,
-    "mobiProximaFecha":"2020-12-19T00:00:00",
-    "mobiIdAnterior":1,
-    "mobiSiguiente":1,
-    "mobiPendiente":1,
-    "mobiBorrado":1,
+    "mobiServId":1,
+    "mobiFecha": "2021-03-22",
+    "mobiObservaciones":"listo servicio pendiente de los 54000.",
+    "mobiOdometro":42000,
+    "mobiProximoOdometro":54000,
+    "mobiProximaFecha":"2021-03-18",
+    "mobiIdAnterior":15,
+    "mobiSiguiente":0,
+    "mobiPendiente":0,
+  
 
-    "mobiId":2
+    "mobiId":16
     
 }
 
@@ -283,8 +283,8 @@ POST http://localhost:8888/index.php/bitacora-tarea HTTP/1.1
 Content-Type: application/json
 
 {
-    "bitaMobiId": 1,
-    "bitaTareId": 2,
+    "bitaMobiId": 17,
+    "bitaTareId": 1,
     "bitaObservaciones": "observaciones",
     "bitaCantidad": 2,
     "bitaCosto": 3000

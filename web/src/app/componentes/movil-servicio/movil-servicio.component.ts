@@ -63,7 +63,9 @@ export class MovilServicioComponent implements OnInit {
       moseKM: [''],
       moseFecha: [''],
       moseFechaAlta: [''],
-      moseBorrado: ['']
+      moseBorrado: [''],
+
+      servNombre: ['']
     });
 
     this.movilServicioService.get(`moseMoviId=${this.moviId}`).subscribe(

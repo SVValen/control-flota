@@ -34,7 +34,7 @@
                 <button title="borrar" mat-raised-button color="primary" style="margin-right: 10px;" (click)="delete(serv)">
                     <mat-icon>delete</mat-icon>
                 </button>  
-                <button title="realizar servicio" mat-raised-button color="primary" (click)="realizarServicio(serv)">
+                <button title="realizar servicio pendiente" mat-raised-button color="primary" (click)="realizarServicio(serv)" [disabled]="serv.mobiPendiente == 0">
                     <mat-icon>add</mat-icon>
                 </button>
             </td>
@@ -54,11 +54,12 @@
 </div>
 
 <div *ngIf="mostrarFormularioAgregarBitacora">
+
     <!--Form agregar nueva bitacora-->
 
     <mat-label style="font-size: 20px; font-weight: 100;">{{label}}</mat-label>
     <form [formGroup]="form" style="width: 100%;">
-        <mat-form-field appearance="outline" style="width: 100%;"> 
+        <mat-form-field appearance="outline" style="width: 100%;" > 
             <mat-label>Servicio</mat-label>
             <mat-select formControlName="mobiServId">
                 <mat-option *ngFor="let serv of servicios" [value]="serv.servId">
@@ -83,10 +84,19 @@
             <mat-label>Odometro</mat-label>
             <input matInput formControlName="mobiOdometro">
         </mat-form-field>
+        <br>
+        <button mat-raised-button type="button" style="margin-right: 10px;" >Agregar tareas </button>
+        <button mat-raised-button type="button"  >Agregar tareas Preestablecidos</button>
+        <br><br>
         <div>
             <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
             &nbsp;
             <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
         </div>
     </form>
+
+    <!--Form Agregar Tareas especificas-->
+
+    <mat-label>Agregar Tareas</mat-label>
+
 </div>
