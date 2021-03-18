@@ -18,7 +18,7 @@ $app->get("/movil-bitacora",function ($request, $response, $args){
 
 //----------------------------------DELETE
 
-$app->delete("/movil-bitacora",function ($request, $response, $args){
+$app->delete("/movil-bitacora/{id}",function ($request, $response, $args){
     $id = $args['id'];
     $db = SQL::connect();
     $model = new MovilBitacora();

@@ -22,7 +22,7 @@ class MovilBitacora {
     //-----------------------------------GET
 
     public function get($db) {
-        $sql = "SELECT $this->fields
+        $sql = "SELECT TOP 10 $this->fields
                 FROM $this->table
                 $this->join
                 WHERE mobiBorrado = 0";
@@ -31,6 +31,8 @@ class MovilBitacora {
             $params = [$_GET["mobiMoviId"]];
             $sql = $sql . "AND mobiMoviId = ? ";
         }
+
+        $sql = $sql . " ORDER BY mobiId desc";
 
         $stmt = SQL::query($db, $sql, $params);
 
@@ -52,7 +54,7 @@ class MovilBitacora {
         $params = [$id];
         $stmt = SQL::query($db, $sql, $params);
 
-        sqlsvr_fetch($stmt);
+        sqlsrv_fetch($stmt);
 
         return [];
     }
@@ -74,7 +76,7 @@ class MovilBitacora {
 	            mobiPendiente, 
 	            mobiFechaAlta,
 	            mobiBorrado)
-                VALUES(?,?,?,?,?,?,?,CONVERT(VARCHAR,GETDATE(),126),?,?,?,CONVERT(VARCHAR,GETDATE(),126),0);
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,CONVERT(VARCHAR,GETDATE(),126),0);
                 
                 SELECT @@IDENTITY mobiId, CONVERT(VARCHAR, GETDATE(),126) mobiFechaAlta;";
         
@@ -87,7 +89,7 @@ class MovilBitacora {
                     DATA["mobiProximoOdometro"],
                     DATA["mobiProximaFecha"],
                     DATA["mobiIdAnterior"],
-                    DATA["mobiSiguiente"],
+                    DATA["mobiIdSiguiente"],
                     DATA["mobiPendiente"]];
         
         $stmt = SQL::query($db, $sql, $params);
@@ -115,8 +117,6 @@ class MovilBitacora {
                     mobiOdometro = ?,
                     mobiProximoOdometro = ?,
                     mobiProximaFecha = ?,
-                    mobiIdAnterior = ?,
-                    mobiIdSiguiente = ?,
                     mobiPendiente = ?
                 WHERE mobiId = ?";
 
@@ -126,9 +126,7 @@ class MovilBitacora {
                     DATA["mobiOdometro"],
                     DATA["mobiProximoOdometro"],
                     DATA["mobiProximaFecha"],
-                    DATA["mobiIdAnterior"],
-                    DATA["mobiSiguiente"],
-                    DATA["mobiPendiente"]];
+                    DATA["mobiPendiente"]]; 
 
         $stmt = SQL::query($db,$sql,$params);
 

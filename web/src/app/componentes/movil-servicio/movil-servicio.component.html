@@ -1,5 +1,5 @@
 <div>
-    <div [hidden]="mostrarFormulario">
+    <div [hidden]="mostrarFormulario" [hidden]="formularioAgregarBitacora">
 
         <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Servicio</button>
 
@@ -25,11 +25,14 @@
             <ng-container matColumnDef="acciones">
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
                 <td mat-cell *matCellDef="let serv">
-                    <button title="editar" mat-raised-button color="primary" style="margin-right: 10px;" (click)="edit(serv)">
+                    <button title="editar servicio" mat-raised-button color="primary" style="margin-right: 10px;" (click)="edit(serv)">
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button title="borrar" mat-raised-button color="primary" (click)="delete(serv)">
+                    <button title="eliminar servicio" mat-raised-button color="primary" style="margin-right: 10px;" (click)="delete(serv)">
                         <mat-icon>delete</mat-icon>
+                    </button>  
+                    <button title="realiar servicio" mat-raised-button color="primary" (click)="agregarBitacora(serv)">
+                        <mat-icon>add</mat-icon>
                     </button>  
                 </td>
             </ng-container>
@@ -67,4 +70,9 @@
        
     </div>
 
+</div>
+
+<div *ngIf="formularioAgregarBitacora">
+    <button mat-raised-button  (click)="cancelar()" style="float: right;">Salir</button>
+    <app-movil-bitacora [moseId]="this.seleccionado.moseId" [moviId]="moviId" [servId]="this.seleccionado.moseServId" [desdeMS]="true"></app-movil-bitacora>
 </div>

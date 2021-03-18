@@ -31,6 +31,8 @@ export class MovilServicioComponent implements OnInit {
   form = new FormGroup({});
 
   mostrarFormulario = false;
+
+  formularioAgregarBitacora = false;
   
   servicios: Servicio[] = [];
   servicio: Servicio[] = [];
@@ -137,8 +139,14 @@ export class MovilServicioComponent implements OnInit {
       });
   }
 
+  agregarBitacora(serv : MovilServicio){
+    this.formularioAgregarBitacora = true;
+    this.seleccionado = serv;
+  }
+
   cancelar() {
     this.mostrarFormulario = false;
+    this.formularioAgregarBitacora = false;
   }
 
 }
