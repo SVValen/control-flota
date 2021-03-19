@@ -208,10 +208,10 @@ PUT http://localhost:8888/index.php/movil-servicio HTTP/1.1
 
 {
     "moseServId": 1,
-    "mosePeriodo": 10,
+    "mosePeriodo": 30,
     "moseKM":12000,
     "moseFecha":0,
-    "moseId":7
+    "moseId":5
     
 }
 
@@ -251,17 +251,17 @@ PUT http://localhost:8888/index.php/movil-bitacora HTTP/1.1
 
 {
     "mobiServId":1,
-    "mobiFecha": "2021-03-22",
-    "mobiObservaciones":"listo servicio pendiente de los 54000.",
-    "mobiOdometro":42000,
-    "mobiProximoOdometro":54000,
+    "mobiFecha": "2021-03-31",
+    "mobiObservaciones":"llisto servicio pendiente. Proximo a los 116000 km.",
+    "mobiOdometro":104000,
+    "mobiProximoOdometro":116000,
     "mobiProximaFecha":"2021-03-18",
-    "mobiIdAnterior":15,
+    "mobiIdAnterior":21,
     "mobiSiguiente":0,
-    "mobiPendiente":0,
+    "mobiPendiente":1,
   
 
-    "mobiId":16
+    "mobiId":22
     
 }
 

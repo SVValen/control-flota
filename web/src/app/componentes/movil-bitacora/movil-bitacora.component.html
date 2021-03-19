@@ -50,53 +50,66 @@
 
     <!--Paginador-->
     
-    <mat-paginator [pageSizeOptions]="[1, 3, 10]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
 </div>
 
+
 <div *ngIf="mostrarFormularioAgregarBitacora">
-
-    <!--Form agregar nueva bitacora-->
-
-    <mat-label style="font-size: 20px; font-weight: 100;">{{label}}</mat-label>
-    <form [formGroup]="form" style="width: 100%;">
-        <mat-form-field appearance="outline" style="width: 100%;" > 
-            <mat-label>Servicio</mat-label>
-            <mat-select formControlName="mobiServId">
-                <mat-option *ngFor="let serv of servicios" [value]="serv.servId">
-                    {{serv.servNombre}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>Fecha</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="mobiFecha" style="width: 100%;">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>                    
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>Observaciones</mat-label>
-            <input matInput formControlName="mobiObservaciones">
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>Odometro</mat-label>
-            <input matInput formControlName="mobiOdometro">
-        </mat-form-field>
-        <br>
-        <button mat-raised-button type="button" style="margin-right: 10px;" >Agregar tareas </button>
-        <button mat-raised-button type="button"  >Agregar tareas Preestablecidos</button>
-        <br><br>
-        <div>
-            <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
-            &nbsp;
-            <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
-        </div>
-    </form>
-
-    <!--Form Agregar Tareas especificas-->
-
-    <mat-label>Agregar Tareas</mat-label>
-
+    <table>
+        <thead>
+            <tr>
+                <th><mat-label style="font-size: 25px; font-weight: 100;">{{label}}</mat-label></th>
+                <th><mat-label style="font-size: 25px; font-weight: 100;">Tareas</mat-label></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>          
+                        <!--Form agregar nueva bitacora-->
+                    
+                        <form [formGroup]="form" style="width: 100%;">
+                            <mat-form-field appearance="outline" style="width: 100%;" > 
+                                <mat-label>Servicio</mat-label>
+                                <mat-select formControlName="mobiServId">
+                                    <mat-option *ngFor="let serv of servicios" [value]="serv.servId">
+                                        {{serv.servNombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Fecha</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="mobiFecha" style="width: 100%;">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>                    
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Observaciones</mat-label>
+                                <input matInput formControlName="mobiObservaciones">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Odometro</mat-label>
+                                <input matInput formControlName="mobiOdometro">
+                            </mat-form-field>
+                            <br>
+                            <button mat-raised-button type="button" (click)="agregarTareasPreestablecidass()" [disabled]="disbledATP" >Agregar tareas Preestablecidos</button>
+                            <br><br>
+                            <div>
+                                <button type="button" mat-raised-button (click)="cancelar()">Cancelar</button>
+                                &nbsp;
+                                <button type="button" mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                            </div>
+                        </form>
+                    
+                </td>
+                <td>
+                    <div style="margin-left: 20px;">
+                        <app-bitacora-tarea [mobiId]="seleccionado.mobiId"></app-bitacora-tarea>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
