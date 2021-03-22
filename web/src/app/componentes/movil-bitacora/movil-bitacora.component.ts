@@ -133,18 +133,7 @@ export class MovilBitacoraComponent implements OnInit {
       }
     )
 
-    this.servicioTareaService.get().subscribe(
-      (tarea) => {
-        this.servicioTarea = tarea;
-      }
-    )
-
-    this.tareaService.get().subscribe(
-      (tareas) => {
-        this.tareas = tareas;
-      }
-    )
-
+    //agregar bitacora programadas
     if(this.desdeMS){
       this.mostrarFormularioAgregarBitacora = true;
       this.form.get('mobiServId')?.setValue(this.servId);
@@ -157,6 +146,7 @@ export class MovilBitacoraComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  //agregar nueva bitacora (no programada o pendiente)
   agregarNuevaBitacora() {
     this.form.reset();
     this.seleccionado = new MovilBitacora();
@@ -172,6 +162,7 @@ export class MovilBitacoraComponent implements OnInit {
     this.form.setValue(seleccionado);
   }
 
+  //agregar bitacora pendiente
   realizarServicio(seleccionado: MovilBitacora){
     this.mostrarFormularioAgregarBitacora = true;
     this.agregarTareasPreestablecidas = true;
@@ -189,9 +180,6 @@ export class MovilBitacoraComponent implements OnInit {
     }
 
     let moseKM = 0;
-    let mosePeriodo =0;
-
-    
 
     if(this.desdeMS){ //desde grilla movil-servicio (nuevo servicio programado)
 
@@ -205,17 +193,15 @@ export class MovilBitacoraComponent implements OnInit {
       
       
       moseKM = this.movilServicios.find(x => x.moseId = this.seleccionado.mobiMoseId)!.moseKM;
-      mosePeriodo = this.movilServicios.find(x => x.moseId = this.seleccionado.mobiMoseId)!.mosePeriodo;
-
       this.seleccionado.mobiProximoOdometro = +this.seleccionado.mobiOdometro + +moseKM;
+
+      //actualizar mobiProximaFecha
+      this.actualizarProximaFecha(this.seleccionado);
+
       this.seleccionado.mobiPendiente = true;
       // this.seleccionado.mobiIdAnterior && this.seleccionado.mobiIdSiguiente null pues estamos creando nueva bitacora
 
       this.movilBitacoraService.post(this.seleccionado).subscribe();
-
-      this.items = this.items.filter(x => x.mobiId !== this.seleccionado.mobiId);
-      this.seleccionado.servNombre = this.servicios.find(x => x.servId = this.seleccionado.mobiServId)!.servNombre;
-      this.items.push(this.seleccionado);
 
       //agregar tareas preestablecidas
       if(this.agregarTareasPreestablecidas){
@@ -224,15 +210,13 @@ export class MovilBitacoraComponent implements OnInit {
 
       this.desdeMS = false;
 
-
-      
-
     } else if (this.desdeGBitacora){ //nueva bitacora desde grilla de bitacora (servicio pendiente)
 
       alert("Servicio agregado desde Grilla Bitacora. Servicio Pendiente.")
+
       //actualizar el estado pendiente de la bitacora anterior a falso
       this.seleccionado.mobiPendiente = false;
-      //this.movilBitacoraService.put(this.seleccionado).subscribe();
+      this.movilBitacoraService.put(this.seleccionado).subscribe();
 
       //cargar bitacora siguiente
 
@@ -244,55 +228,48 @@ export class MovilBitacoraComponent implements OnInit {
       moseKM = this.movilServicios.find(x => x.moseId = this.seleccionado.mobiMoseId)!.moseKM;
       this.seleccionado.mobiProximoOdometro = +this.seleccionado.mobiOdometro + +moseKM;
 
-      mosePeriodo = this.movilServicios.find(x => x.moseId = this.seleccionado.mobiMoseId)!.mosePeriodo;
+      //actualizar mobiProximaFecha
+      this.actualizarProximaFecha(this.seleccionado);
 
-      this.seleccionado.mobiProximaFecha = this.seleccionado.mobiFecha;
-      this.seleccionado.mobiProximaFecha.setDate(this.seleccionado.mobiProximaFecha.getDate() + mosePeriodo);
-      
-      this.seleccionado.mobiProximaFecha;
-
-      this.seleccionado.mobiFecha = this.form.value.mobiFecha;
-
-      this.seleccionado;
-      debugger
-      debugger
-
-      //mobiProximafecha un bardo calcular
       this.seleccionado.mobiPendiente = true;
       this.seleccionado.mobiIdAnterior = this.seleccionado.mobiId;
       //mobIdSiguiente null
 
       this.movilBitacoraService.post(this.seleccionado).subscribe();
 
-      this.items = this.items.filter(x => x.mobiId !== this.seleccionado.mobiId);
-      this.seleccionado.servNombre = this.servicios.find(x => x.servId = this.seleccionado.mobiServId)!.servNombre;
-      this.items.push(this.seleccionado);
-
       //agregar tareas preestablecidas
       if(this.agregarTareasPreestablecidas){
         this.tareasPreestablecidad(this.seleccionado);
       }
-
-
 
       this.desdeGBitacora = false;
 
     } else if(this.seleccionado.mobiId) { //editar bitacora existente
         alert("Editar Servicio")
         this.seleccionado.mobiServId = this.form.value.mobiServId;
-        this.seleccionado.mobiFecha = this.form.value.mobiFecha;
         this.seleccionado.mobiObservaciones = this.form.value.mobiObservaciones;
-        this.seleccionado.mobiOdometro = this.form.value.mobiOdometro;
+        
+        //si edito odometro
+        if(this.form.value.mobiOdometro !== this.seleccionado.mobiOdometro ){
+          this.seleccionado.mobiOdometro = this.form.value.mobiOdometro;
 
-        moseKM = this.movilServicios.find(x => x.moseId = this.seleccionado.mobiMoseId)!.moseKM;
-        this.seleccionado.mobiProximoOdometro = +this.seleccionado.mobiOdometro + +moseKM;
-      
-        //TODO actualizar valor mobiProximaFecha
+          moseKM = this.movilServicios.find(x => x.moseId = this.seleccionado.mobiMoseId)!.moseKM;
+          this.seleccionado.mobiProximoOdometro = +this.seleccionado.mobiOdometro + +moseKM;
+        }
+        //si edito fecha
+        if(this.form.value.mobiFecha !== this.seleccionado.mobiFecha){
+          this.seleccionado.mobiFecha = this.form.value.mobiFecha;
+
+          //actualizar mobiProximaFecha
+          this.actualizarProximaFecha(this.seleccionado);
+        }
 
         this.movilBitacoraService.put(this.seleccionado).subscribe();
-        this.items = this.items.filter(x => x.mobiId != this.seleccionado.mobiId);
-        this.seleccionado.servNombre = this.servicios.find(x => x.servId = this.seleccionado.mobiServId)!.servNombre;
-        this.items.push(this.seleccionado);
+
+        //agregar tareas preestablecidas
+        if(this.agregarTareasPreestablecidas){
+          this.tareasPreestablecidad(this.seleccionado);
+        }
 
        }else{ //agregar bitacora no programada ni pendiente
 
@@ -308,21 +285,36 @@ export class MovilBitacoraComponent implements OnInit {
         //  this.seleccionado.mobiProximoOdometro,this.seleccionado.mobiProximaFecha, this.seleccionado.mobiIdAnterior, this.seleccionado.mobiIdSiguiente, this.seleccionado.mobiPendiente null pues es un servicio no programado
 
         this.movilBitacoraService.post(this.seleccionado).subscribe();
-        this.items = this.items.filter(x => x.mobiId != this.seleccionado.mobiId);
-        this.seleccionado.servNombre = this.servicios.find(x => x.servId = this.seleccionado.mobiServId)!.servNombre;
-        this.items.push(this.seleccionado);
+        
       }
+
       this.mostrarFormularioAgregarBitacora = false;
+
+      this.items = this.items.filter(x => x.mobiId !== this.seleccionado.mobiId);
+      this.seleccionado.servNombre = this.servicios.find(
+                                                  x => x.servId == this.seleccionado.mobiServId)!.servNombre;
+      this.items.push(this.seleccionado);
+
       this.actualizarTabla();
     }
+
+  //actualizar mobiProximaFecha
+  actualizarProximaFecha(seleccionado : MovilBitacora){
+    let mosePeriodo = this.movilServicios.find(x => x.moseId = seleccionado.mobiMoseId)!.mosePeriodo;
+    
+    let fecha = new Date(seleccionado.mobiFecha.getFullYear(),
+                        seleccionado.mobiFecha.getMonth(),
+                        seleccionado.mobiFecha.getDate());
+
+    fecha.setDate(fecha.getDate() + mosePeriodo);
+    seleccionado.mobiProximaFecha = fecha;
+  }
 
   delete(seleccionado: MovilBitacora) {
     const dialogRef = this.matDialog.open(ConfirmarComponent);
 
     dialogRef.afterClosed().subscribe(
       (result) => {
-        console.log(`Dialog Result: ${result}`);
-
         if(result) {
           this.movilBitacoraService.delete(seleccionado.mobiId).subscribe(
             () => {
@@ -339,13 +331,9 @@ export class MovilBitacoraComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       (result) => {
-        console.log(`Dialog Result: ${result}`);
-
         if(result) {
           this.agregarTareasPreestablecidas = true;
-
           this.matDialog.open(AlertaExitoComponent);
-
         }
       });
   }
@@ -353,9 +341,15 @@ export class MovilBitacoraComponent implements OnInit {
   //agregar tareas preestablecidas
   tareasPreestablecidad(seleccionado: MovilBitacora){
 
-    this.movilBitacoraService.get().subscribe(
-      (bita) => {
-        this.items = bita;
+    this.servicioTareaService.get().subscribe(
+      (tarea) => {
+        this.servicioTarea = tarea;
+      }
+    )
+
+    this.tareaService.get().subscribe(
+      (tareas) => {
+        this.tareas = tareas;
       }
     )
 
@@ -369,14 +363,13 @@ export class MovilBitacoraComponent implements OnInit {
       
       this.bitaTarea.bitaTareId = i.setaTareId;
       this.bitaTarea.bitaObservaciones = '';//this.tareas.find(x => x.tareId = i.setaTareId)!.tareDescripcion;
-      this.bitaTarea.bitaMobiId = this.items.find(x => x.mobiBorrado == 0)!.mobiId;;
-      debugger
-      this.bitaTarea.bitaCosto = this.tareas.find(x => x.tareId = i.setaTareId)!.tareCosto;
-      this.bitaTarea.bitaCantidad = this.tareas.find(x => x.tareId = i.setaTareId)!.tareCantidad;
+      this.bitaTarea.bitaMobiId = this.items.find(x => x.mobiBorrado == 0)!.mobiId;
+      this.bitaTarea.bitaCosto = this.tareas.find(x => x.tareId == i.setaTareId)!.tareCosto;
+      this.bitaTarea.bitaCantidad = this.tareas.find(x => x.tareId == i.setaTareId)!.tareCantidad;
     
       this.bitacoraTareaService.post(this.bitaTarea).subscribe();
       this.bitacoraTarea.filter(x => x.bitaId !== this.bitaTarea.bitaId);
-      this.bitaTarea.tareNombre = this.tareas.find(x => x.tareId = i.setaTareId)!.tareNombre;
+      this.bitaTarea.tareNombre = this.tareas.find(x => x.tareId == i.setaTareId)!.tareNombre;
       this.bitacoraTarea.push(this.bitaTarea);
 
     })

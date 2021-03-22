@@ -274,7 +274,7 @@ GET http://localhost:8888/index.php/bitacora-tarea HTTP/1.1
 
 ###
 
-DELETE http://localhost:8888/index.php/bitacora-tarea/2 HTTP/1.1
+DELETE http://localhost:8888/index.php/bitacora-tarea/12 HTTP/1.1
 
 
 ###
