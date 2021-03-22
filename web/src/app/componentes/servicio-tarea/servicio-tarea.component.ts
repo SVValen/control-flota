@@ -22,7 +22,6 @@ export class ServicioTareaComponent implements OnInit {
 
   @Input() servId: number = 0;
 
-  items: ServicioTarea[] = [];
   seleccionado = new ServicioTarea();
 
   columnas: string[] = ['tareNombre','acciones'];
@@ -64,7 +63,7 @@ export class ServicioTareaComponent implements OnInit {
 
     this.servicioTareaService.get(`setaServId=${this.servId}`).subscribe(
       (servTare) => {
-        this.items = servTare;
+        this.servicioTareaService.items = servTare;
         this.actualizarTabla();
       });
 
@@ -75,7 +74,7 @@ export class ServicioTareaComponent implements OnInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.items;
+    this.dataSource.data = this.servicioTareaService.items;
     this.dataSource.paginator = this.paginator;
   }
 
@@ -103,8 +102,8 @@ export class ServicioTareaComponent implements OnInit {
     Object.assign(this.seleccionado, this.form.value);
 
     this.seleccionado.tareNombre = this.tarea.find(tarea => tarea.tareId == this.seleccionado.setaTareId)!.tareNombre;
-    this.items = this.items.filter(x => x.setaId != this.seleccionado.setaId);
-    this.items.push(this.seleccionado);
+    this.servicioTareaService.items = this.servicioTareaService.items.filter(x => x.setaId != this.seleccionado.setaId);
+    this.servicioTareaService.items.push(this.seleccionado);
 
     this.mostrarFormulario = false;
     this.actualizarTabla();

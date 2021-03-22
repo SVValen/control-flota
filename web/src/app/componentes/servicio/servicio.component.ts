@@ -109,13 +109,16 @@ export class ServicioComponent implements OnInit, AfterViewInit {
     if (this.seleccionado.servId) {
       this.servicioService.put(this.seleccionado)
         .subscribe(() => {
+          this.items = this.items.filter(x => x.servId !== this.seleccionado.servId);
+          this.items.push(this.seleccionado);  
           this.actualizarDetalle(this.seleccionado.servId);
         });
 
     } else {
       this.servicioService.post(this.seleccionado)
-        .subscribe((servicio) => {
-          this.items = servicio;
+        .subscribe(() => {
+          this.items = this.items.filter(x => x.servId !== this.seleccionado.servId);
+          this.items.push(this.seleccionado);  
           this.actualizarDetalle(this.seleccionado.servId);
         });
   }
@@ -124,7 +127,7 @@ export class ServicioComponent implements OnInit, AfterViewInit {
 
 }
 
-delete(row: Servicio) {
+delete(seleccionado: Servicio) {
   const dialogRef = this.dialog.open(ConfirmarComponent);
 
   dialogRef.afterClosed().subscribe(
@@ -132,10 +135,9 @@ delete(row: Servicio) {
       console.log(`Dialog resulr: ${result}`);
 
       if (result) {
-        this.servicioService.delete(row.servId).subscribe(
+        this.servicioService.delete(seleccionado.servId).subscribe(
           () => {
-            this.items = this.items.filter( x => x !== row);
-
+            this.items = this.items.filter( x => x.servId !== seleccionado.servId);
             this.actualizarTabla();
           });
       }
@@ -143,7 +145,7 @@ delete(row: Servicio) {
 }
 
 actualizarDetalle(servId:number){
-  this.itemsTareas.forEach((i) => {
+  this.servicioTareaService.items.forEach((i) => {
     i.setaServId = servId;
 
     if (i.setaBorrado){

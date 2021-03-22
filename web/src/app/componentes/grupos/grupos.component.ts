@@ -101,22 +101,28 @@ export class GruposComponent implements OnInit, AfterViewInit {
 
     Object.assign(this.seleccionado, this.form.value);
 
+    this.seleccionado.grupNombre = this.items.find(x => x.grupId == this.seleccionado.grupId)!.grupNombre;
+    
     if(this.seleccionado.grupId) {
       this.grupoService.put(this.seleccionado)
         .subscribe(() => {
+          this.items = this.items.filter(x => x.grupId !== this.seleccionado.grupId);
+          this.items.push(this.seleccionado);  
           this.actualizarDetalle(this.seleccionado.grupId);
         });
     } else {
       this.grupoService.post(this.seleccionado)
-        .subscribe((grupo) => {
-          this.items = grupo;
+        .subscribe(() => {
+          this.items = this.items.filter(x => x.grupId !== this.seleccionado.grupId);
+          this.items.push(this.seleccionado);  
           this.actualizarDetalle(this.seleccionado.grupId);
         });
     }
+
+    this.actualizarTabla();
   }
 
-
-  delete(row: Grupo) {
+  delete(seleccionado: Grupo) {
     const dialogRef = this.dialog.open(ConfirmarComponent);
 
     dialogRef.afterClosed().subscribe(
@@ -124,15 +130,9 @@ export class GruposComponent implements OnInit, AfterViewInit {
         console.log(`Dialog Result: ${result}`);
 
         if(result) {
-          this.grupoService.delete(row.grupId)
+          this.grupoService.delete(seleccionado.grupId)
             .subscribe(() => {
-              this.items = this.items.filter((item) => {
-                if (item.grupId != row.grupId) {
-                  return true
-                } else {
-                  return false
-                }
-              });
+              this.items = this.items.filter(x => x.grupId !== seleccionado.grupId);
               this.actualizarTabla();
             });
         }
@@ -140,9 +140,10 @@ export class GruposComponent implements OnInit, AfterViewInit {
   }
 
   actualizarDetalle(grupId:number){
-    this.itemsServicios.forEach((i) => {
+    this.grupoServicioService.items.forEach((i) => {
       i.grusGrupId = grupId;
   
+      debugger
       if (i.grusBorrado){
         this.grupoServicioService.delete(i.grusId).subscribe();
       }

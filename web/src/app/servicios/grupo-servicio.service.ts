@@ -13,6 +13,8 @@ import { GrupoServicio } from '../modelo/grupo-servicio'
 export class GrupoServicioService
   extends ApiService<GrupoServicio> {
 
+    items: GrupoServicio[] = [];
+
   constructor(
     protected http: HttpClient,
     protected app: AppConfigService

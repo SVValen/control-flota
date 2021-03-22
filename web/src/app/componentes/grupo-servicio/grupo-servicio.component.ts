@@ -22,7 +22,6 @@ export class GrupoServicioComponent implements OnInit {
 
   @Input() grupId: number = 0;
 
-  items : GrupoServicio[] = [];
   seleccionado = new GrupoServicio();
 
   columnas: string [] = ['servNombre','grusPeriodo','grusKM','acciones'];
@@ -67,7 +66,7 @@ export class GrupoServicioComponent implements OnInit {
 
     this.grupoServicioService.get(`grusGrupId=${this.grupId}`).subscribe(
       (grus) => {
-        this.items = grus;
+        this.grupoServicioService.items = grus;
         this.actualizarTabla();
       });
 
@@ -78,7 +77,7 @@ export class GrupoServicioComponent implements OnInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.items;
+    this.dataSource.data = this.grupoServicioService.items;
     this.dataSource.paginator = this.paginator;
   }
 
@@ -106,8 +105,9 @@ export class GrupoServicioComponent implements OnInit {
     Object.assign(this.seleccionado, this.form.value);
 
     this.seleccionado.servNombre = this.servicios.find(serv => serv.servId == this.seleccionado.grusServId)!.servNombre;
-    this.items = this.items.filter(x => x.grusId != this.seleccionado.grusId);
-    this.items.push(this.seleccionado);
+    this.grupoServicioService.items = this.grupoServicioService.items.filter(x => x.grusId !== this.seleccionado.grusId);
+    this.grupoServicioService.items.push(this.seleccionado);
+    debugger
 
     this.mostrarFormulario = false;
     this.actualizarTabla();

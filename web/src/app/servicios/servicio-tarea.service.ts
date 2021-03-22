@@ -12,6 +12,8 @@ import { AppConfigService } from '../core/config.service';
 export class ServicioTareaService
   extends ApiService<ServicioTarea> {
 
+    items: ServicioTarea[] = [];
+
   constructor(
     protected http: HttpClient,
     protected app: AppConfigService
