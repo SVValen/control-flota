@@ -142,8 +142,7 @@ export class GruposComponent implements OnInit, AfterViewInit {
   actualizarDetalle(grupId:number){
     this.grupoServicioService.items.forEach((i) => {
       i.grusGrupId = grupId;
-  
-      debugger
+
       if (i.grusBorrado){
         this.grupoServicioService.delete(i.grusId).subscribe();
       }

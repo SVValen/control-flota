@@ -107,7 +107,6 @@ export class GrupoServicioComponent implements OnInit {
     this.seleccionado.servNombre = this.servicios.find(serv => serv.servId == this.seleccionado.grusServId)!.servNombre;
     this.grupoServicioService.items = this.grupoServicioService.items.filter(x => x.grusId !== this.seleccionado.grusId);
     this.grupoServicioService.items.push(this.seleccionado);
-    debugger
 
     this.mostrarFormulario = false;
     this.actualizarTabla();
