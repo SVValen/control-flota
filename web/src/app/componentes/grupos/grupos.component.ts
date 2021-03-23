@@ -24,8 +24,6 @@ export class GruposComponent implements OnInit, AfterViewInit {
   items : Grupo[] = [];
   seleccionado = new Grupo();
 
-  itemsServicios : GrupoServicio[] = [];
-
   label = '';
 
   columnas: string[] = ['grupNombre','grupDescripcion','acciones'];

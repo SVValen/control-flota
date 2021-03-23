@@ -57,7 +57,7 @@
             <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Servicio</mat-label>
                 <mat-select formControlName="moseServId" required>
-                    <mat-option *ngFor="let serv of servicios" [value]="serv.servId">
+                    <mat-option *ngFor="let serv of items" [value]="serv.moseServId">
                         {{serv.servNombre}}
                     </mat-option>
                 </mat-select>
