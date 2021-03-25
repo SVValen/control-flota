@@ -87,7 +87,7 @@ export class BitacoraTareaComponent implements OnInit {
       }
     )
 
-    this.servicioTareaService.get(`setaServId=${this.movilBitacoraService.items.mobiServId}`).subscribe(
+    this.servicioTareaService.get(`setaServId=${this.movilBitacoraService.mobiSelected.mobiServId}`).subscribe(
       (servTare) => {
         this.servicioTarea = servTare;
       }

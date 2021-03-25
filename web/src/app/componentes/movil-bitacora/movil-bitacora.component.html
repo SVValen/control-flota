@@ -20,9 +20,14 @@
             <td mat-cell *matCellDef="let bit"> {{bit.mobiObservaciones}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="mobiOdometro">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Odometro </th>
-            <td mat-cell *matCellDef="let bit"> {{bit.mobiOdometro}} </td>
+        <ng-container matColumnDef="mobiProximoOdometro">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Proximo Odometro </th>
+            <td mat-cell *matCellDef="let bit"> {{bit.mobiProximoOdometro}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mobiProximaFecha">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Proxima Fecha </th>
+            <td mat-cell *matCellDef="let bit"> {{bit.mobiProximaFecha}} </td>
         </ng-container>
 
         <ng-container matColumnDef="acciones">
@@ -59,7 +64,7 @@
         <thead>
             <tr>
                 <th><mat-label style="font-size: 25px; font-weight: 100;">{{label}}</mat-label></th>
-                <th><mat-label style="font-size: 25px; font-weight: 100;">Tareas</mat-label></th>
+                <th [hidden]="!movilBitacoraService.mobiSelected.mobiServId"><mat-label style="font-size: 25px; font-weight: 100;">Tareas</mat-label></th>
             </tr>
         </thead>
         <tbody>
@@ -70,8 +75,8 @@
                         <form [formGroup]="form" style="width: 100%;">
                             <mat-form-field appearance="outline" style="width: 100%;" > 
                                 <mat-label>Servicio</mat-label>
-                                <mat-select formControlName="mobiServId">
-                                    <mat-option *ngFor="let serv of movilServicios" [value]="serv.moseServId">
+                                <mat-select (selectionChange)="mobiServIdChange($event)" formControlName="mobiServId">
+                                    <mat-option *ngFor="let serv of movilServicios" [value]="serv.moseServId" [disabled]="movilBitacoraService.mobiSelected.mobiServId !== 0">
                                         {{serv.servNombre}}
                                     </mat-option>
                                 </mat-select>
@@ -103,7 +108,7 @@
                     
                 </td>
                 <td>
-                    <div style="margin-left: 20px;">
+                    <div *ngIf="movilBitacoraService.mobiSelected.mobiServId" style="margin-left: 20px;">
                         <app-bitacora-tarea [mobiId]="seleccionado.mobiId"></app-bitacora-tarea>
                     </div>
                 </td>

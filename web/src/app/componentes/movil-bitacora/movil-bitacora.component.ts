@@ -35,7 +35,7 @@ export class MovilBitacoraComponent implements OnInit {
   items : MovilBitacora[] = []
   seleccionado= new MovilBitacora();
 
-  columnas : string[] = ['servNombre','mobiFecha','mobiObservaciones','mobiOdometro','acciones'];
+  columnas : string[] = ['servNombre','mobiFecha','mobiObservaciones','mobiProximoOdometro','mobiProximaFecha','acciones'];
   dataSource = new MatTableDataSource<MovilBitacora>();
 
   form = new FormGroup({});
@@ -51,12 +51,11 @@ export class MovilBitacoraComponent implements OnInit {
 
   mostrarFormularioAgregarBitacora = false;
   agregarTareasPreestablecidas = false;
-  isSetIdServ = false;
   desdeGBitacora = false;
   disbledATP = false;
 
   constructor(
-    private movilBitacoraService: MovilBitacoraService,
+    public movilBitacoraService: MovilBitacoraService,
     private servicioService: ServicioService,
     private bitacoraTareaService: BitacoraTareaService,
     private movilServicioService: MovilServicioService,
@@ -117,8 +116,7 @@ export class MovilBitacoraComponent implements OnInit {
 
     //agregar bitacora programadas
     if(this.desdeMS){
-      this.isSetIdServ = false;
-      this.movilBitacoraService.items.mobiServId = this.movilServicioService.items.moseServId;
+      this.movilBitacoraService.mobiSelected.mobiServId = this.movilServicioService.items.moseServId;
       this.mostrarFormularioAgregarBitacora = true;
       this.form.get('mobiServId')?.setValue(this.movilServicioService.items.moseServId);
       this.label = 'Agregar Bitacora';
@@ -132,7 +130,6 @@ export class MovilBitacoraComponent implements OnInit {
 
   //agregar nueva bitacora (no programada ni pendiente)
   agregarNuevaBitacora() {
-    this.isSetIdServ = true;
     this.form.reset();
     this.seleccionado = new MovilBitacora();
     this.mostrarFormularioAgregarBitacora = true;
@@ -141,8 +138,7 @@ export class MovilBitacoraComponent implements OnInit {
   }
 
   edit(seleccionado: MovilBitacora) {
-    this.isSetIdServ = false;
-    this.movilBitacoraService.items.mobiServId = seleccionado.mobiServId;
+    this.movilBitacoraService.mobiSelected.mobiServId = seleccionado.mobiServId;
     this.label ="Editar Bitacora"
     this.mostrarFormularioAgregarBitacora = true;
     this.seleccionado = seleccionado;
@@ -151,14 +147,12 @@ export class MovilBitacoraComponent implements OnInit {
 
   //agregar bitacora pendiente
   realizarServicio(seleccionado: MovilBitacora){
-
-    this.isSetIdServ = false;
-    this.movilBitacoraService.items.mobiServId = seleccionado.mobiServId;
+    this.movilBitacoraService.mobiSelected.mobiServId = seleccionado.mobiServId;
     this.mostrarFormularioAgregarBitacora = true;
     this.label = 'Agregar Bitacora Pendiente';
     this.desdeGBitacora = true;
     this.seleccionado = seleccionado;
-    this.movilBitacoraService.items = seleccionado;
+    this.movilBitacoraService.mobiSelected = seleccionado;
     this.form.reset();
     this.form.get('mobiServId')!.setValue(this.seleccionado.mobiServId);
   }
@@ -192,6 +186,10 @@ export class MovilBitacoraComponent implements OnInit {
 
       this.movilBitacoraService.post(this.seleccionado).subscribe();
 
+      this.items = this.items.filter(x => x.mobiId !== this.seleccionado.mobiId);
+      this.items.push(this.seleccionado);
+      this.agregarTareas(this.seleccionado.mobiId);
+
       this.desdeMS = false;
 
     } else if (this.desdeGBitacora){ //nueva bitacora desde grilla de bitacora (servicio pendiente)
@@ -220,7 +218,6 @@ export class MovilBitacoraComponent implements OnInit {
       //mobIdSiguiente null
 
       this.movilBitacoraService.post(this.seleccionado).subscribe();
-
       this.agregarTareas(this.seleccionado.mobiId);
 
       this.desdeGBitacora = false;
@@ -274,6 +271,7 @@ export class MovilBitacoraComponent implements OnInit {
       this.seleccionado.servNombre = this.servicios.find(x => x.servId == this.seleccionado.mobiServId)!.servNombre;
       this.items.push(this.seleccionado);
       this.actualizarTabla();
+      
     }
 
   agregarTareas(mobiId: number){
@@ -320,10 +318,17 @@ export class MovilBitacoraComponent implements OnInit {
       });
   }
 
+  mobiServIdChange(event: any){
+    console.log(event.value);
+
+    this.movilBitacoraService.mobiSelected.mobiServId = event.value;
+  }
+
   cancelar() {
     this.form.reset();
     this.mostrarFormularioAgregarBitacora = false;
     this.label = 'Bitacoras Recientes'
+    this.movilBitacoraService.mobiSelected.mobiServId = 0;
   }
  
 }

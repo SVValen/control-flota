@@ -12,7 +12,7 @@ import {MovilBitacora } from '../modelo/movil-bitacora';
 export class MovilBitacoraService 
   extends ApiService<MovilBitacora>{
 
-    items = new MovilBitacora();
+    mobiSelected = new MovilBitacora();
 
   constructor( 
     protected http: HttpClient,
