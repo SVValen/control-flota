@@ -13,6 +13,8 @@ import { MovilServicio } from '../modelo/movil-servicio'
 export class MovilServicioService 
   extends ApiService<MovilServicio>{
 
+    items = new MovilServicio();
+
   constructor(
     protected http: HttpClient,
     protected app: AppConfigService

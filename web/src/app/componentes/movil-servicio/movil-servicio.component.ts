@@ -143,6 +143,7 @@ export class MovilServicioComponent implements OnInit {
 
   agregarBitacora(serv : MovilServicio){
     this.formularioAgregarBitacora = true;
+    this.movilServicioService.items = serv;
     this.seleccionado = serv;
   }
 

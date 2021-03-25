@@ -20,6 +20,7 @@ import { BitacoraTareaService } from '../../servicios/bitacora-tarea.service'
 
 import { MovilServicio } from '../../modelo/movil-servicio';
 import { MovilServicioService } from '../../servicios/movil-servicio.service';
+import { MovilService } from 'src/app/servicios/movil.service';
 
 
 @Component({
@@ -29,10 +30,7 @@ import { MovilServicioService } from '../../servicios/movil-servicio.service';
 })
 export class MovilBitacoraComponent implements OnInit {
 
-  @Input() moviId: number= 0;
-  @Input() servId: number = 0;
   @Input() desdeMS: boolean = false;
-  @Input() moseId: number = 0;
 
   items : MovilBitacora[] = []
   seleccionado= new MovilBitacora();
@@ -62,6 +60,7 @@ export class MovilBitacoraComponent implements OnInit {
     private servicioService: ServicioService,
     private bitacoraTareaService: BitacoraTareaService,
     private movilServicioService: MovilServicioService,
+    private movilService: MovilService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog
   ) { }
@@ -97,7 +96,7 @@ export class MovilBitacoraComponent implements OnInit {
     });
 
 
-    this.movilBitacoraService.get(`mobiMoviId=${this.moviId}`).subscribe(
+    this.movilBitacoraService.get(`mobiMoviId=${this.movilService.item.moviId}`).subscribe(
       (movil) => {
         this.items = movil;
         this.actualizarTabla();
@@ -110,7 +109,7 @@ export class MovilBitacoraComponent implements OnInit {
       }
     );
 
-    this.movilServicioService.get(`moseMoviId=${this.moviId}`).subscribe(
+    this.movilServicioService.get(`moseMoviId=${this.movilService.item.moviId}`).subscribe(
       (movil) => {
         this.movilServicios = movil;
       }
@@ -119,9 +118,9 @@ export class MovilBitacoraComponent implements OnInit {
     //agregar bitacora programadas
     if(this.desdeMS){
       this.isSetIdServ = false;
-      this.movilBitacoraService.items.mobiServId = this.moseId;
+      this.movilBitacoraService.items.mobiServId = this.movilServicioService.items.moseServId;
       this.mostrarFormularioAgregarBitacora = true;
-      this.form.get('mobiServId')?.setValue(this.servId);
+      this.form.get('mobiServId')?.setValue(this.movilServicioService.items.moseServId);
       this.label = 'Agregar Bitacora';
     }
   }
@@ -174,9 +173,9 @@ export class MovilBitacoraComponent implements OnInit {
     if(this.desdeMS){ //desde grilla movil-servicio (nuevo servicio programado)
 
       alert("Bitacora agregada desde movil servicio. Servicio Programado.")
-      this.seleccionado.mobiMoviId = this.moviId;
-      this.seleccionado.mobiServId = this.servId;
-      this.seleccionado.mobiMoseId = this.moseId;
+      this.seleccionado.mobiMoviId = this.movilServicioService.items.moseMoviId;
+      this.seleccionado.mobiServId = this.movilServicioService.items.moseServId;
+      this.seleccionado.mobiMoseId = this.movilServicioService.items.moseId;
       this.seleccionado.mobiFecha = this.form.value.mobiFecha;
       this.seleccionado.mobiObservaciones = this.form.value.mobiObservaciones;
       this.seleccionado.mobiOdometro = this.form.value.mobiOdometro;
@@ -257,7 +256,7 @@ export class MovilBitacoraComponent implements OnInit {
        }else{ //agregar bitacora no programada ni pendiente
 
         alert("Servicio agregado desde pantalla Bitacora. Servicio No Programado.")
-        this.seleccionado.mobiMoviId = this.moviId;
+        this.seleccionado.mobiMoviId = this.movilService.item.moviId;
         // this.seleccionado.mobiMoseId null pues es un servicio no programado
         this.seleccionado.mobiServId = this.form.value.mobiServId;
         this.seleccionado.mobiFecha = this.form.value.mobiFecha;

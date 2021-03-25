@@ -74,5 +74,5 @@
 
 <div *ngIf="formularioAgregarBitacora">
     <button mat-raised-button  (click)="cancelar()" style="float: right;">Salir</button>
-    <app-movil-bitacora [moseId]="this.seleccionado.moseId" [moviId]="moviId" [servId]="this.seleccionado.moseServId" [desdeMS]="true"></app-movil-bitacora>
+    <app-movil-bitacora [desdeMS]="true"></app-movil-bitacora>
 </div>

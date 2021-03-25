@@ -14,6 +14,8 @@ export class MovilService
 
     movilOdometro = new Movil();
 
+    item = new Movil();
+
   constructor(
     protected http: HttpClient,
     protected app: AppConfigService

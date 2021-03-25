@@ -12,8 +12,6 @@ import { MovilGrupoService } from '../../servicios/movil-grupo.service';
 
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { AlertaExitoComponent } from 'src/app/shared/alerta-exito/alerta-exito.component';
-
 
 
 @Component({
@@ -96,7 +94,7 @@ export class MovilComponent implements OnInit {
   verMas(seleccionado:Movil) {
     this.mostrarFormularioMantenimiento = true;
     this.seleccionado = seleccionado;
-
+    this.movilServicio.item = seleccionado;
     this.movilGrupoService.get(`mogrMoviId=${this.seleccionado.moviId}`).subscribe(
       (grupos) => {
         this.gruposMovil = grupos;
