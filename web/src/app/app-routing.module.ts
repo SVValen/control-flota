@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GruposComponent } from './componentes/grupos/grupos.component';
 import { HomeComponent } from './componentes/home/home.component'
 import { MovilComponent } from './componentes/movil/movil.component';
+import { PendientesComponent } from './componentes/pendientes/pendientes.component';
 import { ServicioComponent } from './componentes/servicio/servicio.component';
 import { TareasComponent } from './componentes/tareas/tareas.component';
 
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'servicios', component: ServicioComponent},
   { path: 'tareas', component: TareasComponent},
   { path: 'movil', component: MovilComponent},
+  { path: 'pendientes', component: PendientesComponent}
 
 
 ];

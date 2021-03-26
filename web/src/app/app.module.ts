@@ -45,6 +45,7 @@ import { MovilGrupoComponent } from './componentes/movil-grupo/movil-grupo.compo
 import { AgregarMovilComponent } from './componentes/agregar-movil/agregar-movil.component';
 import { AlertaExitoComponent } from './shared/alerta-exito/alerta-exito.component';
 import { AlertaErrorComponent } from './shared/alerta-error/alerta-exito.component';
+import { PendientesComponent } from './componentes/pendientes/pendientes.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { AlertaErrorComponent } from './shared/alerta-error/alerta-exito.compone
     MovilGrupoComponent,
     AgregarMovilComponent,
     AlertaExitoComponent,
-    AlertaErrorComponent
+    AlertaErrorComponent,
+    PendientesComponent
   ],
   imports: [
     BrowserModule,
