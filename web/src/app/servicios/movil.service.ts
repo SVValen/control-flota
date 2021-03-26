@@ -12,6 +12,8 @@ import { Movil } from '../modelo/movil';
 export class MovilService
   extends ApiService<Movil> {
 
+    items: Movil[] = [];
+
     movilOdometro = new Movil();
 
     item = new Movil();

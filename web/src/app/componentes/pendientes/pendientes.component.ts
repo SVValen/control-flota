@@ -50,6 +50,7 @@ export class PendientesComponent implements OnInit {
   actualizarTabla(){
     this.dataSource.data = this.items;
   }
+  
 
   edit(serv: MovilBitacora){
 

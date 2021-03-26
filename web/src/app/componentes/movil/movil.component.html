@@ -6,7 +6,11 @@
                 <mat-label style="font-size: 25px; font-weight: 100">Móviles en Control de Flota</mat-label>
             
             &nbsp;
-            
+
+            <app-buscador
+            (buscando)="itemsBuscados($event)"
+            [desdeMovil]="true"></app-buscador>
+
             <!--Buscador en memoria-->
             <mat-form-field id="filtro" appearance="legacy">
                 <mat-label>Buscar patente, descripcion, dependencia..</mat-label>

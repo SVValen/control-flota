@@ -71,18 +71,16 @@ export class MovilComponent implements OnInit {
       poliza: [''],
       numeromotor: ['']
     })
-    
-    this.movilServicio.get("activo=1").subscribe(
-      (movil) => {
-        this.items = movil;
-        this.actualizarTabla();
-      }
-    )
   
   }
 
+  itemsBuscados(movil: Movil[]){
+    this.dataSource.data = movil;
+    this.dataSource.paginator = this.paginator;
+  }
+
   actualizarTabla() {
-    this.dataSource.data = this.items
+    this.dataSource.data = this.items;
     this.dataSource.paginator = this.paginator;
   }
 

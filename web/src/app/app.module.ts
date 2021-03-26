@@ -28,6 +28,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { ConfirmarComponent } from '../app/shared/confirmar/confirmar.component';
+import { AlertaExitoComponent } from './shared/alerta-exito/alerta-exito.component';
+import { AlertaErrorComponent } from './shared/alerta-error/alerta-exito.component';
 
 import { AppConfigService } from './core/config.service';
 import { GruposComponent } from './componentes/grupos/grupos.component';
@@ -43,9 +45,8 @@ import { MovilComponent } from './componentes/movil/movil.component';
 import { MovilOdometroComponent } from './componentes/movil-odometro/movil-odometro.component';
 import { MovilGrupoComponent } from './componentes/movil-grupo/movil-grupo.component';
 import { AgregarMovilComponent } from './componentes/agregar-movil/agregar-movil.component';
-import { AlertaExitoComponent } from './shared/alerta-exito/alerta-exito.component';
-import { AlertaErrorComponent } from './shared/alerta-error/alerta-exito.component';
 import { PendientesComponent } from './componentes/pendientes/pendientes.component';
+import { BuscadorComponent } from './shared/buscador/buscador.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { PendientesComponent } from './componentes/pendientes/pendientes.compone
     AgregarMovilComponent,
     AlertaExitoComponent,
     AlertaErrorComponent,
-    PendientesComponent
+    PendientesComponent,
+    BuscadorComponent
   ],
   imports: [
     BrowserModule,

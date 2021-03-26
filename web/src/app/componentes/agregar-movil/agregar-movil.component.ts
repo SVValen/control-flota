@@ -63,25 +63,8 @@ export class AgregarMovilComponent implements OnInit {
       mogrFechaAlta: [''],
       mogrBorrado: ['']
     })
-
-    //this.movilServicio.get("activo=0").subscribe(
-    //  (movil) => {
-    //    this.items = movil;
-    //    this.actualizarTabla();
-        //this.botones(movil[]);
-    //  }
-      //TODO habilitar o desabilitar botones
-    //)
-
   }
 
-  //botones(movil: Movil) {
-  //  if(movil.moviBorrado == 1) {
-  //    this.buttonDisabledReactivar = true;
-  //  }
-  //}
-
-  
   actualizarTabla() {
     this.dataSource.data = this.items;
     this.dataSource.paginator = this.paginator;
@@ -146,7 +129,6 @@ export class AgregarMovilComponent implements OnInit {
             console.log(`Dialog result: ${result}`)
           }
         )
-
       }else{
         this.cancelar();
       }
