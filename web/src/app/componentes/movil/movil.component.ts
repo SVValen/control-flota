@@ -12,6 +12,7 @@ import { MovilGrupoService } from '../../servicios/movil-grupo.service';
 
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { BuscadorService } from 'src/app/servicios/buscador.service';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class MovilComponent implements OnInit {
   constructor(
     private movilServicio : MovilService,
     private movilGrupoService: MovilGrupoService,
+    private buscadorService: BuscadorService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog
   ) { }
@@ -71,6 +73,19 @@ export class MovilComponent implements OnInit {
       poliza: [''],
       numeromotor: ['']
     })
+
+    this.movilServicio.get(`activo=1`).subscribe(
+      (movil) => {
+        this.items = movil;
+        this.actualizarTabla();
+      }
+    )
+
+    this.buscadorService.getBuscador$().subscribe(
+      (filtro) => {
+        console.log(filtro);
+      }
+    )
   
   }
 

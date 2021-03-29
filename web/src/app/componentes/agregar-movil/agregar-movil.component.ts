@@ -65,6 +65,11 @@ export class AgregarMovilComponent implements OnInit {
     })
   }
 
+  itemsBuscados(movil: Movil[]){
+    this.dataSource.data = movil;
+    this.dataSource.paginator = this.paginator;
+  }
+
   actualizarTabla() {
     this.dataSource.data = this.items;
     this.dataSource.paginator = this.paginator;

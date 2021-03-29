@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { BuscadorService } from 'src/app/servicios/buscador.service';
 
 import { Movil } from '../../modelo/movil';
 import { MovilService } from '../../servicios/movil.service';
@@ -15,70 +16,37 @@ export class BuscadorComponent implements OnInit {
   @Input() desdeMovil : boolean = false;
 
   constructor(
-    private movilServicio: MovilService
+    private movilServicio: MovilService,
+    private buscadorService: BuscadorService
   ) { }
 
   patente: string = '';
   descripcion: string ='';
   dependencia: string ='';
 
-  Buscar = false;
+  filtro: string = '';
+
 
   ngOnInit(): void {
   }
 
   buscar(){
 
-    if(this.desdeMovil){
-      console.log(true);
-      if(!this.patente && !this.descripcion && !this.dependencia){
-        alert("Busque por algun filtro")
-        this.movilServicio.items = [];
-      }
-      if(this.patente && !this.descripcion && !this.dependencia){
-        this.movilServicio.get(`patente=${this.patente}&activo=1`).subscribe(
-          (moviles) => {
-            this.movilServicio.items = moviles;
-          }
-        )
-      } else if(this.descripcion && !this.patente && !this.dependencia){
-        this.movilServicio.get(`descripcion=${this.descripcion}&activo=1`).subscribe(
-          (moviles) => {
-            this.movilServicio.items;
-          }
-        )
-      } else if(this.dependencia && !this.patente && !this.descripcion ){
-        this.movilServicio.get(`dependencia=${this.dependencia}&activo=1`).subscribe(
-          (moviles) => {
-            this.movilServicio.items = moviles;
-          }
-        )
-      }
-  
-      if(this.patente && this.descripcion){
-      } else if (this.patente && this.dependencia){
-        this.movilServicio.get(`patente=${this.patente}&dependencia=${this.dependencia}&activo=1`).subscribe(
-          (moviles) => {
-            this.movilServicio.items = moviles;
-          }
-        )
-      } else if(this.descripcion && this.dependencia){
-        this.movilServicio.get(`descripcion=${this.descripcion}&dependencia=${this.dependencia}&activo=1`).subscribe(
-          (moviles) => {
-            this.movilServicio.items = moviles;
-          }
-        )
-      } else if(this.patente && this.descripcion && this.dependencia){
-        this.movilServicio.get(`patente=${this.patente}&descripcion=${this.descripcion}&dependencia=${this.dependencia}&activo=1`).subscribe(
-          (moviles) => {
-            this.movilServicio.items = moviles;
-          }
-        )
-      }
+    if(this.patente){
+      this.filtro = this.filtro + `patente=${this.patente}&`;
+      
+    }
+    if(this.descripcion){
+      this.filtro = this.filtro + `descripcion=${this.descripcion}&`;
+      
+    }
+    if(this.dependencia){
+      this.filtro = this.filtro + `dependencia=${this.dependencia}&`;
+      
     }
 
-    this.buscando.emit(this.movilServicio.items);
+    this.buscadorService.filtroSeteado(this.filtro);
+    console.log(this.filtro);
   }
 
-  
 }

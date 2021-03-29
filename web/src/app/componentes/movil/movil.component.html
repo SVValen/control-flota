@@ -5,24 +5,16 @@
             <div>
                 <mat-label style="font-size: 25px; font-weight: 100">Móviles en Control de Flota</mat-label>
             
-            &nbsp;
+                <!--Agregar nuevo movil a control flota-->
+    
+                <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Movil</button>
+                
+                &nbsp;
 
-            <app-buscador
-            (buscando)="itemsBuscados($event)"
-            [desdeMovil]="true"></app-buscador>
+                <!--Buscador--> 
 
-            <!--Buscador en memoria-->
-            <mat-form-field id="filtro" appearance="legacy">
-                <mat-label>Buscar patente, descripcion, dependencia..</mat-label>
-                <input matInput (keyup)="filter($event)" placeholder="..." #input>
-            </mat-form-field>
-    
-            &nbsp;
-    
-            <!--Agregar nuevo movil a control flota-->
-    
-            <button mat-raised-button id="agregar" (click)="agregar()" style="float:right;">Agregar Movil</button>
-    
+                <app-buscador></app-buscador>
+
             </div>
             <!--Tabla moviles que estan en control flota-->
     

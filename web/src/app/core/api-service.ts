@@ -35,16 +35,16 @@ export abstract class ApiService<T> {
                 .pipe(catchError(this.handleError));
     }
 
-    put(data: T): Observable<T[]> {
+    put(data: T): Observable<T> {
         let payload = JSON.stringify(data);
-        return this.http.put<T[]>
+        return this.http.put<T>
             (this.url, payload)
                 .pipe(catchError(this.handleError));
     }
 
-    post(data: T): Observable<T[]> {
+    post(data: T): Observable<T> {
         let payload = JSON.stringify(data);
-        return this.http.post<T[]>
+        return this.http.post<T>
             (this.url, payload)
                 .pipe(catchError(this.handleError));
     }

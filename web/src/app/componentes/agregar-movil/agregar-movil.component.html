@@ -6,24 +6,8 @@
     <mat-label style="font-size: 25px; font-weight: 100;">Agregar Móvil a Control de Flota</mat-label>
     
     <!--Buscadores-->
-    <div style="margin-top: 20px;">
-        <mat-form-field  appearance="legacy">
-            <mat-label>Buscar por Patente</mat-label>
-            <input matInput  (keyup.enter)="buscar()" [(ngModel)]="patente" placeholder="Ej : AAA111" >
-        </mat-form-field>&nbsp;
-        <mat-form-field  appearance="legacy">
-            <mat-label>Buscar por Descripcion</mat-label>
-            <input matInput  (keyup.enter)="buscar()" [(ngModel)]="descripcion"  placeholder="Ej : CV11A ..">
-        </mat-form-field>&nbsp;
-        <mat-form-field  appearance="legacy">
-            <mat-label>Buscar por Dependencia</mat-label>
-            <input matInput  (keyup.enter)="buscar()" [(ngModel)]="dependencia" placeholder="Ej: CRIA VECINAL ..">
-        </mat-form-field>
 
-        <button mat-raised-button style="margin-left: 10px;" (click)="buscar()">Buscar</button>
-
-       
-    </div>
+    <app-buscador (buscando)="itemsBuscados($event)"></app-buscador>
 
     <table mat-table [dataSource]="dataSource" matSort style="overflow-x:auto; width: 100%;">
 

@@ -105,7 +105,7 @@ export class TareasComponent implements OnInit,AfterViewInit {
     } else {
       this.tareaService.post(this.seleccionado)
         .subscribe((tarea) => {
-          this.items = tarea;
+          this.items.push(tarea);
           this.mostrarFormulario= false;
           this.actualizarTabla();
         });

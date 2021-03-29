@@ -217,8 +217,11 @@ export class MovilBitacoraComponent implements OnInit {
       this.seleccionado.mobiIdAnterior = this.seleccionado.mobiId;
       //mobIdSiguiente null
 
-      this.movilBitacoraService.post(this.seleccionado).subscribe();
-      this.agregarTareas(this.seleccionado.mobiId);
+      this.movilBitacoraService.post(this.seleccionado).subscribe(
+        (nuevo) => {
+          this.agregarTareas(nuevo.mobiId);
+        }
+      )
 
       this.desdeGBitacora = false;
 
@@ -275,6 +278,11 @@ export class MovilBitacoraComponent implements OnInit {
     }
 
   agregarTareas(mobiId: number){
+    this.movilBitacoraService.get(`mobiMoviId=${this.movilService.item.moviId}`).subscribe(
+      (mobi) => {
+        this.items = mobi;
+      }
+    )
     this.bitacoraTareaService.items.forEach((i) => {
       i.bitaMobiId = mobiId;
 
