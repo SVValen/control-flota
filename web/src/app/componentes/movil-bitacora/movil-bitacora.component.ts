@@ -91,7 +91,9 @@ export class MovilBitacoraComponent implements OnInit {
       mobiFechaAlta: [''],
       mobiBorrado: [''],
 
-      servNombre: ['']
+      servNombre: [''],
+      patente: [''],
+      descripcion: ['']
     });
 
 
@@ -184,11 +186,11 @@ export class MovilBitacoraComponent implements OnInit {
       this.seleccionado.mobiPendiente = true;
       // this.seleccionado.mobiIdAnterior && this.seleccionado.mobiIdSiguiente null pues estamos creando nueva bitacora
 
-      this.movilBitacoraService.post(this.seleccionado).subscribe();
-
-      this.items = this.items.filter(x => x.mobiId !== this.seleccionado.mobiId);
-      this.items.push(this.seleccionado);
-      this.agregarTareas(this.seleccionado.mobiId);
+      this.movilBitacoraService.post(this.seleccionado).subscribe(
+        (nuevo) => {
+          this.agregarTareas(nuevo.mobiId);
+        }
+      );
 
       this.desdeMS = false;
 
@@ -247,8 +249,6 @@ export class MovilBitacoraComponent implements OnInit {
 
         this.movilBitacoraService.put(this.seleccionado).subscribe(
           () => {
-            this.items = this.items.filter(x => x.mobiId !== this.seleccionado.mobiId);
-            this.items.push(this.seleccionado);
             this.agregarTareas(this.seleccionado.mobiId);
           }
         );
@@ -269,6 +269,7 @@ export class MovilBitacoraComponent implements OnInit {
         this.movilBitacoraService.post(this.seleccionado).subscribe();
         
       }
+      
       this.mostrarFormularioAgregarBitacora = false;
       this.items = this.items.filter(x => x.mobiId !== this.seleccionado.mobiId);
       this.seleccionado.servNombre = this.servicios.find(x => x.servId == this.seleccionado.mobiServId)!.servNombre;
