@@ -47,6 +47,10 @@ export class BuscadorComponent implements OnInit {
 
     this.buscadorService.filtroSeteado(this.filtro);
     console.log(this.filtro);
+
+    this.filtro = '';
+
+    console.log(this.filtro);
   }
 
 }

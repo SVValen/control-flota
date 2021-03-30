@@ -11,6 +11,7 @@ import { MovilService } from '../../servicios/movil.service';
 
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { BuscadorService } from 'src/app/servicios/buscador.service';
 
 @Component({
   selector: 'app-agregar-movil',
@@ -42,6 +43,7 @@ export class AgregarMovilComponent implements OnInit {
 
   constructor(
     private movilServicio: MovilService,
+    private buscadorService: BuscadorService,
     private formBouilder: FormBuilder,
     private matDialog: MatDialog) { }
 
@@ -63,11 +65,19 @@ export class AgregarMovilComponent implements OnInit {
       mogrFechaAlta: [''],
       mogrBorrado: ['']
     })
-  }
 
-  itemsBuscados(movil: Movil[]){
-    this.dataSource.data = movil;
-    this.dataSource.paginator = this.paginator;
+    this.buscadorService.getBuscador$().subscribe(
+      (filtro) => {
+        filtro = filtro + `activo=0`;
+        this.movilServicio.get(filtro).subscribe(
+          (movil) => {
+            this.items = movil;
+            this.actualizarTabla();
+          }
+        )
+      }
+    )
+
   }
 
   actualizarTabla() {

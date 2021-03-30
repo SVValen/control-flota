@@ -74,24 +74,17 @@ export class MovilComponent implements OnInit {
       numeromotor: ['']
     })
 
-    this.movilServicio.get(`activo=1`).subscribe(
-      (movil) => {
-        this.items = movil;
-        this.actualizarTabla();
-      }
-    )
-
     this.buscadorService.getBuscador$().subscribe(
       (filtro) => {
-        console.log(filtro);
+        filtro = filtro + `activo=1`;
+        this.movilServicio.get(filtro).subscribe(
+          (movil) => {
+            this.items = movil;
+            this.actualizarTabla();
+          }
+        )
       }
     )
-  
-  }
-
-  itemsBuscados(movil: Movil[]){
-    this.dataSource.data = movil;
-    this.dataSource.paginator = this.paginator;
   }
 
   actualizarTabla() {
